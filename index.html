@@ -796,20 +796,26 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 
   <!-- MISSIONS — JOURNEY MAP -->
   <div class="tab-panel active" id="tabMissions">
-    <!-- Story banner -->
-    <div class="story-banner" onclick="openModal('mStory')">
-      <span style="font-size:1.8rem;">🦉</span>
-      <div style="flex:1;"><div style="font-weight:900;font-size:.82rem;color:#fff;">Missão: Resgatar as Criaturas!</div><div id="storyProgress" style="font-size:.7rem;font-weight:700;color:rgba(255,255,255,.75);">0/135 criaturas · Toque para saber mais</div></div>
-      <span style="color:rgba(255,255,255,.6);font-size:.9rem;">›</span>
+    <!-- Story + Missions numa única linha colapsável -->
+    <div style="display:flex;align-items:center;gap:.4rem;padding:.35rem .9rem 0;flex-shrink:0;">
+      <!-- Story mini -->
+      <div onclick="openModal('mStory')" style="flex:1;background:linear-gradient(135deg,#1a3a00,#2e6e00);border-radius:10px;padding:.35rem .6rem;cursor:pointer;display:flex;align-items:center;gap:.4rem;">
+        <span style="font-size:1.1rem;">🦉</span>
+        <div style="flex:1;"><div style="font-weight:800;font-size:.7rem;color:#fff;">Missão das Criaturas</div><div id="storyProgress" style="font-size:.62rem;color:rgba(255,255,255,.75);">0/135 resgatadas</div></div>
+      </div>
+      <!-- Missions mini toggle -->
+      <div onclick="toggleMissionsPanel()" id="missionsMini" style="background:var(--blue-bg);border:2px solid var(--blue);border-radius:10px;padding:.35rem .6rem;cursor:pointer;text-align:center;flex-shrink:0;">
+        <div style="font-weight:900;font-size:.7rem;color:var(--blue-dk);">🎯 Missões</div>
+        <div style="font-size:.62rem;font-weight:700;color:var(--blue-sh);" id="missionMiniStatus">0/3</div>
+      </div>
     </div>
-    <!-- Daily missions -->
-    <div class="missions-bar">
-      <div class="missions-hdr"><span>🎯 Missões de hoje</span><span id="missionReward" style="font-size:.65rem;font-weight:700;color:var(--blue-sh);"></span></div>
+    <!-- Missions expandable panel (fechado por padrão) -->
+    <div id="missionsPanel" style="display:none;margin:.3rem .9rem 0;background:var(--blue-bg);border:2px solid var(--blue);border-radius:var(--r);padding:.5rem .7rem;flex-shrink:0;">
       <div id="missionsList"></div>
     </div>
     <!-- compact difficulty strip -->
     <div class="diff-strip">
-      <div class="diff-strip-lbl">⏱️ Tempo:</div>
+      <div class="diff-strip-lbl">⏱️</div>
       <div class="dbn-sm sel" data-d="0" onclick="setDiff(0,this)">♾️</div>
       <div class="dbn-sm" data-d="5" onclick="setDiff(5,this)">5s</div>
       <div class="dbn-sm" data-d="4" onclick="setDiff(4,this)">4s</div>
@@ -817,10 +823,10 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
       <div class="dbn-sm" data-d="2" onclick="setDiff(2,this)">2s</div>
       <div class="diff-strip-badge" id="diffBadge">Sem timer</div>
     </div>
-    <!-- premium banner -->
-    <div id="homePremiumBanner" onclick="unlockPremium()" style="margin:.3rem .9rem 0;background:linear-gradient(135deg,#3d1f8e,#6a35d4);border-radius:var(--r);padding:.5rem .9rem;cursor:pointer;display:flex;align-items:center;gap:.55rem;box-shadow:0 3px 0 #2a1060;flex-shrink:0;">
-      <span style="font-size:1.2rem;">👑</span>
-      <div style="flex:1;"><div style="font-weight:900;font-size:.78rem;color:#fff;">Premium · R$9,90 · pagamento único</div><div style="font-size:.68rem;font-weight:700;color:rgba(255,255,255,.75);">Tabuadas 6–10 · Divisão · Adição · 135 criaturas</div></div>
+    <!-- premium banner — abre modal, não desbloqueia direto -->
+    <div id="homePremiumBanner" onclick="openModal('mPremium')" style="margin:.3rem .9rem 0;background:linear-gradient(135deg,#3d1f8e,#6a35d4);border-radius:var(--r);padding:.4rem .9rem;cursor:pointer;display:flex;align-items:center;gap:.5rem;box-shadow:0 3px 0 #2a1060;flex-shrink:0;">
+      <span style="font-size:1.1rem;">👑</span>
+      <div style="flex:1;font-weight:800;font-size:.75rem;color:#fff;">Premium · R$9,90 · tabuadas 6–10 + 135 criaturas</div>
       <span style="background:#FFC800;color:#6b4c00;font-size:.65rem;font-weight:900;border-radius:100px;padding:.15rem .4rem;">VER</span>
     </div>
     <!-- scrollable path -->
@@ -1905,13 +1911,20 @@ function updateMissionProgress(key, val){
   saveMissions(ms);
   renderMissions();
 }
+function toggleMissionsPanel(){
+  const panel = document.getElementById('missionsPanel');
+  if(panel) panel.style.display = panel.style.display==='none' ? 'block' : 'none';
+}
+
 function renderMissions(){
   const area = document.getElementById('missionsList');
   if(!area) return;
   const ms = getMissions();
-  const allDone = ms.every(m=>m.done);
+  const done = ms.filter(m=>m.done).length;
+  const mini = document.getElementById('missionMiniStatus');
+  if(mini) mini.textContent = done+'/'+ms.length+(done===ms.length?' ✅':'');
   const rew = document.getElementById('missionReward');
-  if(rew) rew.textContent = allDone ? '✅ Todas concluídas!' : ms.filter(m=>m.done).length+'/'+ms.length+' feitas';
+  if(rew) rew.textContent = done===ms.length ? '✅ Todas concluídas!' : done+'/'+ms.length+' feitas';
   area.innerHTML = ms.map(m=>`
     <div class="mission-row">
       <div class="mcheck${m.done?' done':''}">
