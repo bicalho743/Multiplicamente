@@ -123,27 +123,51 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
   .screen{position:absolute;border-radius:28px;}
 }
 
-/* LOGIN */
-#sLogin{background:var(--white);}
-.login-top{background:var(--green);padding:1.8rem 1.5rem 2.5rem;text-align:center;border-radius:0 0 50% 50%/0 0 28px 28px;flex-shrink:0;}
-.owl{font-size:4rem;display:block;animation:owlBob 2s ease-in-out infinite;}
-@keyframes owlBob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-8px) rotate(3deg)}}
-.login-top h1{font-size:1.9rem;font-weight:900;color:#fff;text-shadow:0 2px 0 rgba(0,0,0,.15);margin-top:.3rem;}
-.login-top p{color:rgba(255,255,255,.85);font-size:.9rem;font-weight:700;}
-.login-body{flex:1;overflow-y:auto;padding:1.2rem 1.5rem;display:flex;flex-direction:column;gap:1rem;}
-.sec-lbl{font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:var(--gray-dk);margin-bottom:.3rem;}
-.profile-item{display:flex;align-items:center;gap:.8rem;background:var(--white);border:2.5px solid var(--gray);border-radius:var(--r);padding:.85rem 1rem;cursor:pointer;transition:all .15s;}
+/* LOGIN — redesign compacto */
+#sLogin{background:var(--bg-screen);display:flex;flex-direction:column;}
+.login-top{background:var(--green);padding:.7rem 1.2rem .9rem;display:flex;align-items:center;gap:.6rem;flex-shrink:0;border-radius:0 0 20px 20px;box-shadow:0 4px 0 var(--green-sh);}
+.login-top-owl{font-size:1.8rem;animation:owlBob 2s ease-in-out infinite;}
+@keyframes owlBob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-5px) rotate(3deg)}}
+.login-top-text{flex:1;}
+.login-top-text h1{font-size:1.2rem;font-weight:900;color:#fff;text-shadow:0 2px 0 rgba(0,0,0,.15);line-height:1;}
+.login-top-text p{color:rgba(255,255,255,.85);font-size:.72rem;font-weight:700;}
+.login-top-cloud{font-size:.72rem;font-weight:700;color:rgba(255,255,255,.8);text-align:right;cursor:pointer;background:rgba(0,0,0,.15);border-radius:8px;padding:.3rem .5rem;flex-shrink:0;}
+/* profiles */
+.login-body{flex:1;overflow-y:auto;padding:.9rem 1.1rem;display:flex;flex-direction:column;gap:.55rem;}
+.profile-big{display:flex;align-items:center;gap:.9rem;background:var(--green);border:3px solid var(--green-sh);border-radius:var(--r-lg);padding:1rem 1.1rem;cursor:pointer;transition:all .15s;box-shadow:0 5px 0 var(--green-sh);}
+.profile-big:active{transform:translateY(4px);box-shadow:0 1px 0 var(--green-sh);}
+.pb-av{font-size:2.2rem;width:52px;height:52px;background:rgba(255,255,255,.25);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.pb-info{flex:1;}
+.pb-name{font-weight:900;font-size:1.15rem;color:#fff;}
+.pb-stats{font-size:.78rem;font-weight:700;color:rgba(255,255,255,.85);}
+.pb-play{font-size:1.6rem;color:rgba(255,255,255,.9);}
+/* secondary profiles */
+.profile-item{display:flex;align-items:center;gap:.7rem;background:var(--bg-card);border:2px solid var(--gray);border-radius:var(--r);padding:.7rem .9rem;cursor:pointer;transition:all .15s;}
 .profile-item:active{transform:scale(.97);}
-.profile-item:hover{border-color:var(--blue);}
-.pi-av{font-size:1.9rem;width:44px;height:44px;background:var(--blue-bg);border-radius:10px;display:flex;align-items:center;justify-content:center;border:2px solid var(--blue);}
-.pi-info{flex:1;} .pi-name{font-weight:800;font-size:1rem;} .pi-stats{font-size:.75rem;color:var(--gray-dk);font-weight:700;}
-.new-box{background:var(--white);border:2.5px solid var(--gray);border-radius:var(--r);padding:1rem;}
-.av-grid{display:flex;flex-wrap:wrap;gap:.35rem;margin:.5rem 0;}
-.av-btn{width:42px;height:42px;font-size:1.35rem;background:var(--gray);border:2.5px solid transparent;border-radius:10px;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;}
+.pi-av{font-size:1.6rem;width:40px;height:40px;background:var(--blue-bg);border-radius:10px;display:flex;align-items:center;justify-content:center;border:2px solid var(--blue);flex-shrink:0;}
+.pi-info{flex:1;} .pi-name{font-weight:800;font-size:.95rem;color:var(--dark);} .pi-stats{font-size:.72rem;color:var(--gray-dk);font-weight:700;}
+/* add player collapsible */
+.add-player-toggle{display:flex;align-items:center;justify-content:center;gap:.4rem;padding:.6rem;background:none;border:2px dashed var(--gray);border-radius:var(--r);width:100%;font-family:'Nunito',sans-serif;font-weight:800;font-size:.88rem;color:var(--gray-dk);cursor:pointer;transition:all .2s;}
+.add-player-toggle:hover{border-color:var(--blue);color:var(--blue);}
+.add-player-form{display:none;background:var(--bg-card);border:2px solid var(--gray);border-radius:var(--r);padding:.9rem;animation:si .2s ease-out;}
+.add-player-form.open{display:block;}
+.new-box{background:var(--bg-card);border:2px solid var(--gray);border-radius:var(--r);padding:.9rem;}
+.av-grid{display:flex;flex-wrap:wrap;gap:.3rem;margin:.4rem 0;}
+.av-btn{width:40px;height:40px;font-size:1.25rem;background:var(--gray);border:2.5px solid transparent;border-radius:10px;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;}
 .av-btn.sel{background:var(--blue-bg);border-color:var(--blue);transform:scale(1.1);}
-.inp{width:100%;padding:.7rem 1rem;background:var(--white);border:2.5px solid var(--gray);border-radius:var(--r);font-family:'Nunito',sans-serif;font-size:.95rem;font-weight:700;color:var(--dark);outline:none;transition:border-color .2s;margin-bottom:.5rem;}
+.inp{width:100%;padding:.65rem .9rem;background:var(--bg-card);border:2.5px solid var(--gray);border-radius:var(--r);font-family:'Nunito',sans-serif;font-size:.92rem;font-weight:700;color:var(--dark);outline:none;transition:border-color .2s;margin-bottom:.45rem;}
 .inp:focus{border-color:var(--blue);}
-.login-footer{padding:1rem 1.5rem;flex-shrink:0;}
+/* cloud section */
+.cloud-section{border:2px solid var(--gray);border-radius:var(--r);overflow:hidden;}
+.cloud-toggle{display:flex;align-items:center;gap:.5rem;padding:.65rem .9rem;cursor:pointer;background:var(--bg-card);}
+.cloud-toggle-icon{font-size:1.1rem;}
+.cloud-toggle-lbl{flex:1;font-weight:800;font-size:.85rem;color:var(--dark);}
+.cloud-toggle-arr{font-size:.75rem;color:var(--gray-dk);transition:transform .2s;}
+.cloud-toggle-arr.open{transform:rotate(180deg);}
+.cloud-body{display:none;padding:.7rem .9rem;border-top:2px solid var(--gray);background:var(--bg-card);}
+.cloud-body.open{display:block;}
+.login-footer{padding:.8rem 1.1rem;flex-shrink:0;border-top:2px solid var(--gray);}
+.sec-lbl{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:var(--gray-dk);margin-bottom:.3rem;}
 
 /* BUTTONS */
 .btn{width:100%;padding:.95rem;border:none;border-radius:var(--r);font-family:'Nunito',sans-serif;font-size:1rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.4rem;transition:transform .1s,box-shadow .1s;position:relative;}
@@ -664,62 +688,81 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 <!-- LOGIN -->
 <div id="app">
 <div class="screen active" id="sLogin">
+  <!-- Cabeçalho compacto -->
   <div class="login-top">
-    <span class="owl">🦉</span>
-    <h1>MultiplicaMente</h1>
-    <p>Aventura da Tabuada!</p>
-  </div>
-  <div class="login-body">
-
-    <!-- Firebase user chip (shown when logged in) -->
-    <div id="fbUserArea" style="display:none;">
-      <div class="user-chip" id="fbUserChip">
-        <span id="fbUserIcon">👤</span>
-        <span id="fbUserName">Usuário</span>
-        <span style="font-size:.7rem;opacity:.7;">☁️ sincronizado</span>
-      </div>
+    <span class="login-top-owl">🦉</span>
+    <div class="login-top-text">
+      <h1>MultiplicaMente</h1>
+      <p>Aventura da Tabuada!</p>
     </div>
+    <div id="loginCloudBtn" class="login-top-cloud" style="display:none;" onclick="toggleCloudSection()">
+      ☁️ <span id="loginCloudName"></span>
+    </div>
+  </div>
 
-    <!-- Existing profiles -->
+  <!-- Banner premium compacto -->
+  <div onclick="openModal('mPremium')" style="margin:.55rem .9rem 0;background:linear-gradient(135deg,#3d1f8e,#6a35d4);border-radius:var(--r);padding:.5rem .9rem;cursor:pointer;display:flex;align-items:center;gap:.5rem;box-shadow:0 3px 0 #2a1060;flex-shrink:0;">
+    <span style="font-size:1.1rem;">👑</span>
+    <div style="flex:1;font-weight:900;font-size:.78rem;color:#fff;">Premium · R$9,90 · todas as tabuadas + 135 criaturas</div>
+    <span style="background:#FFC800;color:#6b4c00;font-size:.65rem;font-weight:900;border-radius:100px;padding:.15rem .4rem;">VER</span>
+  </div>
+
+  <div class="login-body">
+    <!-- Perfis existentes — renderizado pelo JS com profile-big para o 1º -->
     <div id="profilesArea"></div>
 
-    <!-- Auth section (shown when not logged in) -->
-    <div id="authSection">
-      <div class="auth-divider"><span>Entrar para salvar progresso</span></div>
-      <button class="btn btn-google" onclick="signInGoogle()" style="margin-bottom:.5rem;">
-        <svg class="google-icon" width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-        Entrar com Google
-      </button>
-      <div class="auth-tabs">
-        <button class="auth-tab active" onclick="authSwitchTab('signin',this)">Entrar</button>
-        <button class="auth-tab" onclick="authSwitchTab('signup',this)">Criar conta</button>
-      </div>
-      <div class="auth-panel active" id="authSignin">
-        <input class="inp" id="siEmail" type="email" placeholder="E-mail" inputmode="email" autocomplete="email">
-        <input class="inp" id="siPass" type="password" placeholder="Senha" autocomplete="current-password">
-        <div class="auth-err" id="siErr"></div>
-        <button class="btn btn-blue" onclick="signInEmail()" style="margin-top:.3rem;">Entrar</button>
-        <button class="btn btn-outline" style="margin-top:.4rem;font-size:.82rem;" onclick="resetPassword()">Esqueci minha senha</button>
-      </div>
-      <div class="auth-panel" id="authSignup">
-        <input class="inp" id="suEmail" type="email" placeholder="E-mail" inputmode="email" autocomplete="email">
-        <input class="inp" id="suPass" type="password" placeholder="Senha (mín. 6 caracteres)" autocomplete="new-password">
-        <div class="auth-err" id="suErr"></div>
-        <button class="btn btn-green" onclick="signUpEmail()" style="margin-top:.3rem;">Criar conta</button>
-      </div>
-      <div class="auth-divider" style="margin-top:.5rem;"><span>ou</span></div>
-    </div>
-
-    <!-- New local profile -->
-    <div class="new-box">
-      <div class="sec-lbl">Criar jogador <span style="font-size:.65rem;color:var(--gray-dk);">(salvo na nuvem se logado)</span></div>
+    <!-- Adicionar jogador (colapsável) -->
+    <button class="add-player-toggle" id="addPlayerToggle" onclick="toggleAddPlayer()">
+      <span>＋</span> Adicionar jogador
+    </button>
+    <div class="add-player-form" id="addPlayerForm">
+      <div class="sec-lbl">Novo jogador</div>
       <input class="inp" id="newName" placeholder="Nome da criança" maxlength="20">
       <div class="av-grid" id="avGrid"></div>
       <input class="inp" id="newPin" type="password" placeholder="PIN dos pais (4 dígitos)" maxlength="4" inputmode="numeric">
+      <button class="btn btn-green" onclick="createProfile()">🎮 Criar e jogar</button>
     </div>
-  </div>
-  <div class="login-footer">
-    <button class="btn btn-green" onclick="createProfile()">🎮 Criar perfil e jogar</button>
+
+    <!-- Sincronização na nuvem — colapsável, para os pais -->
+    <div class="cloud-section">
+      <div class="cloud-toggle" onclick="toggleCloudSection()">
+        <span class="cloud-toggle-icon">☁️</span>
+        <span class="cloud-toggle-lbl" id="cloudToggleLbl">Salvar progresso na nuvem</span>
+        <span class="cloud-toggle-arr" id="cloudToggleArr">▾</span>
+      </div>
+      <div class="cloud-body" id="cloudBody">
+        <div id="fbUserArea" style="display:none;margin-bottom:.7rem;">
+          <div class="user-chip" id="fbUserChip">
+            <span id="fbUserIcon">👤</span>
+            <span id="fbUserName">Usuário</span>
+            <span style="font-size:.7rem;opacity:.7;">☁️ sincronizado</span>
+          </div>
+        </div>
+        <div id="authSection">
+          <button class="btn btn-google" onclick="signInGoogle()" style="margin-bottom:.5rem;">
+            <svg class="google-icon" width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+            Entrar com Google
+          </button>
+          <div class="auth-tabs">
+            <button class="auth-tab active" onclick="authSwitchTab('signin',this)">Entrar</button>
+            <button class="auth-tab" onclick="authSwitchTab('signup',this)">Criar conta</button>
+          </div>
+          <div class="auth-panel active" id="authSignin">
+            <input class="inp" id="siEmail" type="email" placeholder="E-mail" inputmode="email" autocomplete="email">
+            <input class="inp" id="siPass" type="password" placeholder="Senha" autocomplete="current-password">
+            <div class="auth-err" id="siErr"></div>
+            <button class="btn btn-blue" onclick="signInEmail()" style="margin-top:.3rem;">Entrar</button>
+            <button class="btn btn-outline" style="margin-top:.4rem;font-size:.82rem;" onclick="resetPassword()">Esqueci minha senha</button>
+          </div>
+          <div class="auth-panel" id="authSignup">
+            <input class="inp" id="suEmail" type="email" placeholder="E-mail" inputmode="email" autocomplete="email">
+            <input class="inp" id="suPass" type="password" placeholder="Senha (mín. 6 caracteres)" autocomplete="new-password">
+            <div class="auth-err" id="suErr"></div>
+            <button class="btn btn-green" onclick="signUpEmail()" style="margin-top:.3rem;">Criar conta</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1170,17 +1213,22 @@ function traduzErroFirebase(code){
 function updateAuthUI(){
   const fbArea  = document.getElementById('fbUserArea');
   const authSec = document.getElementById('authSection');
+  const cloudBtn = document.getElementById('loginCloudBtn');
+  const cloudName = document.getElementById('loginCloudName');
+  const cloudLbl = document.getElementById('cloudToggleLbl');
   if(!fbUser){
     if(fbArea)  fbArea.style.display  = 'none';
     if(authSec) authSec.style.display = 'block';
+    if(cloudBtn) cloudBtn.style.display = 'none';
+    if(cloudLbl) cloudLbl.textContent = 'Salvar progresso na nuvem';
     return;
   }
-  if(fbArea){
-    fbArea.style.display = 'block';
-    document.getElementById('fbUserIcon').textContent = fbUser.photoURL ? '' : '👤';
-    document.getElementById('fbUserName').textContent = fbUser.displayName || fbUser.email;
-  }
-  if(authSec) authSec.style.display = 'none';
+  const name = fbUser.displayName || fbUser.email;
+  if(fbArea){ fbArea.style.display='block'; document.getElementById('fbUserIcon').textContent='👤'; document.getElementById('fbUserName').textContent=name; }
+  if(authSec) authSec.style.display='none';
+  if(cloudBtn){ cloudBtn.style.display='flex'; }
+  if(cloudName) cloudName.textContent = name.split(' ')[0] || name.split('@')[0];
+  if(cloudLbl) cloudLbl.textContent = '☁️ Logado como '+name;
 }
 
 function authSwitchTab(tab, el){
@@ -1412,9 +1460,53 @@ function playTick(){try{const ctx=AC(),o=ctx.createOscillator(),g=ctx.createGain
 function testSounds(){playSuccess();setTimeout(playDuck,1400)}
 function setVol(v){vol=parseFloat(v);document.getElementById('volPct').textContent=Math.round(vol*100)+'%';if(P){P.vol=v;sp()}}
 function renderLogin(){
-  const data=gd();const area=document.getElementById('profilesArea');area.innerHTML='';
-  if(data.profiles.length){const lbl=document.createElement('div');lbl.className='sec-lbl';lbl.textContent='Continuar como';area.appendChild(lbl);data.profiles.forEach((p,i)=>{const d=document.createElement('div');d.className='profile-item';d.innerHTML=`<div class="pi-av">${p.av}</div><div class="pi-info"><div class="pi-name">${p.name}</div><div class="pi-stats">⭐${p.stars||0} · 💎${p.gems||0} · 🔥${p.streak||0}</div></div><div style="color:var(--gray-dk);font-size:1.2rem;">▶</div>`;d.onclick=()=>loginAs(i);area.appendChild(d)})}
-  const ag=document.getElementById('avGrid');ag.innerHTML='';AVATARS.forEach(a=>{const b=document.createElement('button');b.className='av-btn'+(a===selAv?' sel':'');b.textContent=a;b.onclick=()=>{selAv=a;renderLogin()};ag.appendChild(b)});
+  const data=gd();
+  const area=document.getElementById('profilesArea');
+  area.innerHTML='';
+  if(data.profiles.length){
+    // First profile — big green button (primary action)
+    const p0 = data.profiles[0];
+    const big = document.createElement('div');
+    big.className = 'profile-big';
+    big.innerHTML = `<div class="pb-av">${p0.av}</div><div class="pb-info"><div class="pb-name">${p0.name}</div><div class="pb-stats">⭐${p0.stars||0} · 💎${p0.gems||0} · 🔥${p0.streak||0}</div></div><div class="pb-play">▶</div>`;
+    big.onclick = ()=>loginAs(0);
+    area.appendChild(big);
+    // Additional profiles — smaller
+    data.profiles.slice(1).forEach((p,i)=>{
+      const d=document.createElement('div');
+      d.className='profile-item';
+      d.innerHTML=`<div class="pi-av">${p.av}</div><div class="pi-info"><div class="pi-name">${p.name}</div><div class="pi-stats">⭐${p.stars||0} · 💎${p.gems||0} · 🔥${p.streak||0}</div></div><div style="color:var(--gray-dk);font-size:1rem;">▶</div>`;
+      d.onclick=()=>loginAs(i+1);
+      area.appendChild(d);
+    });
+  } else {
+    // No profiles — auto-open the add form
+    const form = document.getElementById('addPlayerForm');
+    const toggle = document.getElementById('addPlayerToggle');
+    if(form){ form.classList.add('open'); }
+    if(toggle){ toggle.style.display='none'; }
+  }
+  const ag=document.getElementById('avGrid');
+  if(ag){ ag.innerHTML='';AVATARS.forEach(a=>{const b=document.createElement('button');b.className='av-btn'+(a===selAv?' sel':'');b.textContent=a;b.onclick=()=>{selAv=a;ag.querySelectorAll('.av-btn').forEach(x=>x.classList.remove('sel'));b.classList.add('sel')};ag.appendChild(b)}); }
+  // Update cloud button in header
+  updateAuthUI();
+}
+
+function toggleAddPlayer(){
+  const form = document.getElementById('addPlayerForm');
+  const toggle = document.getElementById('addPlayerToggle');
+  if(!form) return;
+  const isOpen = form.classList.contains('open');
+  form.classList.toggle('open');
+  if(toggle) toggle.textContent = isOpen ? '＋ Adicionar jogador' : '✕ Cancelar';
+}
+
+function toggleCloudSection(){
+  const body = document.getElementById('cloudBody');
+  const arr  = document.getElementById('cloudToggleArr');
+  if(!body) return;
+  body.classList.toggle('open');
+  if(arr) arr.classList.toggle('open');
 }
 function createProfile(){const nm=document.getElementById('newName').value.trim(),pin=document.getElementById('newPin').value.trim();if(!nm){alert('Digite o nome!');return}if(pin&&(pin.length!==4||isNaN(pin))){alert('PIN deve ter 4 números!');return}const data=gd();const p={name:nm,av:selAv,pin:pin||'1234',stars:0,gems:0,streak:0,lastDate:null,tableStars:{},creatures:[],totalOk:0,totalWrong:0,totalGames:0,logs:[],vol:.5};data.profiles.push(p);sd(data);loginAs(data.profiles.length-1)}
 function loginAs(idx){const data=gd();P=data.profiles[idx];Pi=idx;diff=P.diff||0;
