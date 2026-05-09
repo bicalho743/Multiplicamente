@@ -646,19 +646,19 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 
 <!-- PROFILE MODAL -->
 <div class="modal-ov" id="mProfile">
-  <div class="modal-sheet">
-    <div style="display:flex;align-items:center;gap:.9rem;margin-bottom:1rem;">
-      <div style="font-size:3rem;background:var(--green-bg);border:3px solid var(--green);border-radius:16px;width:64px;height:64px;display:flex;align-items:center;justify-content:center;" id="profileModalAv">🦉</div>
-      <div>
-        <div style="font-weight:900;font-size:1.2rem;color:var(--dark);" id="profileModalName">Jogador</div>
-        <div style="font-size:.82rem;font-weight:700;color:var(--gray-dk);" id="profileModalStats">⭐0 · 💎0 · 🔥0</div>
-        <div style="font-size:.75rem;font-weight:700;color:var(--blue-dk);margin-top:.15rem;" id="profileModalCloud"></div>
+  <div class="modal-sheet" style="padding:1rem 1.2rem 1.4rem;">
+    <div style="display:flex;align-items:center;gap:.7rem;margin-bottom:.8rem;">
+      <div style="font-size:1.8rem;background:var(--green-bg);border:2.5px solid var(--green);border-radius:12px;width:48px;height:48px;display:flex;align-items:center;justify-content:center;flex-shrink:0;" id="profileModalAv">🦉</div>
+      <div style="flex:1;">
+        <div style="font-weight:900;font-size:1rem;color:var(--dark);" id="profileModalName">Jogador</div>
+        <div style="font-size:.78rem;font-weight:700;color:var(--gray-dk);" id="profileModalStats">⭐0 · 💎0 · 🔥0</div>
+        <div style="font-size:.72rem;font-weight:700;color:var(--blue-dk);margin-top:.1rem;" id="profileModalCloud"></div>
       </div>
+      <button onclick="closeModal('mProfile')" style="background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--gray-dk);padding:.3rem;">✕</button>
     </div>
-    <button class="btn btn-outline" onclick="closeModal('mProfile');showParentPin()" style="margin-bottom:.4rem;">📊 Ver relatório dos pais</button>
-    <button class="btn btn-outline" onclick="closeModal('mProfile');htab('settings',document.querySelector('.htab:last-child'))" style="margin-bottom:.4rem;">⚙️ Configurações</button>
-    <button class="btn btn-red" onclick="closeModal('mProfile');logout()">🚪 Sair do perfil</button>
-    <button class="btn btn-outline" onclick="closeModal('mProfile')" style="margin-top:.4rem;font-size:.85rem;">Cancelar</button>
+    <button class="btn btn-outline" onclick="closeModal('mProfile');showParentPin()" style="margin-bottom:.35rem;padding:.7rem;font-size:.88rem;">📊 Relatório dos pais</button>
+    <button class="btn btn-outline" onclick="closeModal('mProfile');htab('settings',document.querySelector('.htab:last-child'))" style="margin-bottom:.35rem;padding:.7rem;font-size:.88rem;">⚙️ Configurações</button>
+    <button class="btn btn-red" onclick="closeModal('mProfile');logout()" style="padding:.7rem;font-size:.88rem;">🚪 Sair do perfil</button>
   </div>
 </div>
 
