@@ -622,8 +622,24 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 .mascot-dance{display:block;text-align:center;font-size:3.5rem;animation:mDance .5s ease-in-out infinite alternate;margin:.3rem 0;}
 @keyframes mDance{from{transform:rotate(-12deg) scale(1)}to{transform:rotate(12deg) scale(1.1)}}
 
-/* ── MUSIC BTN ───────────────────────────────────────────── */
-.music-btn{position:fixed;bottom:14px;right:14px;z-index:150;width:38px;height:38px;border-radius:50%;background:rgba(0,0,0,.3);border:none;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);}
+/* ── RANKING VERTICAL ────────────────────────────────────── */
+.rank-list{padding:.5rem .9rem;display:flex;flex-direction:column;gap:.35rem;}
+.rank-row{display:flex;align-items:center;gap:.6rem;padding:.6rem .8rem;background:var(--bg-card);border:2px solid var(--gray);border-radius:var(--r);}
+.rank-row.me{border-color:var(--blue);background:var(--blue-bg);}
+.rank-row.r1{border-color:var(--yellow);background:var(--yellow-bg);}
+.rank-row.r2{border-color:#9e9e9e;}
+.rank-row.r3{border-color:#cd7f32;}
+.rank-pos{font-weight:900;font-size:1rem;width:28px;text-align:center;flex-shrink:0;}
+.rank-av{font-size:1.5rem;flex-shrink:0;}
+.rank-info{flex:1;}
+.rank-name{font-weight:800;font-size:.9rem;color:var(--dark);}
+.rank-sub{font-size:.72rem;font-weight:700;color:var(--gray-dk);}
+.rank-pts{font-weight:900;font-size:1rem;color:var(--green);flex-shrink:0;}
+.rank-arrow{font-size:.85rem;font-weight:900;flex-shrink:0;width:20px;text-align:center;}
+.rank-arrow.up{color:var(--green);}
+.rank-arrow.down{color:var(--red);}
+.rank-arrow.same{color:var(--gray-dk);}
+.rank-title{text-align:center;padding:.6rem;font-weight:900;font-size:.95rem;color:var(--dark);border-bottom:2px solid var(--gray);}
 
 </style>
 </head>
@@ -640,9 +656,6 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
     <div class="splash-dot"></div>
   </div>
 </div>
-
-<!-- MUSIC BUTTON -->
-<button class="music-btn" id="musicBtn" onclick="toggleMusic()" title="Música">🎵</button>
 
 <!-- PROFILE MODAL -->
 <div class="modal-ov" id="mProfile">
@@ -837,11 +850,8 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 
   <!-- RANKING (visible to child) -->
   <div class="tab-panel" id="tabRanking">
-    <div class="rank-wrap">
-      <div style="text-align:center;padding:.5rem 0 .3rem;font-weight:900;font-size:.95rem;color:var(--dark);">🏆 Placar da semana</div>
-      <div id="rankPodium" style="display:flex;align-items:flex-end;justify-content:center;gap:.5rem;padding:.3rem 0 .6rem;"></div>
-      <div id="rankList"></div>
-    </div>
+    <div id="rankPodium"></div>
+    <div class="rank-list" id="rankList"></div>
   </div>
 
   <!-- COLLECTION -->
@@ -1463,6 +1473,30 @@ function AC(){if(!aCtx)aCtx=new(window.AudioContext||window.webkitAudioContext)(
 function playSuccess(){try{const ctx=AC(),ns=[523,659,784,1047];ns.forEach((f,i)=>{const o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.frequency.value=f;o.type='triangle';const t=ctx.currentTime+i*.1;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol*.8,t+.03);g.gain.exponentialRampToValueAtTime(.001,t+.25);o.start(t);o.stop(t+.26)})}catch(e){}}
 function playDuck(){try{const ctx=AC();for(let q=0;q<3;q++){const t=ctx.currentTime+q*.38;const osc=ctx.createOscillator(),bpf=ctx.createBiquadFilter(),lpf=ctx.createBiquadFilter(),mg=ctx.createGain();osc.connect(bpf);bpf.connect(lpf);lpf.connect(mg);mg.connect(ctx.destination);osc.type='square';osc.frequency.setValueAtTime(340,t);osc.frequency.linearRampToValueAtTime(520,t+.05);osc.frequency.linearRampToValueAtTime(280,t+.25);bpf.type='bandpass';bpf.Q.value=4;bpf.frequency.setValueAtTime(700,t);bpf.frequency.linearRampToValueAtTime(1100,t+.05);bpf.frequency.linearRampToValueAtTime(600,t+.25);lpf.type='lowpass';lpf.frequency.value=1800;lpf.Q.value=.5;mg.gain.setValueAtTime(0,t);mg.gain.linearRampToValueAtTime(vol*.95,t+.03);mg.gain.setValueAtTime(vol*.85,t+.13);mg.gain.exponentialRampToValueAtTime(.001,t+.28);const o2=ctx.createOscillator(),g2=ctx.createGain();o2.connect(g2);g2.connect(bpf);o2.type='square';o2.frequency.setValueAtTime(348,t);o2.frequency.linearRampToValueAtTime(530,t+.05);o2.frequency.linearRampToValueAtTime(285,t+.25);g2.gain.value=.35;osc.start(t);osc.stop(t+.29);o2.start(t);o2.stop(t+.29)}}catch(e){}}
 function playTick(){try{const ctx=AC(),o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.frequency.value=900;o.type='square';g.gain.setValueAtTime(0,ctx.currentTime);g.gain.linearRampToValueAtTime(vol*.07,ctx.currentTime+.01);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.06);o.start();o.stop(ctx.currentTime+.07)}catch(e){}}
+function playCombo(n){try{
+  const ctx=AC();
+  const baseFreq=Math.min(300+n*80,1200);
+  [baseFreq,baseFreq*1.25,baseFreq*1.5].forEach((f,i)=>{
+    const o=ctx.createOscillator(),g=ctx.createGain();
+    o.connect(g);g.connect(ctx.destination);
+    o.type='sine';o.frequency.value=f;
+    const t=ctx.currentTime+i*.08;
+    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol*.5,t+.02);g.gain.exponentialRampToValueAtTime(.001,t+.18);
+    o.start(t);o.stop(t+.19);
+  });
+}catch(e){}}
+function playWin(stars){try{
+  const ctx=AC();
+  const ns=stars===3?[523,659,784,1047,1319,1047,784,659,523]:[523,659,784,1047];
+  ns.forEach((f,i)=>{
+    const o=ctx.createOscillator(),g=ctx.createGain();
+    o.connect(g);g.connect(ctx.destination);
+    o.type='triangle';o.frequency.value=f;
+    const t=ctx.currentTime+i*.12;
+    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol*.6,t+.03);g.gain.exponentialRampToValueAtTime(.001,t+.28);
+    o.start(t);o.stop(t+.29);
+  });
+}catch(e){}}
 function testSounds(){playSuccess();setTimeout(playDuck,1400)}
 function setVol(v){vol=parseFloat(v);document.getElementById('volPct').textContent=Math.round(vol*100)+'%';if(P){P.vol=v;sp()}}
 function renderLogin(){
@@ -1784,7 +1818,6 @@ function startGame(table){
   }
   clearInterval(tIv);GS={table,questions:mkQ(table),cur:0,ok:0,wrong:0,combo:0,maxCombo:0,hearts:3,diff};
   initPowerups();updateStreak();document.getElementById('resultBar').className='result-bar hidden';show('sGame');renderQ();
-  if(musicOn) startBgMusic();
 }
 function restartLast(){if(GS)startGame(GS.table)}
 function renderQ(){
@@ -1814,7 +1847,7 @@ function pick(sel,correct,btn){if(waitNext)return;clearInterval(tIv);for(let i=0
 function showRB(ok,title,sub){waitNext=true;const bar=document.getElementById('resultBar');bar.className='result-bar '+(ok?'rb-correct':'rb-wrong');document.getElementById('rbIcon').textContent=ok?'✅':'❌';document.getElementById('rbTitle').textContent=title;document.getElementById('rbSub').textContent=sub}
 function nextQ(){if(!waitNext)return;GS.cur++;if(GS.cur>=GS.questions.length){endGame(true);return}if(GS.cur===5){openModal('mBreak');return}renderQ()}
 function endGame(won){
-  clearInterval(tIv);stopBgMusic();P.totalGames=(P.totalGames||0)+1;const acc=GS.ok/GS.questions.length;
+  clearInterval(tIv);P.totalGames=(P.totalGames||0)+1;const acc=GS.ok/GS.questions.length;
   const log={table:GS.table,ok:GS.ok,total:GS.questions.length,acc:~~(acc*100),won,combo:GS.maxCombo,diff,date:new Date().toLocaleString('pt-BR')};
   P.logs=P.logs||[];P.logs.unshift(log);if(P.logs.length>20)P.logs.pop();
   updateMissionProgress('games',1);
@@ -1838,7 +1871,7 @@ function endGame(won){
     document.getElementById('winTitle').textContent=stars===3?'Perfeito! 🏆':stars===2?'Muito bem! ⭐':'Parabéns! 🎉';
     const sr=document.getElementById('winStars');sr.innerHTML='';for(let i=0;i<3;i++){const s=document.createElement('span');s.className='star-item'+(i>=stars?' empty':'');s.textContent='⭐';sr.appendChild(s)}
     document.getElementById('winRewards').innerHTML=`<div class="rew-chip">💎 +${gems}</div>${gained>0?`<div class="rew-chip">⭐ +${gained}</div>`:''} ${GS.maxCombo>=3?`<div class="rew-chip">🔥 Combo ×${GS.maxCombo}</div>`:''} ${cr?`<div class="rew-chip" style="border-color:${cr.col};">${cr.e} ${cr.n} resgatada!</div>`:''}`;
-    confetti();openModal('mWin');setTimeout(moveJourneyChar,600);
+    confetti();playWin(stars);openModal('mWin');setTimeout(moveJourneyChar,600);
     if(t===5 && stars===3 && !isPremiumUnlocked()) setTimeout(()=>{ closeModal('mWin'); openModal('mPremiumUpsell'); }, 2200);
     if(!fbUser && P.totalGames>=3){
       const lastPrompt = localStorage.getItem('mm_login_prompt');
@@ -1976,52 +2009,6 @@ function usePowerup(i){
   }
 }
 
-// ── BACKGROUND MUSIC ──────────────────────────────────────────
-let musicOn = false, musicNodes = [], musicCtx = null;
-function toggleMusic(){
-  musicOn = !musicOn;
-  const btn = document.getElementById('musicBtn');
-  if(btn) btn.textContent = musicOn ? '🎵' : '🔇';
-  if(musicOn) startBgMusic(); else stopBgMusic();
-  localStorage.setItem('mm_music', musicOn ? '1' : '0');
-}
-function startBgMusic(){
-  try {
-    if(!musicCtx) musicCtx = new(window.AudioContext||window.webkitAudioContext)();
-    stopBgMusic();
-    // Simple upbeat arpeggio loop
-    const notes = [523,659,784,1047,784,659];
-    let step = 0;
-    const bpm = 140;
-    const interval = (60/bpm)*1000/2;
-    function playNote(){
-      if(!musicOn) return;
-      try {
-        const o = musicCtx.createOscillator();
-        const g = musicCtx.createGain();
-        o.connect(g); g.connect(musicCtx.destination);
-        o.type = 'triangle';
-        o.frequency.value = notes[step % notes.length];
-        g.gain.setValueAtTime(0, musicCtx.currentTime);
-        g.gain.linearRampToValueAtTime(vol*.15, musicCtx.currentTime+.02);
-        g.gain.exponentialRampToValueAtTime(.001, musicCtx.currentTime+.18);
-        o.start(); o.stop(musicCtx.currentTime+.19);
-        step++;
-      } catch(e){}
-    }
-    const iv = setInterval(()=>{ if(!musicOn){ clearInterval(iv); return; } playNote(); }, interval);
-    musicNodes.push(iv);
-  } catch(e){}
-}
-function stopBgMusic(){
-  musicNodes.forEach(n=>{ try{ clearInterval(n); }catch(e){} });
-  musicNodes = [];
-}
-(function initMusic(){
-  if(localStorage.getItem('mm_music')==='1'){ musicOn=true; const b=document.getElementById('musicBtn'); if(b)b.textContent='🎵'; }
-  else { const b=document.getElementById('musicBtn'); if(b)b.textContent='🔇'; }
-})();
-
 // ── CHILD RANKING ─────────────────────────────────────────────
 function renderChildRanking(){
   const podium = document.getElementById('rankPodium');
@@ -2029,33 +2016,53 @@ function renderChildRanking(){
   if(!podium||!list) return;
   const data = gd();
   const oneWeekAgo = Date.now() - 7*24*60*60*1000;
+  const twoWeeksAgo = Date.now() - 14*24*60*60*1000;
+
+  const calcPts = (logs, from, to) =>
+    logs.filter(l=>{ try{ const d=new Date(l.date).getTime(); return d>from&&d<=to; }catch(e){return false;} })
+        .reduce((s,l)=>s+(l.ok||0),0);
+
   const rankings = data.profiles.map(p=>{
-    const wl = (p.logs||[]).filter(l=>{ try{ return new Date(l.date).getTime()>oneWeekAgo; }catch(e){return false;} });
-    return { name:p.name, av:p.av, pts:wl.reduce((s,l)=>s+(l.ok||0),0), games:wl.length, isMe: p.name===P.name };
+    const logs = p.logs||[];
+    const pts = calcPts(logs, oneWeekAgo, Date.now());
+    const prevPts = calcPts(logs, twoWeeksAgo, oneWeekAgo);
+    return { name:p.name, av:p.av, pts, prevPts, games:(p.totalGames||0), isMe:p.name===P.name };
   }).sort((a,b)=>b.pts-a.pts);
-  if(!rankings.length){ podium.innerHTML=''; list.innerHTML='<div style="text-align:center;color:var(--gray-dk);padding:1.5rem;">Jogue mais para aparecer aqui!</div>'; return; }
-  const cls = ['r1','r2','r3'];
+
+  // calculate previous rank
+  const prevRankings = [...rankings].sort((a,b)=>b.prevPts-a.prevPts);
+
+  if(!rankings.length){
+    podium.innerHTML='';
+    list.innerHTML='<div style="text-align:center;color:var(--gray-dk);padding:2rem;">Jogue mais para aparecer aqui!</div>';
+    return;
+  }
+
+  podium.innerHTML = `<div class="rank-title">🏆 Placar semanal</div>`;
+
   const medals = ['🥇','🥈','🥉'];
-  const top = rankings.slice(0,3);
-  // render podium for positions 2,1,3 (visual order)
-  const order = top.length>=3 ? [1,0,2] : top.length===2 ? [1,0] : [0];
-  podium.innerHTML = order.map(i=>{
-    const r = top[i];
-    if(!r) return '';
-    return `<div class="rpod ${cls[i]}">
-      <div class="rpod-av${r.isMe?' rank-row me':''}">${r.av}</div>
-      <div class="rpod-col"><div class="rpod-medal">${medals[i]}</div></div>
-      <div class="rpod-name">${r.name}</div>
-      <div class="rpod-pts">${r.pts}✅</div>
+  const rowCls = ['r1','r2','r3'];
+
+  list.innerHTML = rankings.map((r,i)=>{
+    const prevPos = prevRankings.findIndex(x=>x.name===r.name);
+    const moved = prevPos - i; // positive = moved up
+    const arrow = moved > 0 ? `<span class="rank-arrow up">▲</span>` :
+                  moved < 0 ? `<span class="rank-arrow down">▼</span>` :
+                  `<span class="rank-arrow same">—</span>`;
+    const cls = i<3 ? rowCls[i] : '';
+    const meClass = r.isMe ? ' me' : '';
+    const medal = i<3 ? medals[i] : `#${i+1}`;
+    return `<div class="rank-row ${cls}${meClass}">
+      <div class="rank-pos">${medal}</div>
+      <div class="rank-av">${r.av}</div>
+      <div class="rank-info">
+        <div class="rank-name">${r.name}${r.isMe?' (você)':''}</div>
+        <div class="rank-sub">${r.games} partidas totais</div>
+      </div>
+      <div class="rank-pts">${r.pts}✅</div>
+      ${arrow}
     </div>`;
   }).join('');
-  list.innerHTML = rankings.slice(3).map((r,i)=>`
-    <div class="rank-row${r.isMe?' me':''}">
-      <div class="rank-pos">#${i+4}</div>
-      <div class="rank-av">${r.av}</div>
-      <div class="rank-name">${r.name}${r.isMe?' (você)':''}</div>
-      <div class="rank-pts">${r.pts}✅</div>
-    </div>`).join('');
 }
 
 // ── BIG COMBO POPUP ───────────────────────────────────────────
@@ -2065,6 +2072,7 @@ function showComboPop(n){
   const msgs = {3:'🔥 COMBO!',5:'⚡ INCRÍVEL!',8:'🌟 LENDÁRIO!',10:'👑 PERFEITO!'};
   const lbl = Object.keys(msgs).reverse().find(k=>n>=parseInt(k));
   if(!lbl) return;
+  playCombo(n);
   const div = document.createElement('div');
   div.className = 'combo-pop';
   div.innerHTML = `<div class="combo-pop-num">×${n}</div><div class="combo-pop-lbl">${msgs[lbl]}</div>`;
