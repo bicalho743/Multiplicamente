@@ -620,6 +620,24 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 <!-- MUSIC BUTTON -->
 <button class="music-btn" id="musicBtn" onclick="toggleMusic()" title="Música">🎵</button>
 
+<!-- PROFILE MODAL -->
+<div class="modal-ov" id="mProfile">
+  <div class="modal-sheet">
+    <div style="display:flex;align-items:center;gap:.9rem;margin-bottom:1rem;">
+      <div style="font-size:3rem;background:var(--green-bg);border:3px solid var(--green);border-radius:16px;width:64px;height:64px;display:flex;align-items:center;justify-content:center;" id="profileModalAv">🦉</div>
+      <div>
+        <div style="font-weight:900;font-size:1.2rem;color:var(--dark);" id="profileModalName">Jogador</div>
+        <div style="font-size:.82rem;font-weight:700;color:var(--gray-dk);" id="profileModalStats">⭐0 · 💎0 · 🔥0</div>
+        <div style="font-size:.75rem;font-weight:700;color:var(--blue-dk);margin-top:.15rem;" id="profileModalCloud"></div>
+      </div>
+    </div>
+    <button class="btn btn-outline" onclick="closeModal('mProfile');showParentPin()" style="margin-bottom:.4rem;">📊 Ver relatório dos pais</button>
+    <button class="btn btn-outline" onclick="closeModal('mProfile');htab('settings',document.querySelector('.htab:last-child'))" style="margin-bottom:.4rem;">⚙️ Configurações</button>
+    <button class="btn btn-red" onclick="closeModal('mProfile');logout()">🚪 Sair do perfil</button>
+    <button class="btn btn-outline" onclick="closeModal('mProfile')" style="margin-top:.4rem;font-size:.85rem;">Cancelar</button>
+  </div>
+</div>
+
 <!-- STORY MODAL -->
 <div class="modal-ov" id="mStory">
   <div class="modal-sheet">
@@ -708,9 +726,10 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 <!-- HOME -->
 <div class="screen" id="sHome">
   <div class="home-topbar">
-    <div class="home-user">
-      <div class="home-av" id="homeAv">🦉</div>
+    <div class="home-user" onclick="openModal('mProfile')" style="cursor:pointer;">
+      <div class="home-av" id="homeAv" style="border:2px solid var(--green);transition:transform .1s;">🦉</div>
       <div><div class="home-name" id="homeName">Jogador</div><div class="home-gems" id="homeGems">💎 0</div></div>
+      <span style="font-size:.7rem;color:var(--gray-dk);margin-left:.2rem;">▾</span>
     </div>
     <div class="hud-pills" style="align-items:center;gap:.35rem;">
       <div class="pill">🔥 <span id="hudStreak">0</span></div>
@@ -1417,6 +1436,10 @@ function renderHome(){
   const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
   set('homeAv',P.av);set('homeName',P.name);set('homeGems','💎 '+(P.gems||0));
   set('hudStars',P.stars||0);set('hudStreak',P.streak||0);set('settingsName',P.name);
+  // profile modal
+  set('profileModalAv',P.av);set('profileModalName',P.name);
+  set('profileModalStats','⭐'+(P.stars||0)+' · 💎'+(P.gems||0)+' · 🔥'+(P.streak||0));
+  set('profileModalCloud', fbUser ? '☁️ '+( fbUser.displayName||fbUser.email) : '📱 Perfil local');
   document.querySelectorAll('.dbn,.dbn-sm').forEach(b=>b.classList.toggle('sel',parseInt(b.dataset.d)===diff));
   const db=document.getElementById('diffBadge');if(db)db.textContent=DLBL[diff]||'Sem timer';
   updatePremiumUI();updateStoryProgress();renderMissions();renderJourney();
