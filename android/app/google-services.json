@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "568776526292",
+    "project_id": "multiplicamente-ccacc",
+    "storage_bucket": "multiplicamente-ccacc.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:568776526292:android:f6aee992c5bd619940ae41",
+        "android_client_info": {
+          "package_name": "com.solano.multiplicamente"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "568776526292-dbu93qgvklkr5i84rcs9s4b353pd3q43.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDqslra_Bf6Eq_FLc4F1B0WtkwTF7-OYoc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "568776526292-dbu93qgvklkr5i84rcs9s4b353pd3q43.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
