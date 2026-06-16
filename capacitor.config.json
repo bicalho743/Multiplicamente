@@ -1,5 +1,12 @@
 {
   "appId": "com.solano.multiplicamente",
   "appName": "MultiplicaMente",
-  "webDir": "www"
+  "webDir": "www",
+  "plugins": {
+    "GoogleAuth": {
+      "scopes": ["profile", "email"],
+      "serverClientId": "568776526292-dbu93qgvklkr5i84rcs9s4b353pd3q43.apps.googleusercontent.com",
+      "forceCodeForRefreshToken": true
+    }
+  }
 }

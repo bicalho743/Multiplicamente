@@ -45,8 +45,77 @@ body{font-family:'Nunito',sans-serif;background:#f7f7f7;color:#3c3c3c;}
   --purple:#CE82FF;--purple-sh:#8549ba;
   --gray:#E5E5E5;--gray-dk:#AFAFAF;--dark:#4B4B4B;--white:#FFFFFF;
   --r:16px;--r-lg:22px;
+  --bg-screen:#f7f7f7;--bg-card:#FFFFFF;--text-main:#3c3c3c;
 }
-.screen{position:fixed;inset:0;display:none;flex-direction:column;background:#f7f7f7;}
+body[data-dark="1"]{
+  --gray:#2e2e2e;--gray-dk:#888;--dark:#e0e0e0;--white:#1e1e1e;
+  --bg-screen:#121212;--bg-card:#1e1e1e;--text-main:#e0e0e0;
+  --green-bg:#0d2e00;--blue-bg:#002233;--red-bg:#2e0000;--yellow-bg:#2e2600;
+}
+body[data-dark="1"] body,body[data-dark="1"] #app{background:var(--bg-screen);}
+body[data-dark="1"] .screen{background:var(--bg-screen);}
+body[data-dark="1"] #sLogin,body[data-dark="1"] #sHome,body[data-dark="1"] #sGame,
+body[data-dark="1"] #sDash,body[data-dark="1"] #sParentPin{background:var(--bg-screen);}
+body[data-dark="1"] .profile-item,body[data-dark="1"] .new-box,
+body[data-dark="1"] .tcard,body[data-dark="1"] .modal-sheet,
+body[data-dark="1"] .settings-card,body[data-dark="1"] .pin-card,
+body[data-dark="1"] .q-card,body[data-dark="1"] .ans-btn,
+body[data-dark="1"] .log-item,body[data-dark="1"] .ds-card{background:var(--bg-card);color:var(--text-main);}
+body[data-dark="1"] .journey-wrap{background:linear-gradient(180deg,#0a1a22 0%,#0d1a00 35%,#1a1800 65%,#1a0010 100%);}
+body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
+
+/* ── SPLASH ──────────────────────────────────────────────── */
+#sSplash{
+  position:fixed;inset:0;z-index:9999;
+  background:linear-gradient(160deg,#1a6e00 0%,#2e9e00 50%,#1a5500 100%);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:1rem;
+}
+#sSplash.fade-out{animation:splashOut .6s ease-in forwards;}
+@keyframes splashOut{to{opacity:0;transform:scale(1.05)}}
+.splash-owl{font-size:5rem;animation:splashOwl 1s ease-in-out infinite alternate;}
+@keyframes splashOwl{from{transform:translateY(0) rotate(-5deg)}to{transform:translateY(-18px) rotate(5deg)}}
+.splash-title{font-size:2.2rem;font-weight:900;color:#fff;text-shadow:0 3px 0 rgba(0,0,0,.2);letter-spacing:-1px;}
+.splash-sub{font-size:.95rem;font-weight:700;color:rgba(255,255,255,.8);}
+.splash-dots{display:flex;gap:.4rem;margin-top:.5rem;}
+.splash-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.4);animation:dotPulse 1.2s ease-in-out infinite;}
+.splash-dot:nth-child(1){animation-delay:0s}
+.splash-dot:nth-child(2){animation-delay:.2s}
+.splash-dot:nth-child(3){animation-delay:.4s}
+@keyframes dotPulse{0%,100%{background:rgba(255,255,255,.3);transform:scale(1)}50%{background:#fff;transform:scale(1.3)}}
+
+/* ── PREMIUM LOCK ────────────────────────────────────────── */
+.jlocked-premium{
+  width:64px;height:64px;background:linear-gradient(135deg,#2d1b69,#4a2f9e);
+  border-color:#CE82FF;box-shadow:0 3px 0 #8549ba;
+  cursor:pointer!important;
+}
+.jlocked-premium .jnode-num{font-size:1.3rem;color:#CE82FF;}
+.jlocked-premium .jnode-lbl{color:#CE82FF;font-size:.55rem;}
+.premium-badge{position:absolute;top:-6px;right:-6px;background:#FFC800;color:#6b4c00;font-size:.55rem;font-weight:900;border-radius:100px;padding:.1rem .3rem;border:2px solid #fff;}
+
+/* ── SHARE BUTTON ────────────────────────────────────────── */
+.btn-share{background:linear-gradient(135deg,#1CB0F6,#0f6d99);color:#fff;box-shadow:0 5px 0 #0a4d70;}
+.btn-share:active{box-shadow:0 1px 0 #0a4d70;}
+
+/* ── LEADERBOARD ─────────────────────────────────────────── */
+.lb-item{display:flex;align-items:center;gap:.7rem;padding:.6rem .8rem;background:var(--bg-card);border:2px solid var(--gray);border-radius:var(--r);margin-bottom:.35rem;}
+.lb-rank{font-weight:900;font-size:1.1rem;width:28px;text-align:center;flex-shrink:0;}
+.lb-av{font-size:1.4rem;flex-shrink:0;}
+.lb-info{flex:1;}
+.lb-name{font-weight:800;font-size:.9rem;color:var(--dark);}
+.lb-score{font-size:.75rem;font-weight:700;color:var(--gray-dk);}
+.lb-pts{font-weight:900;font-size:1rem;color:var(--green);}
+
+/* ── DARK MODE TOGGLE ────────────────────────────────────── */
+.dark-toggle{display:flex;align-items:center;justify-content:space-between;padding:.3rem 0;}
+.toggle-switch{position:relative;width:48px;height:26px;flex-shrink:0;}
+.toggle-switch input{opacity:0;width:0;height:0;}
+.toggle-slider{position:absolute;inset:0;background:var(--gray);border-radius:100px;cursor:pointer;transition:.3s;}
+.toggle-slider:before{content:'';position:absolute;width:20px;height:20px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.3s;}
+.toggle-switch input:checked+.toggle-slider{background:var(--dark);}
+.toggle-switch input:checked+.toggle-slider:before{transform:translateX(22px);background:var(--yellow);}
+.screen{position:fixed;inset:0;display:none;flex-direction:column;background:#f7f7f7;overflow:hidden;}
 .screen.active{display:flex;animation:si .25s ease-out;}
 @keyframes si{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
 @media(min-width:600px){
@@ -54,27 +123,51 @@ body{font-family:'Nunito',sans-serif;background:#f7f7f7;color:#3c3c3c;}
   .screen{position:absolute;border-radius:28px;}
 }
 
-/* LOGIN */
-#sLogin{background:var(--white);}
-.login-top{background:var(--green);padding:1.8rem 1.5rem 2.5rem;text-align:center;border-radius:0 0 50% 50%/0 0 28px 28px;flex-shrink:0;}
-.owl{font-size:4rem;display:block;animation:owlBob 2s ease-in-out infinite;}
-@keyframes owlBob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-8px) rotate(3deg)}}
-.login-top h1{font-size:1.9rem;font-weight:900;color:#fff;text-shadow:0 2px 0 rgba(0,0,0,.15);margin-top:.3rem;}
-.login-top p{color:rgba(255,255,255,.85);font-size:.9rem;font-weight:700;}
-.login-body{flex:1;overflow-y:auto;padding:1.2rem 1.5rem;display:flex;flex-direction:column;gap:1rem;}
-.sec-lbl{font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:var(--gray-dk);margin-bottom:.3rem;}
-.profile-item{display:flex;align-items:center;gap:.8rem;background:var(--white);border:2.5px solid var(--gray);border-radius:var(--r);padding:.85rem 1rem;cursor:pointer;transition:all .15s;}
+/* LOGIN — redesign compacto */
+#sLogin{background:var(--bg-screen);display:flex;flex-direction:column;height:100%;position:fixed;inset:0;}
+.login-top{background:var(--green);padding:.7rem 1.2rem .9rem;display:flex;align-items:center;gap:.6rem;flex-shrink:0;border-radius:0 0 20px 20px;box-shadow:0 4px 0 var(--green-sh);}
+.login-top-owl{font-size:1.8rem;animation:owlBob 2s ease-in-out infinite;}
+@keyframes owlBob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-5px) rotate(3deg)}}
+.login-top-text{flex:1;}
+.login-top-text h1{font-size:1.2rem;font-weight:900;color:#fff;text-shadow:0 2px 0 rgba(0,0,0,.15);line-height:1;}
+.login-top-text p{color:rgba(255,255,255,.85);font-size:.72rem;font-weight:700;}
+.login-top-cloud{font-size:.72rem;font-weight:700;color:rgba(255,255,255,.8);text-align:right;cursor:pointer;background:rgba(0,0,0,.15);border-radius:8px;padding:.3rem .5rem;flex-shrink:0;}
+/* profiles */
+.login-body{flex:1;min-height:0;overflow-y:scroll;overflow-x:hidden;padding:.9rem 1.1rem 5rem;display:flex;flex-direction:column;gap:.55rem;-webkit-overflow-scrolling:touch;}
+.profile-big{display:flex;align-items:center;gap:.9rem;background:var(--green);border:3px solid var(--green-sh);border-radius:var(--r-lg);padding:1rem 1.1rem;cursor:pointer;transition:all .15s;box-shadow:0 5px 0 var(--green-sh);}
+.profile-big:active{transform:translateY(4px);box-shadow:0 1px 0 var(--green-sh);}
+.pb-av{font-size:2.2rem;width:52px;height:52px;background:rgba(255,255,255,.25);border-radius:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.pb-info{flex:1;}
+.pb-name{font-weight:900;font-size:1.15rem;color:#fff;}
+.pb-stats{font-size:.78rem;font-weight:700;color:rgba(255,255,255,.85);}
+.pb-play{font-size:1.6rem;color:rgba(255,255,255,.9);}
+/* secondary profiles */
+.profile-item{display:flex;align-items:center;gap:.7rem;background:var(--bg-card);border:2px solid var(--gray);border-radius:var(--r);padding:.7rem .9rem;cursor:pointer;transition:all .15s;}
 .profile-item:active{transform:scale(.97);}
-.profile-item:hover{border-color:var(--blue);}
-.pi-av{font-size:1.9rem;width:44px;height:44px;background:var(--blue-bg);border-radius:10px;display:flex;align-items:center;justify-content:center;border:2px solid var(--blue);}
-.pi-info{flex:1;} .pi-name{font-weight:800;font-size:1rem;} .pi-stats{font-size:.75rem;color:var(--gray-dk);font-weight:700;}
-.new-box{background:var(--white);border:2.5px solid var(--gray);border-radius:var(--r);padding:1rem;}
-.av-grid{display:flex;flex-wrap:wrap;gap:.35rem;margin:.5rem 0;}
-.av-btn{width:42px;height:42px;font-size:1.35rem;background:var(--gray);border:2.5px solid transparent;border-radius:10px;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;}
+.pi-av{font-size:1.6rem;width:40px;height:40px;background:var(--blue-bg);border-radius:10px;display:flex;align-items:center;justify-content:center;border:2px solid var(--blue);flex-shrink:0;}
+.pi-info{flex:1;} .pi-name{font-weight:800;font-size:.95rem;color:var(--dark);} .pi-stats{font-size:.72rem;color:var(--gray-dk);font-weight:700;}
+/* add player collapsible */
+.add-player-toggle{display:flex;align-items:center;justify-content:center;gap:.4rem;padding:.6rem;background:none;border:2px dashed var(--gray);border-radius:var(--r);width:100%;font-family:'Nunito',sans-serif;font-weight:800;font-size:.88rem;color:var(--gray-dk);cursor:pointer;transition:all .2s;}
+.add-player-toggle:hover{border-color:var(--blue);color:var(--blue);}
+.add-player-form{display:none;background:var(--bg-card);border:2px solid var(--gray);border-radius:var(--r);padding:.9rem;animation:si .2s ease-out;}
+.add-player-form.open{display:block;}
+.new-box{background:var(--bg-card);border:2px solid var(--gray);border-radius:var(--r);padding:.9rem;}
+.av-grid{display:flex;flex-wrap:wrap;gap:.3rem;margin:.4rem 0;}
+.av-btn{width:40px;height:40px;font-size:1.25rem;background:var(--gray);border:2.5px solid transparent;border-radius:10px;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;}
 .av-btn.sel{background:var(--blue-bg);border-color:var(--blue);transform:scale(1.1);}
-.inp{width:100%;padding:.7rem 1rem;background:var(--white);border:2.5px solid var(--gray);border-radius:var(--r);font-family:'Nunito',sans-serif;font-size:.95rem;font-weight:700;color:var(--dark);outline:none;transition:border-color .2s;margin-bottom:.5rem;}
+.inp{width:100%;padding:.65rem .9rem;background:var(--bg-card);border:2.5px solid var(--gray);border-radius:var(--r);font-family:'Nunito',sans-serif;font-size:.92rem;font-weight:700;color:var(--dark);outline:none;transition:border-color .2s;margin-bottom:.45rem;box-sizing:border-box;}
 .inp:focus{border-color:var(--blue);}
-.login-footer{padding:1rem 1.5rem;flex-shrink:0;}
+/* cloud section */
+.cloud-section{border:2px solid var(--gray);border-radius:var(--r);overflow:visible;flex-shrink:0;}
+.cloud-toggle{display:flex;align-items:center;gap:.5rem;padding:.65rem .9rem;cursor:pointer;background:var(--bg-card);}
+.cloud-toggle-icon{font-size:1.1rem;}
+.cloud-toggle-lbl{flex:1;font-weight:800;font-size:.85rem;color:var(--dark);}
+.cloud-toggle-arr{font-size:.75rem;color:var(--gray-dk);transition:transform .2s;}
+.cloud-toggle-arr.open{transform:rotate(180deg);}
+.cloud-body{display:none;padding:.7rem .9rem .9rem;border-top:2px solid var(--gray);background:var(--bg-card);}
+.cloud-body.open{display:block;}
+.login-footer{padding:.8rem 1.1rem;flex-shrink:0;border-top:2px solid var(--gray);}
+.sec-lbl{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:1.5px;color:var(--gray-dk);margin-bottom:.3rem;}
 
 /* BUTTONS */
 .btn{width:100%;padding:.95rem;border:none;border-radius:var(--r);font-family:'Nunito',sans-serif;font-size:1rem;font-weight:800;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:.4rem;transition:transform .1s,box-shadow .1s;position:relative;}
@@ -451,39 +544,282 @@ body{font-family:'Nunito',sans-serif;background:#f7f7f7;color:#3c3c3c;}
 .help-icon{font-size:2rem;flex-shrink:0;width:44px;text-align:center;}
 .help-info h4{font-weight:800;font-size:.95rem;color:var(--dark);margin-bottom:.2rem;}
 .help-info p{font-size:.82rem;color:var(--gray-dk);font-weight:600;line-height:1.4;}
+/* ── AUTH UI ─────────────────────────────────────────────── */
+.auth-divider{display:flex;align-items:center;gap:.6rem;margin:.5rem 0;}
+.auth-divider span{font-size:.78rem;font-weight:700;color:var(--gray-dk);white-space:nowrap;}
+.auth-divider:before,.auth-divider:after{content:'';flex:1;height:1.5px;background:var(--gray);}
+.btn-google{background:#fff;color:#3c3c3c;border:2.5px solid #ddd;box-shadow:0 4px 0 #bbb;display:flex;align-items:center;justify-content:center;gap:.5rem;}
+.btn-google:active{box-shadow:0 1px 0 #bbb;}
+.btn-google svg,.btn-google .google-icon{width:20px!important;height:20px!important;min-width:20px;max-width:20px;flex-shrink:0;display:block;}
+.auth-tabs{display:flex;border-bottom:2px solid var(--gray);margin-bottom:.8rem;}
+.auth-tab{flex:1;padding:.55rem;background:none;border:none;font-family:'Nunito',sans-serif;font-weight:800;font-size:.85rem;color:var(--gray-dk);cursor:pointer;border-bottom:3px solid transparent;}
+.auth-tab.active{color:var(--blue);border-bottom-color:var(--blue);}
+.auth-panel{display:none;} .auth-panel.active{display:block;}
+.auth-err{color:var(--red);font-size:.8rem;font-weight:700;min-height:18px;text-align:center;margin-top:.25rem;}
+.user-chip{display:flex;align-items:center;gap:.5rem;background:var(--green-bg);border:2px solid var(--green);border-radius:100px;padding:.35rem .8rem;font-size:.82rem;font-weight:800;color:var(--green-sh);margin-bottom:.5rem;justify-content:center;}
+.loading-ov{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:9998;display:none;align-items:center;justify-content:center;flex-direction:column;gap:.8rem;}
+.loading-ov.show{display:flex;}
+.loading-spinner{width:48px;height:48px;border:5px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .8s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-txt{color:#fff;font-weight:800;font-size:1rem;}
+/* ── NARRATIVE ───────────────────────────────────────────── */
+.story-banner{background:linear-gradient(135deg,#1a3a00,#2e6e00);border-radius:var(--r);padding:.65rem .9rem;margin:.4rem .9rem 0;display:flex;align-items:center;gap:.6rem;cursor:pointer;box-shadow:0 3px 0 #0a1a00;flex-shrink:0;}
+.story-owl{font-size:1.8rem;}
+.story-title{font-weight:900;font-size:.82rem;color:#fff;flex:1;}
+.story-sub{font-size:.7rem;font-weight:700;color:rgba(255,255,255,.75);}
+
+/* ── DAILY MISSIONS ──────────────────────────────────────── */
+.missions-bar{background:var(--blue-bg);border:2px solid var(--blue);border-radius:var(--r);padding:.55rem .8rem;margin:.35rem .9rem 0;flex-shrink:0;}
+.missions-hdr{font-weight:900;font-size:.75rem;color:var(--blue-dk);margin-bottom:.35rem;display:flex;justify-content:space-between;}
+.mission-row{display:flex;align-items:center;gap:.45rem;margin-bottom:.28rem;}
+.mission-row:last-child{margin-bottom:0;}
+.mcheck{width:18px;height:18px;border-radius:50%;border:2px solid var(--blue);display:flex;align-items:center;justify-content:center;font-size:.65rem;flex-shrink:0;}
+.mcheck.done{background:var(--blue);}
+.mlbl{flex:1;font-size:.7rem;font-weight:700;color:var(--dark);}
+.mbar-wrap{width:52px;height:5px;background:var(--gray);border-radius:100px;overflow:hidden;}
+.mbar-fill{height:100%;background:var(--blue);border-radius:100px;transition:width .4s;}
+.mrew{font-size:.68rem;font-weight:800;color:var(--blue-dk);}
+
+/* ── POWER-UPS ───────────────────────────────────────────── */
+.pu-row{display:flex;gap:.35rem;padding:.3rem .9rem;flex-shrink:0;}
+.pu-btn{flex:1;padding:.45rem .25rem;background:var(--yellow-bg);border:2px solid var(--yellow);border-radius:12px;font-family:'Nunito',sans-serif;font-weight:800;font-size:.62rem;color:var(--yellow-sh);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:1px;box-shadow:0 3px 0 var(--yellow-sh);transition:all .1s;}
+.pu-btn:active{transform:translateY(3px);box-shadow:none;}
+.pu-btn.used,.pu-btn:disabled{opacity:.35;pointer-events:none;}
+.pu-icon{font-size:1.1rem;}
+
+/* ── BIG COMBO POPUP ─────────────────────────────────────── */
+.combo-pop{position:fixed;top:28%;left:50%;transform:translateX(-50%);z-index:500;pointer-events:none;text-align:center;animation:comboPop .55s ease-out forwards;}
+@keyframes comboPop{0%{opacity:0;transform:translateX(-50%) scale(.3)}55%{transform:translateX(-50%) scale(1.25)}100%{opacity:1;transform:translateX(-50%) scale(1)}}
+.combo-pop-num{font-size:3.8rem;font-weight:900;color:var(--yellow);text-shadow:0 4px 0 var(--yellow-sh),-2px -2px 0 #000,2px 2px 0 #000;}
+.combo-pop-lbl{font-size:.95rem;font-weight:900;color:#fff;text-shadow:0 2px 0 #000;}
+
+/* ── CREATURE: silhouette ────────────────────────────────── */
+.cre-silh{font-size:1.9rem;filter:brightness(0);opacity:.2;}
+
+/* ── CHILD RANKING ───────────────────────────────────────── */
+.rank-wrap{flex:1;overflow-y:auto;padding:.5rem .9rem;}
+.rank-podium{display:flex;align-items:flex-end;justify-content:center;gap:.5rem;padding:.5rem 0 .7rem;}
+.rpod{display:flex;flex-direction:column;align-items:center;gap:.25rem;}
+.rpod-av{font-size:1.8rem;border:3px solid var(--gray);border-radius:50%;padding:.25rem;background:var(--white);}
+.rpod.r1 .rpod-av{border-color:var(--yellow);font-size:2.2rem;}
+.rpod.r2 .rpod-av{border-color:#9e9e9e;}
+.rpod.r3 .rpod-av{border-color:#cd7f32;}
+.rpod-name{font-weight:800;font-size:.72rem;color:var(--dark);}
+.rpod-pts{font-weight:900;font-size:.82rem;color:var(--green);}
+.rpod-col{border-radius:8px 8px 0 0;width:48px;}
+.rpod.r1 .rpod-col{height:65px;background:linear-gradient(#FFE066,#FFC800);}
+.rpod.r2 .rpod-col{height:46px;background:linear-gradient(#ccc,#999);}
+.rpod.r3 .rpod-col{height:32px;background:linear-gradient(#dda06a,#b07040);}
+.rpod-medal{font-size:1.3rem;padding-bottom:4px;}
+.rank-row{display:flex;align-items:center;gap:.55rem;padding:.5rem .65rem;background:var(--bg-card);border:2px solid var(--gray);border-radius:var(--r);margin-bottom:.3rem;}
+.rank-row.me{border-color:var(--blue);background:var(--blue-bg);}
+.rank-pos{font-weight:900;font-size:.85rem;width:22px;text-align:center;color:var(--gray-dk);}
+.rank-av{font-size:1.3rem;}
+.rank-name{flex:1;font-weight:800;font-size:.85rem;}
+.rank-pts{font-weight:900;color:var(--green);}
+
+/* ── WIN: mascot dance ───────────────────────────────────── */
+.mascot-dance{display:block;text-align:center;font-size:3.5rem;animation:mDance .5s ease-in-out infinite alternate;margin:.3rem 0;}
+@keyframes mDance{from{transform:rotate(-12deg) scale(1)}to{transform:rotate(12deg) scale(1.1)}}
+
+/* ── RANKING VERTICAL ────────────────────────────────────── */
+.rank-list{padding:.5rem .9rem;display:flex;flex-direction:column;gap:.35rem;}
+.rank-row{display:flex;align-items:center;gap:.6rem;padding:.6rem .8rem;background:var(--bg-card);border:2px solid var(--gray);border-radius:var(--r);}
+.rank-row.me{border-color:var(--blue);background:var(--blue-bg);}
+.rank-row.r1{border-color:var(--yellow);background:var(--yellow-bg);}
+.rank-row.r2{border-color:#9e9e9e;}
+.rank-row.r3{border-color:#cd7f32;}
+.rank-pos{font-weight:900;font-size:1rem;width:28px;text-align:center;flex-shrink:0;}
+.rank-av{font-size:1.5rem;flex-shrink:0;}
+.rank-info{flex:1;}
+.rank-name{font-weight:800;font-size:.9rem;color:var(--dark);}
+.rank-sub{font-size:.72rem;font-weight:700;color:var(--gray-dk);}
+.rank-pts{font-weight:900;font-size:1rem;color:var(--green);flex-shrink:0;}
+.rank-arrow{font-size:.85rem;font-weight:900;flex-shrink:0;width:20px;text-align:center;}
+.rank-arrow.up{color:var(--green);}
+.rank-arrow.down{color:var(--red);}
+.rank-arrow.same{color:var(--gray-dk);}
+.rank-title{text-align:center;padding:.6rem;font-weight:900;font-size:.95rem;color:var(--dark);border-bottom:2px solid var(--gray);}
+/* ── BIG WIN 3 STARS ─────────────────────────────────────── */
+.win-perfect{animation:winPerfect 1s ease-out;}
+@keyframes winPerfect{
+  0%{transform:scale(0) rotate(-20deg);opacity:0}
+  60%{transform:scale(1.3) rotate(5deg)}
+  80%{transform:scale(.95)}
+  100%{transform:scale(1) rotate(0);opacity:1}
+}
+.star-burst{position:fixed;pointer-events:none;z-index:9999;font-size:2rem;animation:starBurst 1.2s ease-out forwards;}
+@keyframes starBurst{0%{opacity:1;transform:scale(0)}50%{opacity:1;transform:scale(1.5)}100%{opacity:0;transform:scale(.5) translateY(-80px)}}
+
+/* ── OFFLINE BANNER ──────────────────────────────────────── */
+.offline-banner{position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:9990;background:#FF4B4B;color:#fff;font-weight:800;font-size:.82rem;padding:.45rem 1.2rem;border-radius:0 0 12px 12px;display:none;align-items:center;gap:.4rem;box-shadow:0 3px 8px rgba(0,0,0,.2);}
+.offline-banner.show{display:flex;}
+
+/* ── DELETE PROFILE ──────────────────────────────────────── */
+.btn-danger-outline{background:none;color:var(--red);border:2px solid var(--red);border-radius:var(--r);font-family:'Nunito',sans-serif;font-weight:800;font-size:.88rem;padding:.7rem;width:100%;cursor:pointer;margin-top:.4rem;transition:all .15s;}
+.btn-danger-outline:active{background:var(--red-bg);}
+@keyframes fadeOut{0%{opacity:1}100%{opacity:0}}
 
 </style>
 </head>
 <body>
 
+<!-- OFFLINE BANNER -->
+<div class="offline-banner" id="offlineBanner">📵 Sem internet — progresso salvo localmente</div>
+
+<!-- SPLASH -->
+<div id="sSplash">
+  <div class="splash-owl">🦉</div>
+  <div class="splash-title">MultiplicaMente</div>
+  <div class="splash-sub">Aventura da Tabuada!</div>
+  <div class="splash-dots">
+    <div class="splash-dot"></div>
+    <div class="splash-dot"></div>
+    <div class="splash-dot"></div>
+  </div>
+</div>
+
+<!-- PROFILE MODAL -->
+<div class="modal-ov" id="mProfile">
+  <div class="modal-sheet" style="padding:1rem 1.2rem 1.4rem;">
+    <div style="display:flex;align-items:center;gap:.7rem;margin-bottom:.8rem;">
+      <div style="font-size:1.8rem;background:var(--green-bg);border:2.5px solid var(--green);border-radius:12px;width:48px;height:48px;display:flex;align-items:center;justify-content:center;flex-shrink:0;" id="profileModalAv">🦉</div>
+      <div style="flex:1;">
+        <div style="font-weight:900;font-size:1rem;color:var(--dark);" id="profileModalName">Jogador</div>
+        <div style="font-size:.78rem;font-weight:700;color:var(--gray-dk);" id="profileModalStats">⭐0 · 💎0 · 🔥0</div>
+        <div style="font-size:.72rem;font-weight:700;color:var(--blue-dk);margin-top:.1rem;" id="profileModalCloud"></div>
+      </div>
+      <button onclick="closeModal('mProfile')" style="background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--gray-dk);padding:.3rem;">✕</button>
+    </div>
+    <button class="btn btn-outline" onclick="closeModal('mProfile');showParentPin()" style="margin-bottom:.35rem;padding:.7rem;font-size:.88rem;">📊 Relatório dos pais</button>
+    <button class="btn btn-outline" onclick="closeModal('mProfile');htab('settings',document.querySelector('.htab:last-child'))" style="margin-bottom:.35rem;padding:.7rem;font-size:.88rem;">⚙️ Configurações</button>
+    <button class="btn btn-red" onclick="closeModal('mProfile');logout()" style="padding:.7rem;font-size:.88rem;">🚪 Sair do perfil</button>
+    <button class="btn-danger-outline" onclick="closeModal('mProfile');confirmDeleteProfile()">🗑️ Apagar este perfil</button>
+  </div>
+</div>
+
+<!-- DELETE PROFILE MODAL -->
+<div class="modal-ov" id="mDeleteProfile">
+  <div class="modal-sheet">
+    <span class="break-emoji">⚠️</span>
+    <div class="sheet-title">Apagar perfil?</div>
+    <div class="sheet-sub" id="deleteProfileMsg">Todo o progresso será perdido permanentemente.</div>
+    <button class="btn btn-red" onclick="executeDeleteProfile()" style="margin-bottom:.4rem;">🗑️ Sim, apagar tudo</button>
+    <button class="btn btn-outline" onclick="closeModal('mDeleteProfile')">Cancelar</button>
+  </div>
+</div>
+
+<!-- STORY MODAL -->
+<div class="modal-ov" id="mStory">
+  <div class="modal-sheet">
+    <span class="break-emoji">🦉</span>
+    <div class="sheet-title">A Missão do Corujão!</div>
+    <div style="background:var(--green-bg);border:2px solid var(--green);border-radius:var(--r);padding:.8rem;margin-bottom:.9rem;font-size:.88rem;font-weight:700;color:var(--green-sh);line-height:1.7;">
+      🌳 Era uma vez um Corujão mágico que guardava as criaturas da Floresta dos Números...<br><br>
+      ⚡ Um dia, um feitiço misturou todos os números e as criaturas fugiram assustadas!<br><br>
+      🧩 Para resgatar cada criatura, você precisa <strong>dominar a tabuada</strong> daquele número. Quanto mais rápido e certeiro, mais criaturas raras você descobre!<br><br>
+      🏆 Será que você consegue resgatar todas as <strong>135 criaturas</strong>?
+    </div>
+    <button class="btn btn-green" onclick="closeModal('mStory')">🚀 Vamos começar!</button>
+  </div>
+</div>
+
+<!-- COMBO POPUP (criado dinamicamente) -->
+
+<!-- LOADING OVERLAY -->
+<div class="loading-ov" id="loadingOv">
+  <div class="loading-spinner"></div>
+  <div class="loading-txt" id="loadingTxt">Carregando...</div>
+</div>
+
 <!-- LOGIN -->
 <div id="app">
 <div class="screen active" id="sLogin">
+  <!-- Cabeçalho compacto -->
   <div class="login-top">
-    <span class="owl">🦉</span>
-    <h1>MultiplicaMente</h1>
-    <p>Aventura da Tabuada!</p>
+    <span class="login-top-owl">🦉</span>
+    <div class="login-top-text">
+      <h1>MultiplicaMente</h1>
+      <p>Aventura da Tabuada!</p>
+    </div>
+    <div id="loginCloudBtn" class="login-top-cloud" style="display:none;" onclick="toggleCloudSection()">
+      ☁️ <span id="loginCloudName"></span>
+    </div>
   </div>
+
+  <!-- Banner premium compacto -->
+  <div onclick="openModal('mPremium')" style="margin:.55rem .9rem 0;background:linear-gradient(135deg,#3d1f8e,#6a35d4);border-radius:var(--r);padding:.5rem .9rem;cursor:pointer;display:flex;align-items:center;gap:.5rem;box-shadow:0 3px 0 #2a1060;flex-shrink:0;">
+    <span style="font-size:1.1rem;">👑</span>
+    <div style="flex:1;font-weight:900;font-size:.78rem;color:#fff;">Premium · <span class="premium-price-val">R$ 9,90</span> · todas as tabuadas + 135 criaturas</div>
+    <span style="background:#FFC800;color:#6b4c00;font-size:.65rem;font-weight:900;border-radius:100px;padding:.15rem .4rem;">VER</span>
+  </div>
+
   <div class="login-body">
+    <!-- Perfis existentes — renderizado pelo JS com profile-big para o 1º -->
     <div id="profilesArea"></div>
-    <div class="new-box">
-      <div class="sec-lbl">Criar novo jogador</div>
+
+    <!-- Adicionar jogador (colapsável) -->
+    <button class="add-player-toggle" id="addPlayerToggle" onclick="toggleAddPlayer()">
+      <span>＋</span> Adicionar jogador
+    </button>
+    <div class="add-player-form" id="addPlayerForm">
+      <div class="sec-lbl">Novo jogador</div>
       <input class="inp" id="newName" placeholder="Nome da criança" maxlength="20">
       <div class="av-grid" id="avGrid"></div>
       <input class="inp" id="newPin" type="password" placeholder="PIN dos pais (4 dígitos)" maxlength="4" inputmode="numeric">
+      <button class="btn btn-green" onclick="createProfile()">🎮 Criar e jogar</button>
     </div>
-  </div>
-  <div class="login-footer">
-    <button class="btn btn-green" onclick="createProfile()">🎮 Criar perfil e jogar</button>
+
+    <!-- Sincronização na nuvem — colapsável, para os pais -->
+    <div class="cloud-section">
+      <div class="cloud-toggle" onclick="toggleCloudSection()">
+        <span class="cloud-toggle-icon">☁️</span>
+        <span class="cloud-toggle-lbl" id="cloudToggleLbl">Salvar progresso na nuvem</span>
+        <span class="cloud-toggle-arr open" id="cloudToggleArr">▾</span>
+      </div>
+      <div class="cloud-body open" id="cloudBody">
+        <div id="fbUserArea" style="display:none;margin-bottom:.7rem;">
+          <div class="user-chip" id="fbUserChip">
+            <span id="fbUserIcon">👤</span>
+            <span id="fbUserName">Usuário</span>
+            <span style="font-size:.7rem;opacity:.7;">☁️ sincronizado</span>
+          </div>
+        </div>
+        <div id="authSection">
+          <button class="btn btn-google" onclick="signInGoogle()" style="margin-bottom:.5rem;">
+            <svg class="google-icon" width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+            Entrar com Google
+          </button>
+          <div class="auth-tabs">
+            <button class="auth-tab active" onclick="authSwitchTab('signin',this)">Entrar</button>
+            <button class="auth-tab" onclick="authSwitchTab('signup',this)">Criar conta</button>
+          </div>
+          <div class="auth-panel active" id="authSignin">
+            <input class="inp" id="siEmail" type="email" placeholder="E-mail" inputmode="email" autocomplete="email">
+            <input class="inp" id="siPass" type="password" placeholder="Senha" autocomplete="current-password">
+            <div class="auth-err" id="siErr"></div>
+            <button class="btn btn-blue" onclick="signInEmail()" style="margin-top:.3rem;">Entrar</button>
+            <button class="btn btn-outline" style="margin-top:.4rem;font-size:.82rem;" onclick="resetPassword()">Esqueci minha senha</button>
+          </div>
+          <div class="auth-panel" id="authSignup">
+            <input class="inp" id="suEmail" type="email" placeholder="E-mail" inputmode="email" autocomplete="email">
+            <input class="inp" id="suPass" type="password" placeholder="Senha (mín. 6 caracteres)" autocomplete="new-password">
+            <div class="auth-err" id="suErr"></div>
+            <button class="btn btn-green" onclick="signUpEmail()" style="margin-top:.3rem;">Criar conta</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
 <!-- HOME -->
 <div class="screen" id="sHome">
   <div class="home-topbar">
-    <div class="home-user">
-      <div class="home-av" id="homeAv">🦉</div>
+    <div class="home-user" onclick="openModal('mProfile')" style="cursor:pointer;">
+      <div class="home-av" id="homeAv" style="border:2px solid var(--green);transition:transform .1s;">🦉</div>
       <div><div class="home-name" id="homeName">Jogador</div><div class="home-gems" id="homeGems">💎 0</div></div>
+      <span style="font-size:.7rem;color:var(--gray-dk);margin-left:.2rem;">▾</span>
     </div>
     <div class="hud-pills" style="align-items:center;gap:.35rem;">
       <div class="pill">🔥 <span id="hudStreak">0</span></div>
@@ -493,21 +829,40 @@ body{font-family:'Nunito',sans-serif;background:#f7f7f7;color:#3c3c3c;}
   </div>
   <!-- subject switcher -->
   <div class="subj-row">
-    <button class="subj-btn active" data-s="mult" onclick="setSubject('mult',this)" style="background:var(--green);border-color:var(--green-sh);color:#fff;">✖️ Tabuadas</button>
-    <button class="subj-btn" data-s="div" onclick="setSubject('div',this)">➗ Divisão</button>
-    <button class="subj-btn" data-s="add" onclick="setSubject('add',this)">➕ Adição</button>
+    <button class="subj-btn active" data-s="mult" onclick="setSubject('mult',this)" style="background:var(--green);border-color:var(--green-sh);color:#fff;">✖️ ×</button>
+    <button class="subj-btn" data-s="div" onclick="setSubject('div',this)">➗ ÷</button>
+    <button class="subj-btn" data-s="add" onclick="setSubject('add',this)">➕ +</button>
+    <button class="subj-btn" data-s="sub" onclick="setSubject('sub',this)">➖ −</button>
   </div>
   <div class="home-tabs">
-    <button class="htab active" onclick="htab('missions',this)">🎯 Tabuadas</button>
+    <button class="htab active" onclick="htab('missions',this)">🎯 Jornada</button>
+    <button class="htab" onclick="htab('ranking',this)">🏆 Ranking</button>
     <button class="htab" onclick="htab('collection',this)">🐉 Coleção</button>
     <button class="htab" onclick="htab('settings',this)">⚙️ Config</button>
   </div>
 
   <!-- MISSIONS — JOURNEY MAP -->
   <div class="tab-panel active" id="tabMissions">
+    <!-- Story + Missions numa única linha colapsável -->
+    <div style="display:flex;align-items:center;gap:.4rem;padding:.35rem .9rem 0;flex-shrink:0;">
+      <!-- Story mini -->
+      <div onclick="openModal('mStory')" style="flex:1;background:linear-gradient(135deg,#1a3a00,#2e6e00);border-radius:10px;padding:.35rem .6rem;cursor:pointer;display:flex;align-items:center;gap:.4rem;">
+        <span style="font-size:1.1rem;">🦉</span>
+        <div style="flex:1;"><div style="font-weight:800;font-size:.7rem;color:#fff;">Missão das Criaturas</div><div id="storyProgress" style="font-size:.62rem;color:rgba(255,255,255,.75);">0/135 resgatadas</div></div>
+      </div>
+      <!-- Missions mini toggle -->
+      <div onclick="toggleMissionsPanel()" id="missionsMini" style="background:var(--blue-bg);border:2px solid var(--blue);border-radius:10px;padding:.35rem .6rem;cursor:pointer;text-align:center;flex-shrink:0;">
+        <div style="font-weight:900;font-size:.7rem;color:var(--blue-dk);">🎯 Missões</div>
+        <div style="font-size:.62rem;font-weight:700;color:var(--blue-sh);" id="missionMiniStatus">0/3</div>
+      </div>
+    </div>
+    <!-- Missions expandable panel (fechado por padrão) -->
+    <div id="missionsPanel" style="display:none;margin:.3rem .9rem 0;background:var(--blue-bg);border:2px solid var(--blue);border-radius:var(--r);padding:.5rem .7rem;flex-shrink:0;">
+      <div id="missionsList"></div>
+    </div>
     <!-- compact difficulty strip -->
     <div class="diff-strip">
-      <div class="diff-strip-lbl">⏱️ Tempo:</div>
+      <div class="diff-strip-lbl">⏱️</div>
       <div class="dbn-sm sel" data-d="0" onclick="setDiff(0,this)">♾️</div>
       <div class="dbn-sm" data-d="5" onclick="setDiff(5,this)">5s</div>
       <div class="dbn-sm" data-d="4" onclick="setDiff(4,this)">4s</div>
@@ -515,10 +870,22 @@ body{font-family:'Nunito',sans-serif;background:#f7f7f7;color:#3c3c3c;}
       <div class="dbn-sm" data-d="2" onclick="setDiff(2,this)">2s</div>
       <div class="diff-strip-badge" id="diffBadge">Sem timer</div>
     </div>
+    <!-- premium banner — abre modal, não desbloqueia direto -->
+    <div id="homePremiumBanner" onclick="openModal('mPremium')" style="margin:.3rem .9rem 0;background:linear-gradient(135deg,#3d1f8e,#6a35d4);border-radius:var(--r);padding:.4rem .9rem;cursor:pointer;display:flex;align-items:center;gap:.5rem;box-shadow:0 3px 0 #2a1060;flex-shrink:0;">
+      <span style="font-size:1.1rem;">👑</span>
+      <div style="flex:1;font-weight:800;font-size:.75rem;color:#fff;">Premium · <span class="premium-price-val">R$ 9,90</span> · tabuadas 6–10 + 135 criaturas</div>
+      <span style="background:#FFC800;color:#6b4c00;font-size:.65rem;font-weight:900;border-radius:100px;padding:.15rem .4rem;">VER</span>
+    </div>
     <!-- scrollable path -->
     <div class="journey-wrap" id="journeyWrap">
       <div class="journey-canvas" id="journeyCanvas"></div>
     </div>
+  </div>
+
+  <!-- RANKING (visible to child) -->
+  <div class="tab-panel" id="tabRanking">
+    <div id="rankPodium"></div>
+    <div class="rank-list" id="rankList"></div>
   </div>
 
   <!-- COLLECTION -->
@@ -545,9 +912,25 @@ body{font-family:'Nunito',sans-serif;background:#f7f7f7;color:#3c3c3c;}
         <button class="btn btn-outline" style="margin-top:.7rem;width:auto;padding:.6rem 1.1rem;font-size:.88rem;" onclick="testSounds()">🎵 Testar sons</button>
       </div>
       <div class="settings-card">
-        <h3>👤 Conta</h3>
-        <div style="font-size:.88rem;font-weight:600;color:var(--gray-dk);margin-bottom:.7rem;">Logado como: <strong style="color:var(--dark);" id="settingsName">—</strong></div>
-        <button class="btn btn-red" onclick="logout()">🚪 Sair do perfil</button>
+        <h3>🌙 Aparência</h3>
+        <div class="dark-toggle">
+          <span style="font-weight:700;font-size:.9rem;">Modo escuro</span>
+          <label class="toggle-switch">
+            <input type="checkbox" id="darkToggle" onchange="toggleDark(this.checked)">
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </div>
+      <div class="settings-card">
+        <h3>👑 Premium</h3>
+        <div style="font-size:.85rem;font-weight:700;color:var(--gray-dk);margin-bottom:.7rem;" id="premiumStatus">Versão gratuita · Tabuadas 2–5</div>
+        <button class="btn btn-green" onclick="openModal('mPremium')" id="premiumBtn">🔓 Desbloquear Premium · <span class="premium-price-val">R$ 9,90</span></button>
+      </div>
+      <div class="settings-card">
+        <h3>☁️ Conta e sincronização</h3>
+        <div id="settingsAccountArea">
+          <!-- preenchido pelo JS -->
+        </div>
       </div>
     </div>
   </div>
@@ -566,6 +949,12 @@ body{font-family:'Nunito',sans-serif;background:#f7f7f7;color:#3c3c3c;}
     <div class="hearts-disp" id="heartsDisp">💖💖💖</div>
   </div>
   <div class="combo-banner" id="comboBanner"></div>
+  <!-- Power-ups -->
+  <div class="pu-row" id="puRow">
+    <button class="pu-btn" id="pu0" onclick="usePowerup(0)"><span class="pu-icon">⏭️</span>Pular<span style="font-size:.6rem;color:var(--gray-dk);">5💎</span></button>
+    <button class="pu-btn" id="pu1" onclick="usePowerup(1)"><span class="pu-icon">✂️</span>50/50<span style="font-size:.6rem;color:var(--gray-dk);">8💎</span></button>
+    <button class="pu-btn" id="pu2" onclick="usePowerup(2)"><span class="pu-icon">💖</span>+Vida<span style="font-size:.6rem;color:var(--gray-dk);">12💎</span></button>
+  </div>
   <div class="q-card">
     <div class="q-top-row">
       <div class="q-tip" id="qTip"></div>
@@ -625,8 +1014,12 @@ body{font-family:'Nunito',sans-serif;background:#f7f7f7;color:#3c3c3c;}
     </div>
     <div class="sub-title">Progresso por tabuada</div>
     <div id="tableProgArea"></div>
+    <div class="sub-title">📈 Progresso semanal</div>
+    <div id="weeklyChartArea" style="background:var(--bg-card);border:2px solid var(--gray);border-radius:var(--r);padding:.8rem;margin-bottom:.5rem;"></div>
     <div class="sub-title">Últimas partidas</div>
     <div id="logArea"></div>
+    <div class="sub-title">🏆 Placar semanal</div>
+    <div id="leaderboardArea"></div>
   </div>
 </div>
 
@@ -677,11 +1070,29 @@ body{font-family:'Nunito',sans-serif;background:#f7f7f7;color:#3c3c3c;}
 </div>
 <div class="modal-ov" id="mWin">
   <div class="modal-sheet">
-    <span class="break-emoji" id="winEmoji">🏆</span>
+    <span class="mascot-dance" id="winMascot">🦉</span>
+    <span class="break-emoji" id="winEmoji" style="font-size:2.5rem;margin-top:-.5rem;">🏆</span>
     <div class="sheet-title" id="winTitle">Missão completa!</div>
     <div class="stars-row" id="winStars"></div>
     <div class="rewards-row" id="winRewards"></div>
+    <button class="btn btn-share" onclick="shareResult()" style="margin-bottom:.5rem;">📤 Compartilhar resultado</button>
     <button class="btn btn-green" onclick="closeModal('mWin');goHome()">CONTINUAR 🚀</button>
+  </div>
+</div>
+
+<!-- PREMIUM -->
+<div class="modal-ov" id="mPremium">
+  <div class="modal-sheet">
+    <span class="break-emoji">👑</span>
+    <div class="sheet-title">Conteúdo Premium</div>
+    <div class="sheet-sub">As tabuadas 6 a 10 fazem parte da versão completa!</div>
+    <div style="background:var(--yellow-bg);border:2px solid var(--yellow);border-radius:var(--r);padding:.8rem;margin-bottom:1rem;text-align:center;">
+      <div style="font-weight:900;font-size:1.1rem;color:var(--yellow-sh);">✨ MultiplicaMente Premium</div>
+      <div style="font-size:.85rem;font-weight:700;color:var(--yellow-sh);margin-top:.3rem;">Tabuadas 2–10 · Divisão · Adição · Criaturas raras</div>
+      <div style="font-size:1.4rem;font-weight:900;color:var(--green-sh);margin-top:.5rem;"><span class="premium-price-val">R$ 9,90</span> · pagamento único</div>
+    </div>
+    <button class="btn btn-green" onclick="unlockPremium()">🔓 Desbloquear agora · <span class="premium-price-val">R$ 9,90</span></button>
+    <button class="btn btn-outline" onclick="closeModal('mPremium')" style="margin-top:.5rem;">Agora não</button>
   </div>
 </div>
 <div class="modal-ov" id="mLose">
@@ -696,8 +1107,610 @@ body{font-family:'Nunito',sans-serif;background:#f7f7f7;color:#3c3c3c;}
 
 <div class="fb-flash" id="fbFlash"><div class="fb-txt" id="fbTxt"></div></div>
 
+<!-- PREMIUM: modal principal -->
+<!-- PREMIUM UPSELL após tabuada 5 -->
+<div class="modal-ov" id="mPremiumUpsell">
+  <div class="modal-sheet">
+    <span class="break-emoji">🎉</span>
+    <div class="sheet-title">Você dominou as tabuadas grátis!</div>
+    <div class="sheet-sub">Desbloqueie as tabuadas 6 a 10 e torne-se um mestre da matemática!</div>
+    <div style="background:linear-gradient(135deg,#fff9cc,#fff3aa);border:2.5px solid var(--yellow);border-radius:var(--r-lg);padding:1rem;margin-bottom:1rem;">
+      <div style="display:flex;flex-direction:column;gap:.4rem;">
+        <div style="font-weight:800;font-size:.9rem;color:var(--yellow-sh);">✨ Premium inclui:</div>
+        <div style="font-size:.85rem;font-weight:700;color:var(--dark);">🔢 Tabuadas 6, 7, 8, 9 e 10</div>
+        <div style="font-size:.85rem;font-weight:700;color:var(--dark);">➗ Divisão completa</div>
+        <div style="font-size:.85rem;font-weight:700;color:var(--dark);">➕ Adição completa</div>
+        <div style="font-size:.85rem;font-weight:700;color:var(--dark);">🐉 135 criaturas para colecionar</div>
+        <div style="font-weight:900;font-size:1.3rem;color:var(--green-sh);text-align:center;margin-top:.4rem;"><span class="premium-price-val">R$ 9,90</span> · pagamento único</div>
+      </div>
+    </div>
+    <button class="btn btn-green" onclick="unlockPremium()">👑 Desbloquear agora · <span class="premium-price-val">R$ 9,90</span></button>
+    <button class="btn btn-outline" style="margin-top:.5rem;" onclick="closeModal('mPremiumUpsell')">Depois</button>
+  </div>
+</div>
+
+<!-- PREMIUM: pagamento -->
+<div class="modal-ov" id="mPremiumPay">
+  <div class="modal-sheet">
+    <span class="break-emoji">💳</span>
+    <div class="sheet-title">MultiplicaMente Premium</div>
+    <div style="background:linear-gradient(135deg,#fff9cc,#fff3aa);border:2px solid var(--yellow);border-radius:var(--r);padding:.9rem;margin-bottom:1rem;">
+      <div style="font-size:.85rem;font-weight:700;color:var(--dark);line-height:1.9;">
+        ✅ Tabuadas 6, 7, 8, 9 e 10<br>
+        ✅ Divisão e Adição completas<br>
+        ✅ 135 criaturas colecionáveis<br>
+        ✅ Progresso salvo na nuvem<br>
+        ✅ Pagamento único — sem assinatura
+      </div>
+      <div style="font-weight:900;font-size:1.5rem;color:var(--green-sh);text-align:center;margin-top:.6rem;" class="premium-price-val">R$ 9,90</div>
+    </div>
+    <button class="btn btn-green" onclick="payViaGooglePlay()" style="margin-bottom:.7rem;">💳 Pagar pelo Google Play · <span class="premium-price-val">R$ 9,90</span></button>
+    <div class="auth-divider"><span>Tem um código promocional?</span></div>
+    <div style="display:flex;gap:.5rem;margin:.5rem 0;">
+      <input class="inp" id="promoCodeInput" placeholder="Código promo" style="margin:0;flex:1;text-transform:uppercase;" maxlength="20">
+      <button class="btn btn-blue" style="width:auto;padding:.7rem 1rem;margin:0;" onclick="checkPromoCode()">OK</button>
+    </div>
+    <div class="auth-err" id="promoErr"></div>
+    <button class="btn btn-outline" style="margin-top:.4rem;font-size:.82rem;" onclick="closeModal('mPremiumPay')">Cancelar</button>
+  </div>
+</div>
+
+<!-- PREMIUM: gate de login -->
+<div class="modal-ov" id="mPremiumLogin">
+  <div class="modal-sheet">
+    <span class="break-emoji">🔐</span>
+    <div class="sheet-title">Entre para comprar</div>
+    <div class="sheet-sub">Crie uma conta para vincular sua compra e acessar em qualquer dispositivo.</div>
+    <button class="btn btn-google" onclick="signInGoogleThenPay()" style="margin-bottom:.5rem;">
+      <svg class="google-icon" width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+      Entrar com Google
+    </button>
+    <button class="btn btn-blue" onclick="closeModal('mPremiumLogin');localStorage.setItem('mm_pending_pay','1');show('sLogin')" style="margin-bottom:.5rem;">📧 Entrar com e-mail</button>
+    <button class="btn btn-outline" onclick="closeModal('mPremiumLogin')">Cancelar</button>
+  </div>
+</div>
+
+<!-- LOGIN PROMPT após partidas -->
+<div class="modal-ov" id="mLoginPrompt">
+  <div class="modal-sheet">
+    <span class="break-emoji">☁️</span>
+    <div class="sheet-title">Salve seu progresso!</div>
+    <div class="sheet-sub">Você já tem <strong style="color:var(--green);" id="loginPromptGems">0 💎</strong> e <strong style="color:var(--yellow-sh);" id="loginPromptStars">0 ⭐</strong>. Crie uma conta para não perder nada!</div>
+    <div style="background:var(--blue-bg);border:2px solid var(--blue);border-radius:var(--r);padding:.75rem;margin-bottom:1rem;font-size:.85rem;font-weight:700;color:var(--blue-sh);">
+      ✅ Progresso salvo na nuvem<br>
+      ✅ Acesso em qualquer celular<br>
+      ✅ Histórico completo para os pais
+    </div>
+    <button class="btn btn-google" onclick="closeModal('mLoginPrompt');show('sLogin');signInGoogle()" style="margin-bottom:.5rem;">
+      <svg style="width:18px;height:18px;" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+      Entrar com Google
+    </button>
+    <button class="btn btn-blue" onclick="closeModal('mLoginPrompt');show('sLogin')">📧 Criar conta com e-mail</button>
+    <button class="btn btn-outline" style="margin-top:.5rem;font-size:.82rem;" onclick="closeModal('mLoginPrompt')">Continuar sem conta</button>
+  </div>
+</div>
+
 <script>
+const PRECO_PREMIUM = "R$ 9,90";
+
+function applyPremiumPrices() {
+  document.querySelectorAll('.premium-price-val').forEach(el => {
+    el.textContent = PRECO_PREMIUM;
+  });
+}
+applyPremiumPrices();
+
+// ══════════════════════════════════════════════════════════════
+// FIREBASE CONFIG — substitua pelos dados do seu projeto!
+// Console: https://console.firebase.google.com
+// ══════════════════════════════════════════════════════════════
+const FIREBASE_CONFIG = {
+  apiKey:            "AIzaSyB_G6mInL6C5otLV4x4Ior7RiwSwq6Imww",
+  authDomain:        "multiplicamente-ccacc.firebaseapp.com",
+  projectId:         "multiplicamente-ccacc",
+  storageBucket:     "multiplicamente-ccacc.firebasestorage.app",
+  messagingSenderId: "568776526292",
+  appId:             "1:568776526292:web:9b47420eb8185c0f40ae41",
+  measurementId:     "G-ZLW5TLTG8G"
+};
+
+let fbApp, fbAuth, fbDb, fbUser = null;
+let fbReady = false;
+
+function loadFirebaseScripts(callback){
+  const scripts = [
+    'https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js',
+    'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js',
+    'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js'
+  ];
+  let loaded = 0;
+  let failed = false;
+  scripts.forEach(src => {
+    const s = document.createElement('script');
+    s.src = src;
+    s.onload = () => { if(++loaded === scripts.length && !failed) callback(null); };
+    s.onerror = () => { if(!failed){ failed=true; callback(new Error('CDN indisponível')); } };
+    document.head.appendChild(s);
+  });
+}
+
+function initFirebase(){
+  showLoading('Conectando...');
+  // Timeout de segurança — se Firebase não carregar em 8s, mostra login mesmo assim
+  const safetyTimeout = setTimeout(()=>{
+    console.warn('Firebase timeout — carregando sem conexão');
+    hideLoading();
+    fbReady = false;
+    renderLogin();
+  }, 8000);
+
+  loadFirebaseScripts(function(err){
+    hideLoading();
+    clearTimeout(safetyTimeout);
+    if(err){
+      console.warn('Firebase não carregou:', err.message);
+      const as = document.getElementById('authSection');
+      if(as) as.style.display = 'none';
+      renderLogin();
+      return;
+    }
+    try {
+      if(!firebase.apps.length){
+        fbApp = firebase.initializeApp(FIREBASE_CONFIG);
+      } else {
+        fbApp = firebase.apps[0];
+      }
+      fbAuth = firebase.auth();
+      fbDb   = firebase.firestore();
+      fbReady = true;
+      fbAuth.onAuthStateChanged(user => {
+        fbUser = user;
+        updateAuthUI();
+        renderSettingsAccount();
+        if(user){
+          showLoading('Carregando perfis...');
+          loadCloudProfiles().then(()=>{
+            // Verifica redirect do Google
+            fbAuth.getRedirectResult().then(result=>{
+              if(result && result.user) fbUser = result.user;
+              // Retoma pagamento pendente
+              if(localStorage.getItem('mm_pending_pay')==='1'){
+                localStorage.removeItem('mm_pending_pay');
+                setTimeout(()=>unlockPremium(), 800);
+              }
+              localStorage.removeItem('mm_google_login');
+            }).catch(()=>{});
+          });
+        } else {
+          // Se estava tentando login Google via redirect e ainda não voltou
+          if(localStorage.getItem('mm_google_login')==='1'){
+            localStorage.removeItem('mm_google_login');
+          }
+          renderLogin();
+        }
+      });
+    } catch(e) {
+      console.warn('Firebase erro:', e.message);
+      fbReady = false;
+      const as = document.getElementById('authSection');
+      if(as) as.style.display = 'none';
+      renderLogin();
+    }
+  });
+}
+
+function showLoading(txt){ const o=document.getElementById('loadingOv');o.classList.add('show');document.getElementById('loadingTxt').textContent=txt||'Carregando...'; }
+function hideLoading(){ document.getElementById('loadingOv').classList.remove('show'); }
+
+// ── AUTH FUNCTIONS ────────────────────────────────────────────
+async function signInGoogle(){
+  if(!fbReady){alert('Firebase não disponível. Verifique sua internet.');return;}
+  showLoading('Entrando com Google...');
+  try {
+    const isNative = window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform();
+    if(isNative){
+      const { GoogleAuth } = window.Capacitor.Plugins;
+      if(!GoogleAuth){ hideLoading(); flash('Plugin Google não encontrado.','err'); return; }
+      await GoogleAuth.initialize({
+        clientId: '568776526292-dbu93qgvklkr5i84rcs9s4b353pd3q43.apps.googleusercontent.com',
+        scopes: ['profile','email'],
+        grantOfflineAccess: true
+      });
+      const googleUser = await GoogleAuth.signIn();
+      const idToken = googleUser?.authentication?.idToken
+                   || googleUser?.idToken
+                   || googleUser?.authentication?.accessToken
+                   || googleUser?.accessToken;
+      if(!idToken){
+        hideLoading();
+        const keys = Object.keys(googleUser||{}).join(',');
+        flash('Token não encontrado. Keys: '+keys,'err');
+        return;
+      }
+      const credential = firebase.auth.GoogleAuthProvider.credential(idToken);
+      await fbAuth.signInWithCredential(credential);
+      hideLoading();
+    } else {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      await fbAuth.signInWithPopup(provider);
+      hideLoading();
+    }
+  } catch(e) {
+    hideLoading();
+    if(e && (e.error === 'popup_closed_by_user' || e.code === '12501')) return;
+    console.warn('Google Sign-In error:', JSON.stringify(e));
+    const msg = traduzErroFirebase(e.code||'auth/unknown');
+    const errEl = document.getElementById('siErr');
+    if(errEl) errEl.textContent = msg; else flash(msg,'err');
+  }
+}
+
+async function signInGoogleThenPay(){
+  localStorage.setItem('mm_pending_pay','1');
+  await signInGoogle();
+}
+
+async function signInEmail(){
+  if(!fbReady){alert('Firebase não disponível.');return;}
+  const email = document.getElementById('siEmail').value.trim();
+  const pass  = document.getElementById('siPass').value;
+  const err   = document.getElementById('siErr');
+  if(err) err.textContent = '';
+  if(!email||!pass){if(err)err.textContent='Preencha e-mail e senha.';return;}
+  showLoading('Entrando...');
+  try {
+    await fbAuth.signInWithEmailAndPassword(email, pass);
+  } catch(e) {
+    hideLoading();
+    if(err) err.textContent = traduzErroFirebase(e.code);
+  }
+}
+
+async function signUpEmail(){
+  if(!fbReady){alert('Firebase não disponível.');return;}
+  const email = document.getElementById('suEmail').value.trim();
+  const pass  = document.getElementById('suPass').value;
+  const err   = document.getElementById('suErr');
+  if(err) err.textContent = '';
+  if(!email||!pass){if(err)err.textContent='Preencha e-mail e senha.';return;}
+  if(pass.length < 6){if(err)err.textContent='Senha deve ter pelo menos 6 caracteres.';return;}
+  showLoading('Criando conta...');
+  try {
+    await fbAuth.createUserWithEmailAndPassword(email, pass);
+  } catch(e) {
+    hideLoading();
+    if(err) err.textContent = traduzErroFirebase(e.code);
+  }
+}
+
+async function resetPassword(){
+  if(!fbReady){alert('Firebase não disponível.');return;}
+  const emailEl = document.getElementById('siEmail');
+  const errEl = document.getElementById('siErr');
+  const email = emailEl ? emailEl.value.trim() : '';
+  if(!email){
+    if(errEl) errEl.textContent='Digite seu e-mail primeiro.';
+    return;
+  }
+  showLoading('Enviando e-mail...');
+  try {
+    await fbAuth.sendPasswordResetEmail(email);
+    hideLoading();
+    if(errEl) errEl.textContent = '';
+    flash('E-mail enviado! Verifique sua caixa de entrada e spam.','ok');
+  } catch(e) {
+    hideLoading();
+    const msg = traduzErroFirebase(e.code);
+    if(errEl) errEl.textContent = msg; else alert(msg);
+  }
+}
+
+function signOut(){
+  if(fbAuth) fbAuth.signOut();
+  fbUser = null;
+  P = null;
+  updateAuthUI();
+  renderLogin();
+  show('sLogin');
+}
+
+function traduzErroFirebase(code){
+  const map = {
+    'auth/user-not-found':'Usuário não encontrado.',
+    'auth/wrong-password':'Senha incorreta.',
+    'auth/invalid-email':'E-mail inválido.',
+    'auth/email-already-in-use':'Este e-mail já está em uso.',
+    'auth/weak-password':'Senha muito fraca.',
+    'auth/popup-closed-by-user':'Login cancelado.',
+    'auth/network-request-failed':'Sem conexão com a internet.',
+    'auth/too-many-requests':'Muitas tentativas. Tente mais tarde.',
+    'auth/invalid-credential':'E-mail ou senha incorretos.',
+  };
+  return map[code] || 'Erro: '+code;
+}
+
+function updateAuthUI(){
+  const fbArea  = document.getElementById('fbUserArea');
+  const authSec = document.getElementById('authSection');
+  const cloudBtn = document.getElementById('loginCloudBtn');
+  const cloudName = document.getElementById('loginCloudName');
+  const cloudLbl = document.getElementById('cloudToggleLbl');
+  const cloudBody = document.getElementById('cloudBody');
+  const arr = document.getElementById('cloudToggleArr');
+  if(!fbUser){
+    if(fbArea)  fbArea.style.display  = 'none';
+    if(authSec) authSec.style.display = 'block';
+    if(cloudBtn) cloudBtn.style.display = 'none';
+    if(cloudLbl) cloudLbl.textContent = 'Salvar progresso na nuvem';
+    // Abre por padrão para facilitar login
+    if(cloudBody) cloudBody.classList.add('open');
+    if(arr) arr.classList.add('open');
+    return;
+  }
+  const name = fbUser.displayName || fbUser.email;
+  if(fbArea){ fbArea.style.display='block'; document.getElementById('fbUserIcon').textContent='👤'; document.getElementById('fbUserName').textContent=name; }
+  if(authSec) authSec.style.display='none';
+  if(cloudBtn){ cloudBtn.style.display='flex'; }
+  if(cloudName) cloudName.textContent = name.split(' ')[0] || name.split('@')[0];
+  if(cloudLbl) cloudLbl.textContent = '☁️ Logado como '+name;
+  if(cloudBody) cloudBody.classList.add('open');
+  if(arr) arr.classList.add('open');
+}
+
+function authSwitchTab(tab, el){
+  document.querySelectorAll('.auth-tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  document.querySelectorAll('.auth-panel').forEach(p=>p.classList.remove('active'));
+  document.getElementById(tab==='signin'?'authSignin':'authSignup').classList.add('active');
+}
+
+// ── FIRESTORE SYNC ────────────────────────────────────────────
+async function loadCloudProfiles(){
+  if(!fbReady||!fbUser){ hideLoading(); renderLogin(); return; }
+  try {
+    const snap = await fbDb.collection('users').doc(fbUser.uid).collection('profiles').get();
+    if(!snap.empty){
+      const data = gd();
+      snap.forEach(doc => {
+        const cp = doc.data();
+        cp._cloudId = doc.id;
+        const exists = data.profiles.findIndex(p=>p._cloudId===doc.id);
+        if(exists>=0) data.profiles[exists] = cp;
+        else data.profiles.push(cp);
+      });
+      sd(data);
+    }
+  } catch(e) {
+    console.warn('Erro ao carregar perfis:', e);
+  }
+  hideLoading();
+  renderLogin();
+}
+
+async function saveProfileToCloud(){
+  if(!fbReady||!fbUser||!P) return;
+  try {
+    const ref = fbDb.collection('users').doc(fbUser.uid).collection('profiles');
+    if(P._cloudId){
+      await ref.doc(P._cloudId).set(P);
+    } else {
+      const doc = await ref.add(P);
+      P._cloudId = doc.id;
+    }
+    // also update local
+    sp();
+  } catch(e) {
+    console.warn('Erro ao salvar na nuvem:', e);
+  }
+}
+
+// ── OVERRIDE sp() to also sync cloud ─────────────────────────
+const _spOriginal = function(){const data=gd();data.profiles[Pi]={...P};sd(data)};
+
 const AVATARS=['🦊','🐯','🐻','🐼','🦁','🐸','🐧','🦄','🤖','⚡','🌟','🎮'];
+
+// ── SPLASH ────────────────────────────────────────────────────
+(function initSplash(){
+  const splash = document.getElementById('sSplash');
+  if(!splash) return;
+  setTimeout(()=>{
+    splash.classList.add('fade-out');
+    setTimeout(()=>{ splash.style.display='none'; }, 600);
+  }, 2000);
+})();
+
+// ── DARK MODE ─────────────────────────────────────────────────
+function toggleDark(on){
+  document.body.setAttribute('data-dark', on ? '1' : '0');
+  localStorage.setItem('mm_dark', on ? '1' : '0');
+}
+(function initDark(){
+  const saved = localStorage.getItem('mm_dark');
+  if(saved === '1'){
+    document.body.setAttribute('data-dark','1');
+    const t = document.getElementById('darkToggle');
+    if(t) t.checked = true;
+  }
+})();
+
+// ── PREMIUM ───────────────────────────────────────────────────
+const FREE_TABLES = [2,3,4,5];
+const PREMIUM_TABLES = [6,7,8,9,10];
+// ── GOOGLE PLAY BILLING ───────────────────────────────────────
+let billingReady = false;
+
+async function initBilling(){
+  try {
+    if(typeof window.Capacitor === 'undefined' || !window.Capacitor.isNativePlatform()){
+      return;
+    }
+    const Billing = window.Capacitor.Plugins.Billing;
+    if(!Billing){ return; }
+    await Billing.initBilling();
+    billingReady = true;
+    console.log('Billing initialized ✅');
+    await checkExistingPurchase();
+  } catch(e){
+    console.warn('Billing init error:', e);
+  }
+}
+
+async function checkExistingPurchase(){
+  try {
+    if(!billingReady) return;
+    const { Capacitor } = window;
+    const Billing = Capacitor.Plugins.Billing;
+    const result = await Billing.checkPurchase();
+    if(result.hasPremium && P && !P.premium){
+      P.premium = true;
+      sp();
+      updatePremiumUI();
+      renderHome();
+    }
+  } catch(e){
+    console.warn('checkPurchase error:', e);
+  }
+}
+
+function isPremiumUnlocked(){
+  return (P && P.premium) || localStorage.getItem('mm_premium_purchased')==='1';
+}
+
+function unlockPremium(){
+  closeModal('mPremium');
+  closeModal('mPremiumUpsell');
+  openModal('mPremiumPay');
+}
+
+async function startGooglePlayPurchase(){
+  showLoading('Abrindo Google Play...');
+  const timeout = setTimeout(()=>{
+    hideLoading();
+    openModal('mPremiumPay');
+  }, 8000);
+  try {
+    const Billing = window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Billing;
+    if(!Billing){ clearTimeout(timeout); hideLoading(); openModal('mPremiumPay'); return; }
+    const result = await Billing.purchasePremium();
+    clearTimeout(timeout);
+    hideLoading();
+    if(result && result.success) confirmPremiumPurchase();
+    else openModal('mPremiumPay');
+  } catch(e){
+    clearTimeout(timeout);
+    hideLoading();
+    if(e && e.message !== 'USER_CANCELED') openModal('mPremiumPay');
+  }
+}
+
+function premiumAfterLogin(){
+  closeModal('mPremiumLogin');
+  unlockPremium();
+}
+
+function confirmPremiumPurchase(){
+  localStorage.setItem('mm_premium_purchased','1');
+  if(P){ P.premium = true; sp(); }
+  closeModal('mPremiumPay');
+  closeModal('mPremium');
+  closeModal('mPremiumUpsell');
+  closeModal('mPremiumLogin');
+  updatePremiumUI();
+  confetti();
+  flash('Premium desbloqueado! 👑','ok');
+  setTimeout(()=>{
+    if(P) renderHome();
+    else renderLogin(); // atualiza tela de login escondendo o banner
+  }, 600);
+}
+
+function payViaGooglePlay(){
+  const isNative = window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform();
+  if(isNative){
+    // Tenta billing mesmo se billingReady for false — tenta inicializar e comprar
+    closeModal('mPremiumPay');
+    if(billingReady){
+      startGooglePlayPurchase();
+    } else {
+      // Tenta inicializar billing e comprar
+      showLoading('Conectando ao Google Play...');
+      initBilling().then(()=>{
+        hideLoading();
+        if(billingReady) startGooglePlayPurchase();
+        else { flash('Google Play indisponível. Use código promocional.','err'); openModal('mPremiumPay'); }
+      });
+    }
+  } else {
+    flash('Disponível apenas no app da Play Store. Use um código promocional.','err');
+  }
+}
+function checkPromoCode(){
+  const inp = document.getElementById('promoCodeInput');
+  const err = document.getElementById('promoErr');
+  if(!inp) return;
+  const code = inp.value.trim().toUpperCase();
+  const VALID_CODES = ['BETA2025','MULTIPLICA10','TESTPREMIUM','SANTA'];
+  if(VALID_CODES.includes(code)){
+    confirmPremiumPurchase();
+  } else {
+    if(err) err.textContent = 'Código inválido.';
+  }
+}
+
+function updatePremiumUI(){
+  const st  = document.getElementById('premiumStatus');
+  const btn = document.getElementById('premiumBtn');
+  const hb  = document.getElementById('homePremiumBanner');
+  if(isPremiumUnlocked()){
+    if(st)  st.textContent  = '✅ Premium ativo · Todas as tabuadas';
+    if(btn){ btn.textContent='👑 Premium ativo!'; btn.disabled=true; btn.style.opacity='.6'; }
+    if(hb)  hb.style.display = 'none';
+  } else {
+    if(st)  st.textContent  = 'Versão gratuita · Tabuadas 2–5';
+    if(btn){ btn.textContent='🔓 Desbloquear Premium · ' + PRECO_PREMIUM; btn.disabled=false; btn.style.opacity='1'; }
+    if(hb)  hb.style.display = 'flex';
+  }
+}
+
+// ── SHARE RESULT ──────────────────────────────────────────────
+function shareResult(){
+  if(!GS) return;
+  const acc = GS.ok && GS.questions ? Math.round(GS.ok/GS.questions.length*100) : 0;
+  const stars = acc===100?'⭐⭐⭐':acc>=80?'⭐⭐':'⭐';
+  const table = GS.table==='boss'?'Desafio Misto':'Tabuada do '+GS.table;
+  const text = `🦉 MultiplicaMente\n${P.av} ${P.name} completou a ${table}!\n${stars} ${acc}% de acertos · ${GS.ok}/${GS.questions.length} corretas\n💎 ${P.gems||0} gemas · 🔥 ${P.streak||0} dias seguidos\n\nBaixe o MultiplicaMente e aprenda a tabuada se divertindo!`;
+  if(navigator.share){
+    navigator.share({ title:'MultiplicaMente', text }).catch(()=>{});
+  } else {
+    navigator.clipboard.writeText(text).then(()=>{ flash('Copiado! 📋','ok'); }).catch(()=>{ flash('Erro ao copiar','err'); });
+  }
+}
+
+// ── LEADERBOARD ───────────────────────────────────────────────
+function renderLeaderboard(){
+  const area = document.getElementById('leaderboardArea');
+  if(!area) return;
+  const data = gd();
+  const oneWeekAgo = Date.now() - 7*24*60*60*1000;
+  const rankings = data.profiles.map(p=>{
+    const weekLogs = (p.logs||[]).filter(l=>{ try{ return new Date(l.date).getTime()>oneWeekAgo; }catch(e){return false;} });
+    const weekOk = weekLogs.reduce((s,l)=>s+(l.ok||0),0);
+    const weekGames = weekLogs.length;
+    return { name:p.name, av:p.av, weekOk, weekGames, gems:p.gems||0, stars:p.stars||0 };
+  }).sort((a,b)=>b.weekOk-a.weekOk);
+  if(!rankings.length){ area.innerHTML='<div style="text-align:center;color:var(--gray-dk);padding:1rem;">Nenhum dado ainda!</div>'; return; }
+  const medals = ['🥇','🥈','🥉'];
+  area.innerHTML = rankings.map((r,i)=>`
+    <div class="lb-item">
+      <div class="lb-rank">${medals[i]||'#'+(i+1)}</div>
+      <div class="lb-av">${r.av}</div>
+      <div class="lb-info">
+        <div class="lb-name">${r.name}</div>
+        <div class="lb-score">${r.weekGames} partidas esta semana · ⭐${r.stars} · 💎${r.gems}</div>
+      </div>
+      <div class="lb-pts">${r.weekOk} ✅</div>
+    </div>`).join('');
+}
 const CREATURES_ALL={
   0:{name:'Amigos da Floresta',icon:'🌿',color:'#58CC02',sh:'#2E7D00',bg:'#d7ffb8',
     c:{2:{e:'🐢',n:'Tartalinho'},3:{e:'🦋',n:'Borboletus'},4:{e:'🐸',n:'Sapinho'},
@@ -720,13 +1733,37 @@ const CREATURES_ALL={
        5:{e:'✨',n:'Faíscium'},6:{e:'🔮',n:'Oráculon'},7:{e:'🌠',n:'Meteoro-7'},
        8:{e:'⚜️',n:'Brasorum'},9:{e:'🏆',n:'Vitorius'},10:{e:'👑',n:'O Supremo'}}}
 };
+// Subtração tem suas próprias criaturas (mesmas sets, identificadas pelo subject)
+const CREATURES_SUB={
+  0:{name:'Guardiões da Floresta',icon:'🍀',color:'#58CC02',sh:'#2E7D00',bg:'#d7ffb8',
+    c:{2:{e:'🐛',n:'Larviño'},3:{e:'🐞',n:'Joanita'},4:{e:'🦗',n:'Grilius'},
+       5:{e:'🐝',n:'Abelardo'},6:{e:'🦎',n:'Lagartel'},7:{e:'🐍',n:'Serpentix'},
+       8:{e:'🦔',n:'Espinoso'},9:{e:'🦦',n:'Lontrinha'},10:{e:'🦫',n:'Castorim'}}},
+  5:{name:'Abismos do Mar',icon:'🌊',color:'#1CB0F6',sh:'#0f6d99',bg:'#ddf4ff',
+    c:{2:{e:'🦀',n:'Carangux'},3:{e:'🦞',n:'Lagostel'},4:{e:'🐠',n:'Peixim-4'},
+       5:{e:'🦭',n:'Focinha'},6:{e:'🐚',n:'Conchinex'},7:{e:'🪸',n:'Coralix'},
+       8:{e:'🐋',n:'Baleinex'},9:{e:'🦑',n:'Lulitão'},10:{e:'🧜',n:'Tritão'}}},
+  4:{name:'Predadores',icon:'🐅',color:'#FF9600',sh:'#c47200',bg:'#fff4e0',
+    c:{2:{e:'🦊',n:'Raposão'},3:{e:'🐻',n:'Ursolino'},4:{e:'🐗',n:'Javalisso'},
+       5:{e:'🦅',n:'Águilix'},6:{e:'🐺',n:'Lobão'},7:{e:'🦁',n:'Leorix'},
+       8:{e:'🐯',n:'Tigrix'},9:{e:'🐆',n:'Onçalix'},10:{e:'🦍',n:'Kingori'}}},
+  3:{name:'Elementais',icon:'⚡',color:'#CE82FF',sh:'#8549ba',bg:'#f5eeff',
+    c:{2:{e:'🌱',n:'Terrix'},3:{e:'💧',n:'Aquix'},4:{e:'🔥',n:'Pyrix'},
+       5:{e:'💨',n:'Ventix'},6:{e:'⚡',n:'Fulgor'},7:{e:'❄️',n:'Glacix'},
+       8:{e:'🌑',n:'Umbrix'},9:{e:'☀️',n:'Solarius'},10:{e:'🌌',n:'Cosmix'}}},
+  2:{name:'Ancestrais',icon:'🔱',color:'#FFC800',sh:'#c49a00',bg:'#fff5cc',
+    c:{2:{e:'🗿',n:'Monolith'},3:{e:'⚗️',n:'Alquimix'},4:{e:'🔯',n:'Hexagrix'},
+       5:{e:'🧿',n:'Amuletox'},6:{e:'🪄',n:'Feiticix'},7:{e:'🔮',n:'Oraclix'},
+       8:{e:'📿',n:'Sagradix'},9:{e:'⚜️',n:'Nobrilis'},10:{e:'👁️',n:'O Onisciente'}}}
+};
 let collViewDiff = 0;
 let subject = 'mult'; // 'mult' | 'div' | 'add'
 
 const SUBJECTS = {
   mult:{label:'✖️ Multiplicação', op:'×', color:'var(--green)', sh:'var(--green-sh)'},
   div: {label:'➗ Divisão',       op:'÷', color:'var(--blue)',  sh:'var(--blue-sh)'},
-  add: {label:'➕ Adição',        op:'+', color:'#FF9600',      sh:'#c47200'}
+  add: {label:'➕ Adição',        op:'+', color:'#FF9600',      sh:'#c47200'},
+  sub: {label:'➖ Subtração',     op:'−', color:'var(--red)',   sh:'var(--red-sh)'}
 };
 
 const DIV_TIPS = {
@@ -734,6 +1771,11 @@ const DIV_TIPS = {
   4:'💡 Metade da metade!',5:'💡 Resultado múltiplo de '+5,
   6:'💡 Use a tabuada do 6',7:'💡 Use a tabuada do 7',
   8:'💡 Use a tabuada do 8',9:'💡 9 × ? = número',10:'💡 Só tirar o zero!'
+};
+const SUB_TIPS = {
+  2:'💡 Conta 2 para trás!',3:'💡 Volta 3 passinhos',4:'💡 Volta 4 passinhos',
+  5:'💡 Vai até 10 e volta',6:'💡 6 = 10−4, use isso!',7:'💡 7 = 10−3, use isso!',
+  8:'💡 8 = 10−2, use isso!',9:'💡 9 = 10−1, use isso!',10:'💡 Só muda a dezena!'
 };
 const ADD_TIPS = {
   2:'💡 Conta 2 a mais!',3:'💡 Conta 3 passinhos',4:'💡 Conta 4 a mais',
@@ -773,15 +1815,91 @@ function AC(){if(!aCtx)aCtx=new(window.AudioContext||window.webkitAudioContext)(
 function playSuccess(){try{const ctx=AC(),ns=[523,659,784,1047];ns.forEach((f,i)=>{const o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.frequency.value=f;o.type='triangle';const t=ctx.currentTime+i*.1;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol*.8,t+.03);g.gain.exponentialRampToValueAtTime(.001,t+.25);o.start(t);o.stop(t+.26)})}catch(e){}}
 function playDuck(){try{const ctx=AC();for(let q=0;q<3;q++){const t=ctx.currentTime+q*.38;const osc=ctx.createOscillator(),bpf=ctx.createBiquadFilter(),lpf=ctx.createBiquadFilter(),mg=ctx.createGain();osc.connect(bpf);bpf.connect(lpf);lpf.connect(mg);mg.connect(ctx.destination);osc.type='square';osc.frequency.setValueAtTime(340,t);osc.frequency.linearRampToValueAtTime(520,t+.05);osc.frequency.linearRampToValueAtTime(280,t+.25);bpf.type='bandpass';bpf.Q.value=4;bpf.frequency.setValueAtTime(700,t);bpf.frequency.linearRampToValueAtTime(1100,t+.05);bpf.frequency.linearRampToValueAtTime(600,t+.25);lpf.type='lowpass';lpf.frequency.value=1800;lpf.Q.value=.5;mg.gain.setValueAtTime(0,t);mg.gain.linearRampToValueAtTime(vol*.95,t+.03);mg.gain.setValueAtTime(vol*.85,t+.13);mg.gain.exponentialRampToValueAtTime(.001,t+.28);const o2=ctx.createOscillator(),g2=ctx.createGain();o2.connect(g2);g2.connect(bpf);o2.type='square';o2.frequency.setValueAtTime(348,t);o2.frequency.linearRampToValueAtTime(530,t+.05);o2.frequency.linearRampToValueAtTime(285,t+.25);g2.gain.value=.35;osc.start(t);osc.stop(t+.29);o2.start(t);o2.stop(t+.29)}}catch(e){}}
 function playTick(){try{const ctx=AC(),o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.frequency.value=900;o.type='square';g.gain.setValueAtTime(0,ctx.currentTime);g.gain.linearRampToValueAtTime(vol*.07,ctx.currentTime+.01);g.gain.exponentialRampToValueAtTime(.001,ctx.currentTime+.06);o.start();o.stop(ctx.currentTime+.07)}catch(e){}}
+function playCombo(n){try{
+  const ctx=AC();
+  const baseFreq=Math.min(300+n*80,1200);
+  [baseFreq,baseFreq*1.25,baseFreq*1.5].forEach((f,i)=>{
+    const o=ctx.createOscillator(),g=ctx.createGain();
+    o.connect(g);g.connect(ctx.destination);
+    o.type='sine';o.frequency.value=f;
+    const t=ctx.currentTime+i*.08;
+    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol*.5,t+.02);g.gain.exponentialRampToValueAtTime(.001,t+.18);
+    o.start(t);o.stop(t+.19);
+  });
+}catch(e){}}
+function playWin(stars){try{
+  const ctx=AC();
+  const ns=stars===3?[523,659,784,1047,1319,1047,784,659,523]:[523,659,784,1047];
+  ns.forEach((f,i)=>{
+    const o=ctx.createOscillator(),g=ctx.createGain();
+    o.connect(g);g.connect(ctx.destination);
+    o.type='triangle';o.frequency.value=f;
+    const t=ctx.currentTime+i*.12;
+    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol*.6,t+.03);g.gain.exponentialRampToValueAtTime(.001,t+.28);
+    o.start(t);o.stop(t+.29);
+  });
+}catch(e){}}
 function testSounds(){playSuccess();setTimeout(playDuck,1400)}
 function setVol(v){vol=parseFloat(v);document.getElementById('volPct').textContent=Math.round(vol*100)+'%';if(P){P.vol=v;sp()}}
 function renderLogin(){
-  const data=gd();const area=document.getElementById('profilesArea');area.innerHTML='';
-  if(data.profiles.length){const lbl=document.createElement('div');lbl.className='sec-lbl';lbl.textContent='Continuar como';area.appendChild(lbl);data.profiles.forEach((p,i)=>{const d=document.createElement('div');d.className='profile-item';d.innerHTML=`<div class="pi-av">${p.av}</div><div class="pi-info"><div class="pi-name">${p.name}</div><div class="pi-stats">⭐${p.stars||0} · 💎${p.gems||0} · 🔥${p.streak||0}</div></div><div style="color:var(--gray-dk);font-size:1.2rem;">▶</div>`;d.onclick=()=>loginAs(i);area.appendChild(d)})}
-  const ag=document.getElementById('avGrid');ag.innerHTML='';AVATARS.forEach(a=>{const b=document.createElement('button');b.className='av-btn'+(a===selAv?' sel':'');b.textContent=a;b.onclick=()=>{selAv=a;renderLogin()};ag.appendChild(b)});
+  // Esconde banner premium na login se já comprou
+  const loginBanner = document.querySelector('#sLogin [onclick*="mPremium"]');
+  if(loginBanner) loginBanner.style.display = isPremiumUnlocked() ? 'none' : 'flex';
+
+  const data=gd();
+  const area=document.getElementById('profilesArea');
+  area.innerHTML='';
+  if(data.profiles.length){
+    // First profile — big green button (primary action)
+    const p0 = data.profiles[0];
+    const big = document.createElement('div');
+    big.className = 'profile-big';
+    big.innerHTML = `<div class="pb-av">${p0.av}</div><div class="pb-info"><div class="pb-name">${p0.name}</div><div class="pb-stats">⭐${p0.stars||0} · 💎${p0.gems||0} · 🔥${p0.streak||0}</div></div><div class="pb-play">▶</div>`;
+    big.onclick = ()=>loginAs(0);
+    area.appendChild(big);
+    // Additional profiles — smaller
+    data.profiles.slice(1).forEach((p,i)=>{
+      const d=document.createElement('div');
+      d.className='profile-item';
+      d.innerHTML=`<div class="pi-av">${p.av}</div><div class="pi-info"><div class="pi-name">${p.name}</div><div class="pi-stats">⭐${p.stars||0} · 💎${p.gems||0} · 🔥${p.streak||0}</div></div><div style="color:var(--gray-dk);font-size:1rem;">▶</div>`;
+      d.onclick=()=>loginAs(i+1);
+      area.appendChild(d);
+    });
+  } else {
+    // No profiles — auto-open the add form
+    const form = document.getElementById('addPlayerForm');
+    const toggle = document.getElementById('addPlayerToggle');
+    if(form){ form.classList.add('open'); }
+    if(toggle){ toggle.style.display='none'; }
+  }
+  const ag=document.getElementById('avGrid');
+  if(ag){ ag.innerHTML='';AVATARS.forEach(a=>{const b=document.createElement('button');b.className='av-btn'+(a===selAv?' sel':'');b.textContent=a;b.onclick=()=>{selAv=a;ag.querySelectorAll('.av-btn').forEach(x=>x.classList.remove('sel'));b.classList.add('sel')};ag.appendChild(b)}); }
+  // Update cloud button in header
+  updateAuthUI();
+}
+
+function toggleAddPlayer(){
+  const form = document.getElementById('addPlayerForm');
+  const toggle = document.getElementById('addPlayerToggle');
+  if(!form) return;
+  const isOpen = form.classList.contains('open');
+  form.classList.toggle('open');
+  if(toggle) toggle.textContent = isOpen ? '＋ Adicionar jogador' : '✕ Cancelar';
+}
+
+function toggleCloudSection(){
+  const body = document.getElementById('cloudBody');
+  const arr  = document.getElementById('cloudToggleArr');
+  if(!body) return;
+  body.classList.toggle('open');
+  if(arr) arr.classList.toggle('open');
 }
 function createProfile(){const nm=document.getElementById('newName').value.trim(),pin=document.getElementById('newPin').value.trim();if(!nm){alert('Digite o nome!');return}if(pin&&(pin.length!==4||isNaN(pin))){alert('PIN deve ter 4 números!');return}const data=gd();const p={name:nm,av:selAv,pin:pin||'1234',stars:0,gems:0,streak:0,lastDate:null,tableStars:{},creatures:[],totalOk:0,totalWrong:0,totalGames:0,logs:[],vol:.5};data.profiles.push(p);sd(data);loginAs(data.profiles.length-1)}
 function loginAs(idx){const data=gd();P=data.profiles[idx];Pi=idx;diff=P.diff||0;
+  // Aplica premium comprado antes de criar perfil
+  if(localStorage.getItem('mm_premium_purchased')==='1' && !P.premium){
+    P.premium = true;
+  }
   // Migrate old tableStars / creaturesMap into P.subjects.mult
   if(P.tableStars&&Object.keys(P.tableStars).length){
     P.subjects=P.subjects||{};P.subjects.mult=P.subjects.mult||{};
@@ -789,15 +1907,24 @@ function loginAs(idx){const data=gd();P=data.profiles[idx];Pi=idx;diff=P.diff||0
       P.subjects.mult.tableStars=P.tableStars;
     if(P.creaturesMap&&!P.subjects.mult.creaturesMap)
       P.subjects.mult.creaturesMap=P.creaturesMap;
-  }vol=P.vol||.5;document.getElementById('volSlider').value=vol;document.getElementById('volPct').textContent=Math.round(vol*100)+'%';updateStreak();renderHome();show('sHome')}
-function sp(){const data=gd();data.profiles[Pi]={...P};sd(data)}
-function logout(){P=null;renderLogin();show('sLogin')}
+  }vol=P.vol||.5;document.getElementById('volSlider').value=vol;document.getElementById('volPct').textContent=Math.round(vol*100)+'%';
+  // restore dark toggle state
+  const dt=document.getElementById('darkToggle');if(dt)dt.checked=localStorage.getItem('mm_dark')==='1';
+  updatePremiumUI();updateStreak();renderHome();show('sHome')}
+function sp(){const data=gd();data.profiles[Pi]={...P};sd(data);saveProfileToCloud();}
+function logout(){P=null;if(fbUser){signOut();}else{renderLogin();show('sLogin');}}
 function updateStreak(){const today=new Date().toDateString();if(!P||P.lastDate===today)return;const yest=new Date();yest.setDate(yest.getDate()-1);P.streak=P.lastDate===yest.toDateString()?(P.streak||0)+1:1;P.lastDate=today;sp()}
 function renderHome(){
-  document.getElementById('homeAv').textContent=P.av;document.getElementById('homeName').textContent=P.name;document.getElementById('homeGems').textContent='💎 '+(P.gems||0);document.getElementById('hudStars').textContent=P.stars||0;document.getElementById('hudStreak').textContent=P.streak||0;document.getElementById('settingsName').textContent=P.name;
+  const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+  set('homeAv',P.av);set('homeName',P.name);set('homeGems','💎 '+(P.gems||0));
+  set('hudStars',P.stars||0);set('hudStreak',P.streak||0);set('settingsName',P.name);
+  // profile modal
+  set('profileModalAv',P.av);set('profileModalName',P.name);
+  set('profileModalStats','⭐'+(P.stars||0)+' · 💎'+(P.gems||0)+' · 🔥'+(P.streak||0));
+  set('profileModalCloud', fbUser ? '☁️ '+( fbUser.displayName||fbUser.email) : '📱 Perfil local');
   document.querySelectorAll('.dbn,.dbn-sm').forEach(b=>b.classList.toggle('sel',parseInt(b.dataset.d)===diff));
   const db=document.getElementById('diffBadge');if(db)db.textContent=DLBL[diff]||'Sem timer';
-  renderJourney();
+  updatePremiumUI();updateStoryProgress();renderMissions();renderJourney();
 }
 
 // ── JOURNEY PATH ─────────────────────────────────────────────
@@ -906,7 +2033,17 @@ function renderJourney(){
       ? `<div class="jnode-num">👑</div><div class="jnode-lbl">${opLabel}${n.t}</div>`
       : `<div class="jnode-num">${opPfx}${n.t}</div><div class="jnode-lbl">${starsStr}</div>`;
 
-    if(!cls.includes('jlocked')) div.onclick = () => startGame(n.t);
+    if(!cls.includes('jlocked')){
+      // Check freemium gate
+      if(!n.boss && PREMIUM_TABLES.includes(n.t) && !isPremiumUnlocked()){
+        cls = 'jnode jlocked-premium';
+        div.className = cls;
+        div.innerHTML = `<div class="jnode-num">🔒</div><div class="jnode-lbl">Premium</div><div class="premium-badge">👑</div>`;
+        div.onclick = () => openModal('mPremium');
+      } else {
+        div.onclick = () => startGame(n.t);
+      }
+    }
     canvas.appendChild(div);
   });
 
@@ -947,7 +2084,8 @@ function moveJourneyChar(){
 }
 
 function renderCollection(){
-  const set = CREATURES_ALL[collViewDiff];
+  const creSet = subject==='sub' ? CREATURES_SUB : CREATURES_ALL;
+  const set = creSet[collViewDiff];
   if(!set) return;
 
   // difficulty selector row
@@ -955,7 +2093,7 @@ function renderCollection(){
   if(row){
     row.innerHTML='';
     [0,5,4,3,2].forEach(d=>{
-      const s=CREATURES_ALL[d];
+      const s=creSet[d];
       const btn=document.createElement('div');
       btn.className='cdiff-btn'+(d===collViewDiff?' sel':'');
       btn.style.borderColor = d===collViewDiff ? s.color : '';
@@ -989,11 +2127,13 @@ function renderCollection(){
     const c=set.c[i];
     const d=document.createElement('div');
     d.className='cre-card '+(un?'un':'lk');
-    d.innerHTML=`<div class="cre-emoji">${un?c.e:'🔒'}</div><div class="cre-name">${un?c.n:'Tab. '+i}</div>`;
+    d.innerHTML=un
+      ? `<div class="cre-emoji">${c.e}</div><div class="cre-name">${c.n}</div>`
+      : `<div class="cre-silh">${c.e}</div><div class="cre-mystery">Tab. ${i} ?</div>`;
     grid.appendChild(d);
   }
 }
-function htab(tab,el){document.querySelectorAll('.htab').forEach(b=>b.classList.remove('active'));el.classList.add('active');const map={missions:'tabMissions',collection:'tabCollection',settings:'tabSettings'};document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.getElementById(map[tab]).classList.add('active');if(tab==='collection'){collViewDiff=diff;renderCollection();}}
+function htab(tab,el){document.querySelectorAll('.htab').forEach(b=>b.classList.remove('active'));el.classList.add('active');const map={missions:'tabMissions',ranking:'tabRanking',collection:'tabCollection',settings:'tabSettings'};document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.getElementById(map[tab]).classList.add('active');if(tab==='collection'){collViewDiff=diff;renderCollection();}if(tab==='ranking')renderChildRanking();if(tab==='settings')renderSettingsAccount();}
 function setDiff(d,el){diff=d;document.querySelectorAll('.dbn,.dbn-sm').forEach(b=>b.classList.remove('sel'));document.querySelectorAll('[data-d="'+d+'"]').forEach(b=>b.classList.add('sel'));const db=document.getElementById('diffBadge');if(db)db.textContent=DLBL[d];if(P){P.diff=d;sp()}}
 function mkQ(table){
   const seq=[1,2,10,5,3,4,9,6,7,8];
@@ -1011,18 +2151,25 @@ function mkQ(table){
     }
     return qs;
   }
-  const tipMap = subject==='div'?DIV_TIPS:subject==='add'?ADD_TIPS:TIPS;
+  const tipMap = subject==='div'?DIV_TIPS:subject==='add'?ADD_TIPS:subject==='sub'?SUB_TIPS:TIPS;
   for(let i=0;i<10;i++){
     const b=seq[i];
     const tip=i===0?tipMap[table]:null;
     if(subject==='mult') qs.push({a:table,op:'×',b,ans:table*b,tip});
     else if(subject==='div') qs.push({a:table*b,op:'÷',b:table,ans:b,tip});
+    else if(subject==='sub') qs.push({a:table+b,op:'−',b,ans:table,tip});
     else qs.push({a:table,op:'+',b,ans:table+b,tip});
   }
   return [...qs.slice(0,3),...qs.slice(3).sort(()=>Math.random()-.5)];
 }
 function mkAns(c){const s=new Set([c]);while(s.size<4){const v=~~(Math.random()*5)+1;const w=Math.random()>.5?c+v:Math.max(1,c-v);if(w!==c)s.add(w)}return Array.from(s).sort(()=>Math.random()-.5)}
-function startGame(table){clearInterval(tIv);GS={table,questions:mkQ(table),cur:0,ok:0,wrong:0,combo:0,maxCombo:0,hearts:3,diff};updateStreak();document.getElementById('resultBar').className='result-bar hidden';show('sGame');renderQ()}
+function startGame(table){
+  if(table!=='boss' && PREMIUM_TABLES.includes(table) && !isPremiumUnlocked()){
+    openModal('mPremium'); return;
+  }
+  clearInterval(tIv);GS={table,questions:mkQ(table),cur:0,ok:0,wrong:0,combo:0,maxCombo:0,hearts:3,diff};
+  initPowerups();updateStreak();document.getElementById('resultBar').className='result-bar hidden';show('sGame');renderQ();
+}
 function restartLast(){if(GS)startGame(GS.table)}
 function renderQ(){
   clearInterval(tIv);waitNext=false;document.getElementById('resultBar').className='result-bar hidden';
@@ -1047,13 +2194,15 @@ function setupTimer(){
 }
 function updateRing(rem,total,arc,num,C){const pct=rem/total;arc.style.strokeDashoffset=C*(1-pct);num.textContent=Math.ceil(rem);arc.className='qr-arc'+(pct>.5?'':pct>.25?' warn':' hot')}
 function timeOut(){const q=GS.questions[GS.cur];const ans=q.a*q.b;GS.combo=0;GS.wrong++;GS.hearts--;playDuck();showRB(false,`Tempo! A resposta era ${ans}`,'Tente mais rápido da próxima vez! ⏱');for(let i=0;i<4;i++){const b=document.getElementById('a'+i);b.disabled=true;if(parseInt(b.textContent)===ans)b.classList.add('correct')}if(GS.hearts<=0){setTimeout(()=>endGame(false),1500);return}}
-function pick(sel,correct,btn){if(waitNext)return;clearInterval(tIv);for(let i=0;i<4;i++)document.getElementById('a'+i).disabled=true;if(sel===correct){btn.classList.add('correct');GS.ok++;GS.combo++;GS.maxCombo=Math.max(GS.maxCombo,GS.combo);P.totalOk=(P.totalOk||0)+1;playSuccess();flash(PRAISES[~~(Math.random()*PRAISES.length)],'ok');showRB(true,'Correto! 🎉',`${sel} é a resposta certa`)}else{btn.classList.add('wrong');for(let i=0;i<4;i++){const b=document.getElementById('a'+i);if(parseInt(b.textContent)===correct)b.classList.add('correct')}GS.combo=0;GS.wrong++;GS.hearts--;P.totalWrong=(P.totalWrong||0)+1;playDuck();flash('Ops! 💪','err');showRB(false,`A resposta era ${correct}`,`${GS.questions[GS.cur].a} ${GS.questions[GS.cur].op||'×'} ${GS.questions[GS.cur].b} = ${correct}`);if(GS.hearts<=0){setTimeout(()=>endGame(false),1600);return}}}
+function pick(sel,correct,btn){if(waitNext)return;clearInterval(tIv);for(let i=0;i<4;i++)document.getElementById('a'+i).disabled=true;if(sel===correct){btn.classList.add('correct');GS.ok++;GS.combo++;GS.maxCombo=Math.max(GS.maxCombo,GS.combo);P.totalOk=(P.totalOk||0)+1;playSuccess();flash(PRAISES[~~(Math.random()*PRAISES.length)],'ok');showRB(true,'Correto! 🎉',`${sel} é a resposta certa`);if(GS.combo>=3)showComboPop(GS.combo);updateMissionProgress('combo',1);}else{btn.classList.add('wrong');for(let i=0;i<4;i++){const b=document.getElementById('a'+i);if(parseInt(b.textContent)===correct)b.classList.add('correct')}GS.combo=0;GS.wrong++;GS.hearts--;P.totalWrong=(P.totalWrong||0)+1;playDuck();flash('Ops! 💪','err');showRB(false,`A resposta era ${correct}`,`${GS.questions[GS.cur].a} ${GS.questions[GS.cur].op||'×'} ${GS.questions[GS.cur].b} = ${correct}`);if(GS.hearts<=0){setTimeout(()=>endGame(false),1600);return}}}
 function showRB(ok,title,sub){waitNext=true;const bar=document.getElementById('resultBar');bar.className='result-bar '+(ok?'rb-correct':'rb-wrong');document.getElementById('rbIcon').textContent=ok?'✅':'❌';document.getElementById('rbTitle').textContent=title;document.getElementById('rbSub').textContent=sub}
 function nextQ(){if(!waitNext)return;GS.cur++;if(GS.cur>=GS.questions.length){endGame(true);return}if(GS.cur===5){openModal('mBreak');return}renderQ()}
 function endGame(won){
   clearInterval(tIv);P.totalGames=(P.totalGames||0)+1;const acc=GS.ok/GS.questions.length;
   const log={table:GS.table,ok:GS.ok,total:GS.questions.length,acc:~~(acc*100),won,combo:GS.maxCombo,diff,date:new Date().toLocaleString('pt-BR')};
   P.logs=P.logs||[];P.logs.unshift(log);if(P.logs.length>20)P.logs.pop();
+  updateMissionProgress('games',1);
+  if(won&&acc===1&&GS.wrong===0) updateMissionProgress('perfect',1);
   if(won){
     const stars=acc===1&&GS.wrong===0?3:acc>=.8?2:1;const t=GS.table;const ts2=getTS();const prev=ts2[t]||0;const nS=t!=='boss'?Math.max(prev,stars):prev;if(t!=='boss')setTStar(t,nS);const gained=Math.max(0,nS-prev);
     const gems=GS.ok*2+GS.maxCombo*3+(acc===1?25:0)+(diff>0?(6-diff)*5:0);P.stars=(P.stars||0)+gained;P.gems=(P.gems||0)+gems;
@@ -1064,14 +2213,26 @@ function endGame(won){
       if(!cm[gd].includes(t)){
         cm[gd].push(t);
         setCMEntry(gd,cm[gd]);
-        const cset=CREATURES_ALL[gd];
+        const cset = subject==='sub' ? CREATURES_SUB[gd] : CREATURES_ALL[gd];
         if(cset) cr={e:cset.c[t].e,n:cset.c[t].n,col:cset.color,set:cset.name};
       }
     }sp();
-    document.getElementById('winEmoji').textContent=stars===3?'🏆':stars===2?'⭐':'🎉';document.getElementById('winTitle').textContent=stars===3?'Perfeito! 🏆':stars===2?'Muito bem! ⭐':'Parabéns! 🎉';
+    const wm=document.getElementById('winMascot');if(wm)wm.textContent=P.av||'🦉';
+    document.getElementById('winEmoji').textContent=stars===3?'🏆':stars===2?'⭐':'🎉';
+    document.getElementById('winTitle').textContent=stars===3?'Perfeito! 🏆':stars===2?'Muito bem! ⭐':'Parabéns! 🎉';
     const sr=document.getElementById('winStars');sr.innerHTML='';for(let i=0;i<3;i++){const s=document.createElement('span');s.className='star-item'+(i>=stars?' empty':'');s.textContent='⭐';sr.appendChild(s)}
-    document.getElementById('winRewards').innerHTML=`<div class="rew-chip">💎 +${gems}</div>${gained>0?`<div class="rew-chip">⭐ +${gained}</div>`:''} ${GS.maxCombo>=3?`<div class="rew-chip">🔥 Combo ×${GS.maxCombo}</div>`:''} ${cr?`<div class="rew-chip" style="border-color:${cr.col};">${cr.e} ${cr.n} desbloqueado!</div>`:''}`;
-    confetti();openModal('mWin');setTimeout(moveJourneyChar,600);
+    document.getElementById('winRewards').innerHTML=`<div class="rew-chip">💎 +${gems}</div>${gained>0?`<div class="rew-chip">⭐ +${gained}</div>`:''} ${GS.maxCombo>=3?`<div class="rew-chip">🔥 Combo ×${GS.maxCombo}</div>`:''} ${cr?`<div class="rew-chip" style="border-color:${cr.col};">${cr.e} ${cr.n} resgatada!</div>`:''}`;
+    confetti();playWin(stars);if(stars===3) bigWinCelebration();openModal('mWin');setTimeout(moveJourneyChar,600);
+    if(t===5 && stars===3 && !isPremiumUnlocked()) setTimeout(()=>{ closeModal('mWin'); openModal('mPremiumUpsell'); }, 2200);
+    if(!fbUser && P.totalGames>=3){
+      const lastPrompt = localStorage.getItem('mm_login_prompt');
+      if(!lastPrompt || Date.now()-parseInt(lastPrompt) > 24*60*60*1000){
+        localStorage.setItem('mm_login_prompt', Date.now());
+        const lp=document.getElementById('loginPromptGems');const ls=document.getElementById('loginPromptStars');
+        if(lp)lp.textContent=(P.gems||0)+' 💎';if(ls)ls.textContent=(P.stars||0)+' ⭐';
+        setTimeout(()=>{ closeModal('mWin'); openModal('mLoginPrompt'); }, 2500);
+      }
+    }
   }else{const gems=GS.ok;P.gems=(P.gems||0)+gems;sp();document.getElementById('loseGems').textContent=gems+' 💎';openModal('mLose')}
 }
 function showParentPin(){document.getElementById('pinInput').value='';document.getElementById('pinErr').textContent='';show('sParentPin')}
@@ -1100,7 +2261,9 @@ function renderDash(){
       tp.appendChild(r);
     }
   });
-  const la=document.getElementById('logArea');la.innerHTML='';const logs=(P.logs||[]).slice(0,10);if(!logs.length){la.innerHTML='<div style="text-align:center;color:var(--gray-dk);padding:1rem;">Nenhuma partida ainda!</div>';return}logs.forEach(l=>{const tl=l.table==='boss'?'👑 Misto':'×'+l.table;const d=document.createElement('div');d.className='log-item';d.innerHTML=`<div class="li-icon">${l.won?'✅':'❌'}</div><div class="li-info">${tl} · ${l.acc}% · ⏱${l.diff||0}s<br><span style="font-size:.7rem;color:var(--gray-dk);">${l.date}</span></div><div class="li-score">${l.ok}/${l.total}</div>`;la.appendChild(d)});
+  const la=document.getElementById('logArea');la.innerHTML='';const logs=(P.logs||[]).slice(0,10);if(!logs.length){la.innerHTML='<div style="text-align:center;color:var(--gray-dk);padding:1rem;">Nenhuma partida ainda!</div>';}else{logs.forEach(l=>{const tl=l.table==='boss'?'👑 Misto':'×'+l.table;const d=document.createElement('div');d.className='log-item';d.innerHTML=`<div class="li-icon">${l.won?'✅':'❌'}</div><div class="li-info">${tl} · ${l.acc}% · ⏱${l.diff||0}s<br><span style="font-size:.7rem;color:var(--gray-dk);">${l.date}</span></div><div class="li-score">${l.ok}/${l.total}</div>`;la.appendChild(d)});}
+  renderLeaderboard();
+  renderWeeklyChart();
 }
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active')}
 function goHome(){clearInterval(tIv);renderHome();show('sHome');document.querySelectorAll('.htab').forEach((t,i)=>t.classList.toggle('active',i===0));document.querySelectorAll('.tab-panel').forEach((p,i)=>p.classList.toggle('active',i===0))}
@@ -1108,7 +2271,293 @@ function openModal(id){document.getElementById(id).classList.add('open')}
 function closeModal(id){document.getElementById(id).classList.remove('open')}
 function flash(txt,type){const ov=document.getElementById('fbFlash'),t=document.getElementById('fbTxt');t.textContent=txt;t.className='fb-txt fb-'+type;ov.classList.add('show');setTimeout(()=>ov.classList.remove('show'),900)}
 function confetti(){const c=['#58CC02','#1CB0F6','#FF4B4B','#FFC800','#CE82FF'];for(let i=0;i<45;i++){const d=document.createElement('div');d.className='cft';d.style.left=Math.random()*100+'%';d.style.top='-10px';d.style.background=c[~~(Math.random()*c.length)];d.style.animationDelay=(Math.random()*.6)+'s';d.style.animationDuration=(1.5+Math.random()*1.5)+'s';d.style.borderRadius=Math.random()>.5?'50%':'2px';document.body.appendChild(d);setTimeout(()=>d.remove(),3e3)}}
-renderLogin();
+// ── OFFLINE DETECTION ─────────────────────────────────────
+function updateOnlineStatus(){
+  const banner = document.getElementById('offlineBanner');
+  if(!banner) return;
+  if(!navigator.onLine) banner.classList.add('show');
+  else banner.classList.remove('show');
+}
+window.addEventListener('online', updateOnlineStatus);
+window.addEventListener('offline', updateOnlineStatus);
+updateOnlineStatus();
+
+// ── DELETE PROFILE ────────────────────────────────────────
+function confirmDeleteProfile(){
+  if(!P) return;
+  const msg = document.getElementById('deleteProfileMsg');
+  if(msg) msg.textContent = `Todo o progresso de "${P.name}" (⭐${P.stars||0} · 💎${P.gems||0}) será perdido permanentemente.`;
+  openModal('mDeleteProfile');
+}
+function executeDeleteProfile(){
+  if(!P) return;
+  const data = gd();
+  data.profiles.splice(Pi, 1);
+  sd(data);
+  // Delete from cloud too
+  if(fbReady && fbUser && P._cloudId){
+    try{ fbDb.collection('users').doc(fbUser.uid).collection('profiles').doc(P._cloudId).delete(); }catch(e){}
+  }
+  P = null; Pi = -1;
+  closeModal('mDeleteProfile');
+  flash('Perfil apagado.','ok');
+  renderLogin();
+  show('sLogin');
+}
+
+// ── BIG WIN 3 STARS ANIMATION ─────────────────────────────
+function bigWinCelebration(){
+  const emojis = ['⭐','🌟','✨','🏆','🎉','💎'];
+  for(let i=0; i<12; i++){
+    const el = document.createElement('div');
+    el.className = 'star-burst';
+    el.textContent = emojis[Math.floor(Math.random()*emojis.length)];
+    el.style.left = Math.random()*100+'%';
+    el.style.top = Math.random()*60+'%';
+    el.style.animationDelay = (Math.random()*.6)+'s';
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(), 1800);
+  }
+  // Screen flash
+  const flash = document.createElement('div');
+  flash.style.cssText = 'position:fixed;inset:0;background:rgba(255,200,0,.3);z-index:9998;pointer-events:none;animation:fadeOut .6s ease-out forwards;';
+  document.body.appendChild(flash);
+  setTimeout(()=>flash.remove(), 700);
+}
+
+// ── WEEKLY PROGRESS CHART ─────────────────────────────────
+function renderWeeklyChart(){
+  const area = document.getElementById('weeklyChartArea');
+  if(!area || !P) return;
+  const days = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+  const now = new Date();
+  const weekData = Array(7).fill(0);
+  (P.logs||[]).forEach(l=>{
+    try{
+      const d = new Date(l.date);
+      const diff = Math.floor((now - d)/(1000*60*60*24));
+      if(diff < 7){
+        const dayIdx = (now.getDay() - diff + 7) % 7;
+        weekData[dayIdx] += (l.ok||0);
+      }
+    }catch(e){}
+  });
+  const max = Math.max(...weekData, 1);
+  const todayIdx = now.getDay();
+  area.innerHTML = `
+    <div style="font-weight:900;font-size:.82rem;color:var(--dark);margin-bottom:.6rem;">📈 Acertos por dia (últimos 7 dias)</div>
+    <div style="display:flex;align-items:flex-end;gap:.3rem;height:70px;">
+      ${weekData.map((v,i)=>`
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;">
+          <div style="font-size:.65rem;font-weight:700;color:var(--dark);">${v||''}</div>
+          <div style="width:100%;background:${i===todayIdx?'var(--green)':'var(--blue)'};border-radius:4px 4px 0 0;height:${Math.round(v/max*52)+4}px;transition:height .4s;"></div>
+          <div style="font-size:.6rem;color:var(--gray-dk);font-weight:700;">${days[i]}</div>
+        </div>`).join('')}
+    </div>`;
+}
+const MISSION_DEFS = [
+  {id:'play3',    lbl:'Jogue 3 partidas',        max:3,  rew:15, key:'games'},
+  {id:'streak5',  lbl:'Acerte 5 seguidas',        max:5,  rew:20, key:'combo'},
+  {id:'perfect',  lbl:'Termine sem errar',        max:1,  rew:30, key:'perfect'},
+];
+function getTodayKey(){ return new Date().toDateString(); }
+function getMissions(){
+  const key = 'mm_missions_'+getTodayKey();
+  const saved = localStorage.getItem(key);
+  if(saved) return JSON.parse(saved);
+  const fresh = MISSION_DEFS.map(m=>({...m, cur:0, done:false}));
+  localStorage.setItem(key, JSON.stringify(fresh));
+  return fresh;
+}
+function saveMissions(ms){ localStorage.setItem('mm_missions_'+getTodayKey(), JSON.stringify(ms)); }
+function updateMissionProgress(key, val){
+  const ms = getMissions();
+  ms.forEach(m=>{
+    if(m.done) return;
+    if(m.key === key){ m.cur = Math.min(m.max, m.cur + val); if(m.cur >= m.max){ m.done = true; if(P){ P.gems = (P.gems||0) + m.rew; sp(); flash('Missão concluída! +'+m.rew+'💎','ok'); } } }
+  });
+  saveMissions(ms);
+  renderMissions();
+}
+function toggleMissionsPanel(){
+  const panel = document.getElementById('missionsPanel');
+  if(panel) panel.style.display = panel.style.display==='none' ? 'block' : 'none';
+}
+
+function renderMissions(){
+  const area = document.getElementById('missionsList');
+  if(!area) return;
+  const ms = getMissions();
+  const done = ms.filter(m=>m.done).length;
+  const mini = document.getElementById('missionMiniStatus');
+  if(mini) mini.textContent = done+'/'+ms.length+(done===ms.length?' ✅':'');
+  const rew = document.getElementById('missionReward');
+  if(rew) rew.textContent = done===ms.length ? '✅ Todas concluídas!' : done+'/'+ms.length+' feitas';
+  area.innerHTML = ms.map(m=>`
+    <div class="mission-row">
+      <div class="mcheck${m.done?' done':''}">
+        ${m.done?'✓':''}
+      </div>
+      <div class="mlbl">${m.lbl}</div>
+      <div class="mbar-wrap"><div class="mbar-fill" style="width:${Math.round(m.cur/m.max*100)}%"></div></div>
+      <div class="mrew">+${m.rew}💎</div>
+    </div>`).join('');
+}
+
+// ── POWER-UPS ─────────────────────────────────────────────────
+const POWERUP_COSTS = [5, 8, 12];
+let puUsed = [false, false, false];
+function initPowerups(){
+  puUsed = [false, false, false];
+  for(let i=0;i<3;i++){
+    const b = document.getElementById('pu'+i);
+    if(b){ b.classList.remove('used'); b.disabled = false; }
+  }
+}
+function usePowerup(i){
+  const costs = POWERUP_COSTS;
+  if(!P || (P.gems||0) < costs[i]){ flash('Gemas insuficientes!','err'); return; }
+  if(puUsed[i]) return;
+  P.gems -= costs[i]; sp();
+  document.getElementById('homeGems').textContent = '💎 '+(P.gems||0);
+  puUsed[i] = true;
+  document.getElementById('pu'+i).classList.add('used');
+  if(i===0){ // skip question
+    flash('Pergunta pulada! ⏭️','ok');
+    GS.cur++;
+    if(GS.cur >= GS.questions.length){ endGame(true); return; }
+    renderQ();
+  } else if(i===1){ // 50/50
+    flash('Duas erradas removidas! ✂️','ok');
+    const q = GS.questions[GS.cur];
+    const ans = q.ans !== undefined ? q.ans : q.a*q.b;
+    let removed = 0;
+    for(let j=0;j<4&&removed<2;j++){
+      const b = document.getElementById('a'+j);
+      if(b && parseInt(b.textContent) !== ans && !b.disabled){
+        b.style.opacity='.2'; b.disabled=true; removed++;
+      }
+    }
+  } else if(i===2){ // extra life
+    if(GS.hearts < 5){ GS.hearts++; flash('Vida extra! 💖','ok'); document.getElementById('heartsDisp').textContent='💖'.repeat(GS.hearts); }
+    else flash('Já tem vidas cheias!','ok');
+  }
+}
+
+function renderSettingsAccount(){
+  const area = document.getElementById('settingsAccountArea');
+  if(!area) return;
+  if(fbUser){
+    const name = fbUser.displayName || '';
+    const email = fbUser.email || '';
+    const photo = fbUser.photoURL ? `<img src="${fbUser.photoURL}" style="width:36px;height:36px;border-radius:50%;object-fit:cover;border:2px solid var(--green);">` : `<div style="width:36px;height:36px;border-radius:50%;background:var(--green);display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:#fff;">👤</div>`;
+    area.innerHTML = `
+      <div style="display:flex;align-items:center;gap:.7rem;padding:.5rem 0;margin-bottom:.7rem;border-bottom:2px solid var(--gray);">
+        ${photo}
+        <div style="flex:1;">
+          ${name ? `<div style="font-weight:800;font-size:.9rem;color:var(--dark);">${name}</div>` : ''}
+          <div style="font-size:.78rem;font-weight:700;color:var(--gray-dk);">${email}</div>
+          <div style="font-size:.72rem;font-weight:700;color:var(--green);">☁️ Sincronizado</div>
+        </div>
+      </div>
+      <button class="btn btn-outline" style="font-size:.85rem;padding:.65rem;margin-bottom:.4rem;" onclick="logout()">🚪 Sair da conta</button>
+    `;
+  } else {
+    area.innerHTML = `
+      <div style="display:flex;align-items:center;gap:.6rem;padding:.4rem 0;margin-bottom:.7rem;">
+        <div style="font-size:1.5rem;">📵</div>
+        <div>
+          <div style="font-weight:800;font-size:.88rem;color:var(--dark);">Sem conta</div>
+          <div style="font-size:.75rem;font-weight:700;color:var(--gray-dk);">Progresso salvo apenas neste celular</div>
+        </div>
+      </div>
+      <button class="btn btn-green" style="font-size:.85rem;padding:.65rem;" onclick="goHome();setTimeout(()=>{show('sLogin');},100)">☁️ Entrar para salvar na nuvem</button>
+    `;
+  }
+}
+
+function renderChildRanking(){
+  const podium = document.getElementById('rankPodium');
+  const list   = document.getElementById('rankList');
+  if(!podium||!list) return;
+  const data = gd();
+  const oneWeekAgo = Date.now() - 7*24*60*60*1000;
+  const twoWeeksAgo = Date.now() - 14*24*60*60*1000;
+
+  const calcPts = (logs, from, to) =>
+    logs.filter(l=>{ try{ const d=new Date(l.date).getTime(); return d>from&&d<=to; }catch(e){return false;} })
+        .reduce((s,l)=>s+(l.ok||0),0);
+
+  const rankings = data.profiles.map(p=>{
+    const logs = p.logs||[];
+    const pts = calcPts(logs, oneWeekAgo, Date.now());
+    const prevPts = calcPts(logs, twoWeeksAgo, oneWeekAgo);
+    return { name:p.name, av:p.av, pts, prevPts, games:(p.totalGames||0), isMe:p.name===P.name };
+  }).sort((a,b)=>b.pts-a.pts);
+
+  // calculate previous rank
+  const prevRankings = [...rankings].sort((a,b)=>b.prevPts-a.prevPts);
+
+  if(!rankings.length){
+    podium.innerHTML='';
+    list.innerHTML='<div style="text-align:center;color:var(--gray-dk);padding:2rem;">Jogue mais para aparecer aqui!</div>';
+    return;
+  }
+
+  podium.innerHTML = `<div class="rank-title">🏆 Placar semanal</div>`;
+
+  const medals = ['🥇','🥈','🥉'];
+  const rowCls = ['r1','r2','r3'];
+
+  list.innerHTML = rankings.map((r,i)=>{
+    const prevPos = prevRankings.findIndex(x=>x.name===r.name);
+    const moved = prevPos - i; // positive = moved up
+    const arrow = moved > 0 ? `<span class="rank-arrow up">▲</span>` :
+                  moved < 0 ? `<span class="rank-arrow down">▼</span>` :
+                  `<span class="rank-arrow same">—</span>`;
+    const cls = i<3 ? rowCls[i] : '';
+    const meClass = r.isMe ? ' me' : '';
+    const medal = i<3 ? medals[i] : `#${i+1}`;
+    return `<div class="rank-row ${cls}${meClass}">
+      <div class="rank-pos">${medal}</div>
+      <div class="rank-av">${r.av}</div>
+      <div class="rank-info">
+        <div class="rank-name">${r.name}${r.isMe?' (você)':''}</div>
+        <div class="rank-sub">${r.games} partidas totais</div>
+      </div>
+      <div class="rank-pts">${r.pts}✅</div>
+      ${arrow}
+    </div>`;
+  }).join('');
+}
+
+// ── BIG COMBO POPUP ───────────────────────────────────────────
+function showComboPop(n){
+  const old = document.querySelector('.combo-pop');
+  if(old) old.remove();
+  const msgs = {3:'🔥 COMBO!',5:'⚡ INCRÍVEL!',8:'🌟 LENDÁRIO!',10:'👑 PERFEITO!'};
+  const lbl = Object.keys(msgs).reverse().find(k=>n>=parseInt(k));
+  if(!lbl) return;
+  playCombo(n);
+  const div = document.createElement('div');
+  div.className = 'combo-pop';
+  div.innerHTML = `<div class="combo-pop-num">×${n}</div><div class="combo-pop-lbl">${msgs[lbl]}</div>`;
+  document.body.appendChild(div);
+  setTimeout(()=>div.remove(), 1200);
+}
+
+// ── STORY PROGRESS ────────────────────────────────────────────
+function updateStoryProgress(){
+  const totalCre = ['mult','div','add','sub'].reduce((tot,sb)=>{
+    const cm = ((P.subjects||{})[sb]||{}).creaturesMap||{};
+    return tot + [0,5,4,3,2].reduce((a,d)=>a+(cm[d]||[]).length,0);
+  }, 0);
+  const el = document.getElementById('storyProgress');
+  if(el) el.textContent = `${totalCre}/135 criaturas resgatadas · Toque para saber mais`;
+}
+
+initFirebase();
+window.addEventListener('load', ()=>{ setTimeout(initBilling, 1500); });
 </script>
 </div><!-- /app -->
 </body>
