@@ -312,7 +312,7 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 .modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-end;z-index:200;}
 .modal-ov.open{display:flex;animation:fadeOv .2s;}
 @keyframes fadeOv{from{opacity:0}to{opacity:1}}
-.modal-sheet{width:100%;background:var(--white);border-radius:24px 24px 0 0;padding:1.4rem 1.4rem 1.8rem;animation:slideUp .3s ease-out;}
+.modal-sheet{width:100%;max-height:90%;overflow-y:auto;-webkit-overflow-scrolling:touch;background:var(--white);border-radius:24px 24px 0 0;padding:1.4rem 1.4rem 1.8rem;animation:slideUp .3s ease-out;}
 @keyframes slideUp{from{transform:translateY(60px);opacity:0}to{transform:translateY(0);opacity:1}}
 .break-emoji{font-size:3.8rem;text-align:center;display:block;animation:bnc .7s ease-in-out infinite alternate;}
 @keyframes bnc{from{transform:translateY(0)}to{transform:translateY(-10px)}}
@@ -677,14 +677,14 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 .fb-txt.fb-long{font-size:1.15rem;max-width:85%;text-align:center;border-radius:18px;line-height:1.3;}
 
 /* ── SELETOR DE VELOCIDADE ───────────────────────────────── */
-.spd-list{display:flex;flex-direction:column;gap:.45rem;margin-bottom:.8rem;}
-.spd-opt{display:flex;align-items:center;gap:.7rem;width:100%;padding:.7rem .9rem;background:var(--bg-card);border:2.5px solid var(--gray);border-radius:var(--r);font-family:'Nunito',sans-serif;cursor:pointer;box-shadow:0 3px 0 var(--gray);text-align:left;transition:transform .1s;}
+.spd-list{display:flex;flex-direction:column;gap:.4rem;margin-bottom:.7rem;}
+.spd-opt{display:flex;align-items:center;gap:.7rem;width:100%;padding:.5rem .8rem;background:var(--bg-card);border:2.5px solid var(--gray);border-radius:var(--r);font-family:'Nunito',sans-serif;cursor:pointer;box-shadow:0 3px 0 var(--gray);text-align:left;transition:transform .1s;}
 .spd-opt:active{transform:translateY(3px);box-shadow:none;}
 .spd-opt.sel{border-width:3px;}
-.spd-ic{font-size:1.6rem;width:36px;text-align:center;flex-shrink:0;}
+.spd-ic{font-size:1.35rem;width:32px;text-align:center;flex-shrink:0;}
 .spd-txt{flex:1;}
-.spd-name{font-weight:900;font-size:1rem;color:var(--dark);}
-.spd-sub{font-weight:700;font-size:.8rem;color:var(--gray-dk);}
+.spd-name{font-weight:900;font-size:.95rem;color:var(--dark);}
+.spd-sub{font-weight:700;font-size:.75rem;color:var(--gray-dk);}
 .spd-cre{font-size:1.5rem;flex-shrink:0;}
 .spd-cre.lk{filter:brightness(0);opacity:.25;}
 
@@ -1192,8 +1192,8 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 <!-- VELOCIDADE: escolhida ao tocar numa tabuada -->
 <div class="modal-ov" id="mSpeed">
   <div class="modal-sheet">
-    <div class="sheet-title" id="spdTitle">Tabuada do 2</div>
-    <div class="sheet-sub" style="margin-bottom:.7rem;">Escolha a velocidade. Mais rápido = criaturas mais raras!</div>
+    <div class="sheet-title" id="spdTitle" style="font-size:1.25rem;margin-top:0;">Tabuada do 2</div>
+    <div class="sheet-sub" style="margin-bottom:.6rem;font-size:.85rem;">Escolha a velocidade. Mais rápido = criaturas mais raras!</div>
     <div class="spd-list" id="spdList"></div>
     <button class="btn btn-outline" onclick="closeModal('mSpeed')">Voltar</button>
   </div>
