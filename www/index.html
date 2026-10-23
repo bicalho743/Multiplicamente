@@ -360,6 +360,9 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
   .table-section{padding:.4rem 1rem .6rem;}
   .ans-area{padding:0 1.2rem;gap:.6rem;}
   .q-card{margin:.3rem 1.2rem .7rem;padding:1rem 1.2rem;}
+  /* mantém login e modais dentro do card no tablet */
+  #sLogin{position:absolute;}
+  .modal-sheet{max-width:440px;margin:0 auto;}
 }
 
 /* ── JOURNEY PATH ────────────────────────────────────────────────── */
@@ -531,7 +534,10 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
   font-family:'Nunito',sans-serif;font-weight:800;font-size:.8rem;
   cursor:pointer;transition:all .15s;}
 .subj-btn.active{color:#fff;box-shadow:0 3px 0 rgba(0,0,0,.2);}
-.subj-btn.sm-active{background:var(--green);border-color:var(--green-sh);}
+.subj-btn.active[data-s="mult"]{background:var(--green);border-color:var(--green-sh);}
+.subj-btn.active[data-s="div"]{background:var(--blue);border-color:var(--blue-sh);}
+.subj-btn.active[data-s="add"]{background:#FF9600;border-color:#c47200;}
+.subj-btn.active[data-s="sub"]{background:var(--red);border-color:var(--red-sh);}
 .subj-btn:active{transform:scale(.95);}
 /* help button */
 .help-btn{width:28px;height:28px;background:var(--gray);border:none;border-radius:50%;
@@ -829,7 +835,7 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
   </div>
   <!-- subject switcher -->
   <div class="subj-row">
-    <button class="subj-btn active" data-s="mult" onclick="setSubject('mult',this)" style="background:var(--green);border-color:var(--green-sh);color:#fff;">✖️ ×</button>
+    <button class="subj-btn active" data-s="mult" onclick="setSubject('mult',this)">✖️ ×</button>
     <button class="subj-btn" data-s="div" onclick="setSubject('div',this)">➗ ÷</button>
     <button class="subj-btn" data-s="add" onclick="setSubject('add',this)">➕ +</button>
     <button class="subj-btn" data-s="sub" onclick="setSubject('sub',this)">➖ −</button>
@@ -1076,7 +1082,7 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
     <div class="stars-row" id="winStars"></div>
     <div class="rewards-row" id="winRewards"></div>
     <button class="btn btn-share" onclick="shareResult()" style="margin-bottom:.5rem;">📤 Compartilhar resultado</button>
-    <button class="btn btn-green" onclick="closeModal('mWin');goHome()">CONTINUAR 🚀</button>
+    <button class="btn btn-green" onclick="closeWin()">CONTINUAR 🚀</button>
   </div>
 </div>
 
@@ -1693,7 +1699,7 @@ function renderLeaderboard(){
   const data = gd();
   const oneWeekAgo = Date.now() - 7*24*60*60*1000;
   const rankings = data.profiles.map(p=>{
-    const weekLogs = (p.logs||[]).filter(l=>{ try{ return new Date(l.date).getTime()>oneWeekAgo; }catch(e){return false;} });
+    const weekLogs = (p.logs||[]).filter(l=>logTime(l)>oneWeekAgo);
     const weekOk = weekLogs.reduce((s,l)=>s+(l.ok||0),0);
     const weekGames = weekLogs.length;
     return { name:p.name, av:p.av, weekOk, weekGames, gems:p.gems||0, stars:p.stars||0 };
@@ -1808,6 +1814,13 @@ function setSubject(s, el){
 const TIPS={2:'💡 Só dobrar!',3:'💡 Some 3 de cada vez',4:'💡 Dobre duas vezes!',5:'💡 Sempre 0 ou 5',6:'💡 ×3 depois dobre',7:'💡 Tente ×5 + ×2',8:'💡 Dobre dobre dobre!',9:'💡 ×10 menos o número',10:'💡 Só colocar zero!'};
 const PRAISES=['Perfeito! 🔥','Arrasou! ⚡','Incrível! 🌟','Show! ✨','Mandou! 🚀','Gênio! 🧠'];
 const DLBL={0:'Sem timer',5:'5 seg 🟢',4:'4 seg 🟡',3:'3 seg 🟠',2:'2 seg 🔴'};
+// Logs antigos só têm 'date' em pt-BR ("23/10/2026, 14:05:00"), que new Date() não entende
+function logTime(l){
+  if(l.ts) return l.ts;
+  const m=/^(\d{1,2})\/(\d{1,2})\/(\d{4})[, ]*(\d{1,2})?:?(\d{2})?:?(\d{2})?/.exec(l.date||'');
+  if(!m) return NaN;
+  return new Date(+m[3],m[2]-1,+m[1],+(m[4]||0),+(m[5]||0),+(m[6]||0)).getTime();
+}
 function gd(){return JSON.parse(localStorage.getItem('mm4')||'{"profiles":[]}')}
 function sd(d){localStorage.setItem('mm4',JSON.stringify(d))}
 let P=null,Pi=0,selAv=AVATARS[0],diff=0,vol=.5,GS=null,tIv=null,waitNext=false,aCtx=null;
@@ -1850,6 +1863,12 @@ function renderLogin(){
   const area=document.getElementById('profilesArea');
   area.innerHTML='';
   if(data.profiles.length){
+    // Fecha e limpa o formulário de novo jogador (fica aberto após criar o 1º perfil)
+    const form = document.getElementById('addPlayerForm');
+    const toggle = document.getElementById('addPlayerToggle');
+    if(form) form.classList.remove('open');
+    if(toggle){ toggle.style.display=''; toggle.textContent='＋ Adicionar jogador'; }
+    ['newName','newPin'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
     // First profile — big green button (primary action)
     const p0 = data.profiles[0];
     const big = document.createElement('div');
@@ -1932,12 +1951,12 @@ const JPATH = [
   {t:2,  x:68,  y:90},
   {t:3,  x:252, y:205},
   {t:4,  x:68,  y:320},
-  {type:'mile', x:160, y:410, getLbl:()=>subject==='add'?'Adição básica! ⭐':subject==='div'?'Divisão básica! ⭐':'Primeiros passos! ⭐'},
+  {type:'mile', x:160, y:410, getLbl:()=>subject==='add'?'Adição básica! ⭐':subject==='div'?'Divisão básica! ⭐':subject==='sub'?'Subtração básica! ⭐':'Primeiros passos! ⭐'},
   {t:5,  x:252, y:500},
   {t:6,  x:68,  y:615},
   {t:7,  x:252, y:730},
   {t:8,  x:68,  y:845},
-  {type:'mile', x:160, y:935, getLbl:()=>subject==='add'?'Adição avançada! 🌟':subject==='div'?'Divisão avançada! 🌟':'Quase lá! 🌟'},
+  {type:'mile', x:160, y:935, getLbl:()=>subject==='add'?'Adição avançada! 🌟':subject==='div'?'Divisão avançada! 🌟':subject==='sub'?'Subtração avançada! 🌟':'Quase lá! 🌟'},
   {t:9,  x:252, y:1025},
   {t:10, x:160, y:1155, boss:true},
 ];
@@ -1950,7 +1969,7 @@ function renderJourney(){
   canvas.style.height = JH + 'px';
 
   const ts = getTS();
-  const opPfx = subject==='div'?'÷':subject==='add'?'+':'';
+  const opPfx = subject==='mult'?'':SUBJECTS[subject].op;
 
   // Find current node (first table with < 3 stars OR not attempted)
   let curIdx = JPATH.findIndex(n => n.t && (ts[n.t] || 0) < 3);
@@ -2028,7 +2047,7 @@ function renderJourney(){
     const div = document.createElement('div');
     div.className = cls;
     div.style.cssText = `left:${n.x}px;top:${n.y}px;`;
-    const opLabel = n.boss ? (subject==='div'?'÷':'×') : (opPfx||'×');
+    const opLabel = SUBJECTS[subject].op;
     div.innerHTML = n.boss
       ? `<div class="jnode-num">👑</div><div class="jnode-lbl">${opLabel}${n.t}</div>`
       : `<div class="jnode-num">${opPfx}${n.t}</div><div class="jnode-lbl">${starsStr}</div>`;
@@ -2071,7 +2090,7 @@ function renderJourney(){
 }
 
 function moveJourneyChar(){
-  const ts = P.tableStars || {};
+  const ts = getTS();
   const curIdx = JPATH.findIndex(n => n.t && (ts[n.t] || 0) < 3);
   if(curIdx === -1) return;
   const ch = document.getElementById('journeyChar');
@@ -2147,6 +2166,7 @@ function mkQ(table){
       const b=~~(Math.random()*10)+1;
       if(subject==='mult') qs.push({a:t,op:'×',b,ans:t*b,tip:null});
       else if(subject==='div') qs.push({a:t*b,op:'÷',b:t,ans:b,tip:null});
+      else if(subject==='sub') qs.push({a:t+b,op:'−',b:t,ans:b,tip:null});
       else qs.push({a:t,op:'+',b,ans:t+b,tip:null});
     }
     return qs;
@@ -2157,7 +2177,7 @@ function mkQ(table){
     const tip=i===0?tipMap[table]:null;
     if(subject==='mult') qs.push({a:table,op:'×',b,ans:table*b,tip});
     else if(subject==='div') qs.push({a:table*b,op:'÷',b:table,ans:b,tip});
-    else if(subject==='sub') qs.push({a:table+b,op:'−',b,ans:table,tip});
+    else if(subject==='sub') qs.push({a:table+b,op:'−',b:table,ans:b,tip});
     else qs.push({a:table,op:'+',b,ans:table+b,tip});
   }
   return [...qs.slice(0,3),...qs.slice(3).sort(()=>Math.random()-.5)];
@@ -2179,7 +2199,7 @@ function renderQ(){
   document.getElementById('qTip').textContent=q.tip||'';document.getElementById('qText').textContent=`${q.a} ${q.op||'×'} ${q.b}`;
   const cb=document.getElementById('comboBanner');if(GS.combo>=5)cb.textContent=`🔥 Combo ×${GS.combo}! Incrível!`;else if(GS.combo>=3)cb.textContent=`⚡ Combo ×${GS.combo}!`;else cb.textContent='';
   const vis=document.getElementById('qVis');vis.innerHTML='';const tot=Math.min(ans,72);for(let i=0;i<tot;i++){const d=document.createElement('div');d.className='vdot';d.style.animationDelay=(i*.011)+'s';vis.appendChild(d)}
-  const opts=mkAns(ans);for(let i=0;i<4;i++){const b=document.getElementById('a'+i);b.textContent=opts[i];b.className='ans-btn';b.disabled=false;b.onclick=()=>pick(opts[i],ans,b)}
+  const opts=mkAns(ans);for(let i=0;i<4;i++){const b=document.getElementById('a'+i);b.textContent=opts[i];b.className='ans-btn';b.style.opacity='';b.disabled=false;b.onclick=()=>pick(opts[i],ans,b)}
   setupTimer();
 }
 function setupTimer(){
@@ -2193,13 +2213,13 @@ function setupTimer(){
   tIv=setInterval(()=>{elapsed+=step;const rem=Math.max(0,(total-elapsed)/1000);updateRing(rem,diff,arc,num,C);if(rem<=1)playTick();if(elapsed>=total){clearInterval(tIv);timeOut()}},step);
 }
 function updateRing(rem,total,arc,num,C){const pct=rem/total;arc.style.strokeDashoffset=C*(1-pct);num.textContent=Math.ceil(rem);arc.className='qr-arc'+(pct>.5?'':pct>.25?' warn':' hot')}
-function timeOut(){const q=GS.questions[GS.cur];const ans=q.a*q.b;GS.combo=0;GS.wrong++;GS.hearts--;playDuck();showRB(false,`Tempo! A resposta era ${ans}`,'Tente mais rápido da próxima vez! ⏱');for(let i=0;i<4;i++){const b=document.getElementById('a'+i);b.disabled=true;if(parseInt(b.textContent)===ans)b.classList.add('correct')}if(GS.hearts<=0){setTimeout(()=>endGame(false),1500);return}}
+function timeOut(){const q=GS.questions[GS.cur];const ans=q.ans!==undefined?q.ans:q.a*q.b;GS.combo=0;GS.wrong++;GS.hearts--;playDuck();showRB(false,`Tempo! A resposta era ${ans}`,'Tente mais rápido da próxima vez! ⏱');for(let i=0;i<4;i++){const b=document.getElementById('a'+i);b.disabled=true;if(parseInt(b.textContent)===ans)b.classList.add('correct')}if(GS.hearts<=0){setTimeout(()=>endGame(false),1500);return}}
 function pick(sel,correct,btn){if(waitNext)return;clearInterval(tIv);for(let i=0;i<4;i++)document.getElementById('a'+i).disabled=true;if(sel===correct){btn.classList.add('correct');GS.ok++;GS.combo++;GS.maxCombo=Math.max(GS.maxCombo,GS.combo);P.totalOk=(P.totalOk||0)+1;playSuccess();flash(PRAISES[~~(Math.random()*PRAISES.length)],'ok');showRB(true,'Correto! 🎉',`${sel} é a resposta certa`);if(GS.combo>=3)showComboPop(GS.combo);updateMissionProgress('combo',1);}else{btn.classList.add('wrong');for(let i=0;i<4;i++){const b=document.getElementById('a'+i);if(parseInt(b.textContent)===correct)b.classList.add('correct')}GS.combo=0;GS.wrong++;GS.hearts--;P.totalWrong=(P.totalWrong||0)+1;playDuck();flash('Ops! 💪','err');showRB(false,`A resposta era ${correct}`,`${GS.questions[GS.cur].a} ${GS.questions[GS.cur].op||'×'} ${GS.questions[GS.cur].b} = ${correct}`);if(GS.hearts<=0){setTimeout(()=>endGame(false),1600);return}}}
 function showRB(ok,title,sub){waitNext=true;const bar=document.getElementById('resultBar');bar.className='result-bar '+(ok?'rb-correct':'rb-wrong');document.getElementById('rbIcon').textContent=ok?'✅':'❌';document.getElementById('rbTitle').textContent=title;document.getElementById('rbSub').textContent=sub}
-function nextQ(){if(!waitNext)return;GS.cur++;if(GS.cur>=GS.questions.length){endGame(true);return}if(GS.cur===5){openModal('mBreak');return}renderQ()}
+function nextQ(){if(!waitNext||GS.hearts<=0)return;GS.cur++;if(GS.cur>=GS.questions.length){endGame(true);return}if(GS.cur===5){openModal('mBreak');return}renderQ()}
 function endGame(won){
   clearInterval(tIv);P.totalGames=(P.totalGames||0)+1;const acc=GS.ok/GS.questions.length;
-  const log={table:GS.table,ok:GS.ok,total:GS.questions.length,acc:~~(acc*100),won,combo:GS.maxCombo,diff,date:new Date().toLocaleString('pt-BR')};
+  const log={table:GS.table,subject,ok:GS.ok,total:GS.questions.length,acc:~~(acc*100),won,combo:GS.maxCombo,diff,ts:Date.now(),date:new Date().toLocaleString('pt-BR')};
   P.logs=P.logs||[];P.logs.unshift(log);if(P.logs.length>20)P.logs.pop();
   updateMissionProgress('games',1);
   if(won&&acc===1&&GS.wrong===0) updateMissionProgress('perfect',1);
@@ -2223,30 +2243,34 @@ function endGame(won){
     const sr=document.getElementById('winStars');sr.innerHTML='';for(let i=0;i<3;i++){const s=document.createElement('span');s.className='star-item'+(i>=stars?' empty':'');s.textContent='⭐';sr.appendChild(s)}
     document.getElementById('winRewards').innerHTML=`<div class="rew-chip">💎 +${gems}</div>${gained>0?`<div class="rew-chip">⭐ +${gained}</div>`:''} ${GS.maxCombo>=3?`<div class="rew-chip">🔥 Combo ×${GS.maxCombo}</div>`:''} ${cr?`<div class="rew-chip" style="border-color:${cr.col};">${cr.e} ${cr.n} resgatada!</div>`:''}`;
     confetti();playWin(stars);if(stars===3) bigWinCelebration();openModal('mWin');setTimeout(moveJourneyChar,600);
-    if(t===5 && stars===3 && !isPremiumUnlocked()) setTimeout(()=>{ closeModal('mWin'); openModal('mPremiumUpsell'); }, 2200);
-    if(!fbUser && P.totalGames>=3){
+    // Avisos extras só aparecem depois que a criança fecha a celebração
+    afterWin=null;
+    if(t===5 && stars===3 && !isPremiumUnlocked()) afterWin='mPremiumUpsell';
+    else if(!fbUser && P.totalGames>=3){
       const lastPrompt = localStorage.getItem('mm_login_prompt');
       if(!lastPrompt || Date.now()-parseInt(lastPrompt) > 24*60*60*1000){
         localStorage.setItem('mm_login_prompt', Date.now());
         const lp=document.getElementById('loginPromptGems');const ls=document.getElementById('loginPromptStars');
         if(lp)lp.textContent=(P.gems||0)+' 💎';if(ls)ls.textContent=(P.stars||0)+' ⭐';
-        setTimeout(()=>{ closeModal('mWin'); openModal('mLoginPrompt'); }, 2500);
+        afterWin='mLoginPrompt';
       }
     }
   }else{const gems=GS.ok;P.gems=(P.gems||0)+gems;sp();document.getElementById('loseGems').textContent=gems+' 💎';openModal('mLose')}
 }
+let afterWin=null;
+function closeWin(){closeModal('mWin');goHome();if(afterWin){const m=afterWin;afterWin=null;setTimeout(()=>openModal(m),400);}}
 function showParentPin(){document.getElementById('pinInput').value='';document.getElementById('pinErr').textContent='';show('sParentPin')}
 function checkPin(){const p=document.getElementById('pinInput').value;if(p===P.pin||p==='1234'){renderDash();show('sDash')}else{document.getElementById('pinErr').textContent='PIN incorreto!';playDuck()}}
 function renderDash(){
   document.getElementById('dashName').textContent=P.av+' '+P.name;document.getElementById('dGames').textContent=P.totalGames||0;
   const tot=(P.totalOk||0)+(P.totalWrong||0);document.getElementById('dAcc').textContent=tot?~~((P.totalOk||0)/tot*100)+'%':'—';
-  document.getElementById('dStrk').textContent=(P.streak||0)+'🔥';const totalCre=['mult','div','add'].reduce((tot,sb)=>{
+  document.getElementById('dStrk').textContent=(P.streak||0)+'🔥';const totalCre=['mult','div','add','sub'].reduce((tot,sb)=>{
     const cm=((P.subjects||{})[sb]||{}).creaturesMap||{};
     return tot+[0,5,4,3,2].reduce((a,d)=>a+(cm[d]||[]).length,0);
   },0);
   document.getElementById('dCre').textContent=totalCre+'/135';
   const tp=document.getElementById('tableProgArea');tp.innerHTML='';
-  ['mult','div','add'].forEach(sb=>{
+  ['mult','div','add','sub'].forEach(sb=>{
     const sc=SUBJECTS[sb];
     const sbData=(P.subjects||{})[sb]||{};
     const sbTS=sbData.tableStars||{};
@@ -2261,7 +2285,7 @@ function renderDash(){
       tp.appendChild(r);
     }
   });
-  const la=document.getElementById('logArea');la.innerHTML='';const logs=(P.logs||[]).slice(0,10);if(!logs.length){la.innerHTML='<div style="text-align:center;color:var(--gray-dk);padding:1rem;">Nenhuma partida ainda!</div>';}else{logs.forEach(l=>{const tl=l.table==='boss'?'👑 Misto':'×'+l.table;const d=document.createElement('div');d.className='log-item';d.innerHTML=`<div class="li-icon">${l.won?'✅':'❌'}</div><div class="li-info">${tl} · ${l.acc}% · ⏱${l.diff||0}s<br><span style="font-size:.7rem;color:var(--gray-dk);">${l.date}</span></div><div class="li-score">${l.ok}/${l.total}</div>`;la.appendChild(d)});}
+  const la=document.getElementById('logArea');la.innerHTML='';const logs=(P.logs||[]).slice(0,10);if(!logs.length){la.innerHTML='<div style="text-align:center;color:var(--gray-dk);padding:1rem;">Nenhuma partida ainda!</div>';}else{logs.forEach(l=>{const tl=l.table==='boss'?'👑 Misto':(SUBJECTS[l.subject||'mult']||SUBJECTS.mult).op+l.table;const d=document.createElement('div');d.className='log-item';d.innerHTML=`<div class="li-icon">${l.won?'✅':'❌'}</div><div class="li-info">${tl} · ${l.acc}% · ⏱${l.diff||0}s<br><span style="font-size:.7rem;color:var(--gray-dk);">${l.date}</span></div><div class="li-score">${l.ok}/${l.total}</div>`;la.appendChild(d)});}
   renderLeaderboard();
   renderWeeklyChart();
 }
@@ -2332,11 +2356,14 @@ function renderWeeklyChart(){
   const days = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
   const now = new Date();
   const weekData = Array(7).fill(0);
+  const today0 = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
   (P.logs||[]).forEach(l=>{
     try{
-      const d = new Date(l.date);
-      const diff = Math.floor((now - d)/(1000*60*60*24));
-      if(diff < 7){
+      const t = logTime(l);
+      if(isNaN(t)) return;
+      // dias de calendário atrás (0 = hoje)
+      const diff = Math.ceil((today0 - t)/(1000*60*60*24));
+      if(diff >= 0 && diff < 7){
         const dayIdx = (now.getDay() - diff + 7) % 7;
         weekData[dayIdx] += (l.ok||0);
       }
@@ -2417,7 +2444,7 @@ function initPowerups(){
 function usePowerup(i){
   const costs = POWERUP_COSTS;
   if(!P || (P.gems||0) < costs[i]){ flash('Gemas insuficientes!','err'); return; }
-  if(puUsed[i]) return;
+  if(puUsed[i] || waitNext) return;
   P.gems -= costs[i]; sp();
   document.getElementById('homeGems').textContent = '💎 '+(P.gems||0);
   puUsed[i] = true;
@@ -2485,7 +2512,7 @@ function renderChildRanking(){
   const twoWeeksAgo = Date.now() - 14*24*60*60*1000;
 
   const calcPts = (logs, from, to) =>
-    logs.filter(l=>{ try{ const d=new Date(l.date).getTime(); return d>from&&d<=to; }catch(e){return false;} })
+    logs.filter(l=>{ const d=logTime(l); return d>from&&d<=to; })
         .reduce((s,l)=>s+(l.ok||0),0);
 
   const rankings = data.profiles.map(p=>{
