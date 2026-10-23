@@ -192,7 +192,7 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 .pill{display:flex;align-items:center;gap:.25rem;border-radius:100px;padding:.3rem .55rem;font-weight:800;font-size:.82rem;background:var(--yellow-bg);color:var(--yellow-sh);}
 .pill-b{background:var(--blue-bg);color:var(--blue-dk);}
 .home-tabs{display:flex;border-bottom:2px solid var(--gray);flex-shrink:0;}
-.htab{flex:1;padding:.75rem .3rem;font-family:'Nunito',sans-serif;font-weight:800;font-size:.85rem;background:none;border:none;color:var(--gray-dk);cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:.25rem;}
+.htab{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:.7rem .2rem;font-family:'Nunito',sans-serif;font-weight:800;font-size:.8rem;background:none;border:none;color:var(--gray-dk);cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:.25rem;}
 .htab.active{color:var(--green);border-bottom-color:var(--green);}
 .tab-panel{display:none;flex:1;overflow:hidden;flex-direction:column;}
 .tab-panel.active{display:flex;}
@@ -228,7 +228,13 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 
 /* HOME BOTTOM */
 .home-bottom{padding:.5rem .9rem .8rem;border-top:2px solid var(--gray);display:flex;gap:.4rem;flex-shrink:0;}
-.boss-btn{flex:1;padding:.8rem;background:var(--dark);color:#fff;border:none;border-radius:var(--r);font-family:'Nunito',sans-serif;font-weight:800;font-size:.9rem;cursor:pointer;box-shadow:0 4px 0 #1a1a1a;display:flex;align-items:center;justify-content:center;gap:.35rem;transition:all .1s;}
+.boss-btn{flex:1;min-width:0;padding:.5rem .8rem;background:var(--dark);color:#fff;border:none;border-radius:var(--r);font-family:'Nunito',sans-serif;font-weight:800;font-size:.95rem;cursor:pointer;box-shadow:0 4px 0 #1a1a1a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;transition:all .1s;line-height:1.2;}
+.boss-sub{font-size:.72rem;font-weight:700;opacity:.9;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.boss-btn.locked{filter:grayscale(1);opacity:.6;}
+.home-chips{display:flex;gap:.4rem;padding:.4rem .9rem 0;flex-shrink:0;}
+.home-chip{flex:1;min-width:0;display:flex;align-items:center;justify-content:center;gap:.35rem;padding:.4rem .6rem;border-radius:100px;font-family:'Nunito',sans-serif;font-weight:800;font-size:.8rem;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.home-chip.story{background:linear-gradient(135deg,#1a3a00,#2e6e00);color:#fff;border:none;}
+.home-chip.miss{background:var(--blue-bg);color:var(--blue-dk);border:2px solid var(--blue);}
 .boss-btn:active{transform:translateY(4px);box-shadow:none;}
 .dash-btn{width:48px;height:48px;background:var(--purple);border:none;border-radius:var(--r);font-size:1.3rem;cursor:pointer;box-shadow:0 4px 0 var(--purple-sh);display:flex;align-items:center;justify-content:center;transition:all .1s;flex-shrink:0;}
 .dash-btn:active{transform:translateY(4px);box-shadow:none;}
@@ -876,18 +882,10 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 
   <!-- MISSIONS — JOURNEY MAP -->
   <div class="tab-panel active" id="tabMissions">
-    <!-- Story + Missions numa única linha colapsável -->
-    <div style="display:flex;align-items:center;gap:.4rem;padding:.35rem .9rem 0;flex-shrink:0;">
-      <!-- Story mini -->
-      <div onclick="openModal('mStory')" style="flex:1;background:linear-gradient(135deg,#1a3a00,#2e6e00);border-radius:12px;padding:.45rem .7rem;cursor:pointer;display:flex;align-items:center;gap:.5rem;">
-        <span style="font-size:1.4rem;">🦉</span>
-        <div style="flex:1;"><div style="font-weight:800;font-size:.85rem;color:#fff;">Missão das Criaturas</div><div id="storyProgress" style="font-size:.74rem;font-weight:700;color:rgba(255,255,255,.8);">0/180 resgatadas</div></div>
-      </div>
-      <!-- Missions mini toggle -->
-      <div onclick="toggleMissionsPanel()" id="missionsMini" style="background:var(--blue-bg);border:2px solid var(--blue);border-radius:12px;padding:.45rem .7rem;cursor:pointer;text-align:center;flex-shrink:0;">
-        <div style="font-weight:900;font-size:.85rem;color:var(--blue-dk);">🎯 Missões</div>
-        <div style="font-size:.74rem;font-weight:700;color:var(--blue-sh);" id="missionMiniStatus">0/3</div>
-      </div>
+    <!-- Missão das criaturas + missões do dia: uma linha fina -->
+    <div class="home-chips">
+      <button class="home-chip story" onclick="openModal('mStory')">🦉 <span id="storyProgress">0/180</span> criaturas</button>
+      <button class="home-chip miss" id="missionsMini" onclick="toggleMissionsPanel()">🎯 Missões <span id="missionMiniStatus">0/3</span></button>
     </div>
     <!-- Missions expandable panel (fechado por padrão) -->
     <div id="missionsPanel" style="display:none;margin:.3rem .9rem 0;background:var(--blue-bg);border:2px solid var(--blue);border-radius:var(--r);padding:.5rem .7rem;flex-shrink:0;">
@@ -953,7 +951,7 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
   </div>
 
   <div class="home-bottom">
-    <button class="boss-btn" id="bossBtn" onclick="openSpeed('boss')" style="background:var(--green);box-shadow:0 4px 0 var(--green-sh);">👑 Desafio Misto</button>
+    <button class="boss-btn" id="bossBtn" onclick="openSpeed('boss')" style="background:var(--green);box-shadow:0 4px 0 var(--green-sh);"><span>🔀 Desafio Misto</span><span class="boss-sub" id="bossSub">mistura as tabuadas que você já passou</span></button>
     <button class="dash-btn" onclick="showParentPin()">📊</button>
   </div>
 </div>
@@ -1193,7 +1191,7 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 <div class="modal-ov" id="mSpeed">
   <div class="modal-sheet">
     <div class="sheet-title" id="spdTitle" style="font-size:1.25rem;margin-top:0;">Tabuada do 2</div>
-    <div class="sheet-sub" style="margin-bottom:.6rem;font-size:.85rem;">Escolha a velocidade. Mais rápido = criaturas mais raras!</div>
+    <div class="sheet-sub" id="spdSub" style="margin-bottom:.6rem;font-size:.85rem;">Escolha a velocidade. Mais rápido = criaturas mais raras!</div>
     <div class="spd-list" id="spdList"></div>
     <button class="btn btn-outline" onclick="closeModal('mSpeed')">Voltar</button>
   </div>
@@ -1989,7 +1987,15 @@ function renderHome(){
   set('profileModalCloud', fbUser ? '☁️ '+( fbUser.displayName||fbUser.email) : '📱 Perfil local');
   document.querySelectorAll('.dbn,.dbn-sm').forEach(b=>b.classList.toggle('sel',parseInt(b.dataset.d)===diff));
   const db=document.getElementById('diffBadge');if(db)db.textContent=DLBL[diff]||'Sem timer';
-  updatePremiumUI();updateStoryProgress();renderMissions();renderJourney();
+  updatePremiumUI();updateStoryProgress();renderMissions();renderJourney();renderBossBtn();
+}
+// Tabuadas já passadas (≥1⭐) na operação atual — base do Desafio Misto
+function passedTables(){ const ts=getTS(); return Object.keys(ts).filter(t=>(ts[t]||0)>=1).map(Number).sort((a,b)=>a-b); }
+function renderBossBtn(){
+  const n=passedTables().length, bb=document.getElementById('bossBtn'), sub=document.getElementById('bossSub');
+  if(!bb||!sub) return;
+  bb.classList.toggle('locked', n<2);
+  sub.textContent = n<2 ? '🔒 passe 2 tabuadas para liberar' : 'mistura as tabuadas que você já passou';
 }
 
 // ── JOURNEY PATH ─────────────────────────────────────────────
@@ -2367,7 +2373,7 @@ function renderDash(){
       tp.appendChild(r);
     }
   });
-  const la=document.getElementById('logArea');la.innerHTML='';const logs=(P.logs||[]).slice(0,10);if(!logs.length){la.innerHTML='<div style="text-align:center;color:var(--gray-dk);padding:1rem;">Nenhuma partida ainda!</div>';}else{logs.forEach(l=>{const tl=l.table==='boss'?'👑 Misto':(SUBJECTS[l.subject||'mult']||SUBJECTS.mult).op+l.table;const d=document.createElement('div');d.className='log-item';d.innerHTML=`<div class="li-icon">${l.won?'✅':'❌'}</div><div class="li-info">${tl} · ${l.acc}% · ⏱${l.diff||0}s<br><span style="font-size:.7rem;color:var(--gray-dk);">${l.date}</span></div><div class="li-score">${l.ok}/${l.total}</div>`;la.appendChild(d)});}
+  const la=document.getElementById('logArea');la.innerHTML='';const logs=(P.logs||[]).slice(0,10);if(!logs.length){la.innerHTML='<div style="text-align:center;color:var(--gray-dk);padding:1rem;">Nenhuma partida ainda!</div>';}else{logs.forEach(l=>{const tl=l.table==='boss'?'🔀 Misto':(SUBJECTS[l.subject||'mult']||SUBJECTS.mult).op+l.table;const d=document.createElement('div');d.className='log-item';d.innerHTML=`<div class="li-icon">${l.won?'✅':'❌'}</div><div class="li-info">${tl} · ${l.acc}% · ⏱${l.diff||0}s<br><span style="font-size:.7rem;color:var(--gray-dk);">${l.date}</span></div><div class="li-score">${l.ok}/${l.total}</div>`;la.appendChild(d)});}
   renderLeaderboard();
   renderWeeklyChart();
 }
@@ -2671,9 +2677,15 @@ function saveNewPin(){
 const SPD_NAMES = {0:'Sem tempo',5:'5 segundos',4:'4 segundos',3:'3 segundos',2:'2 segundos'};
 function openSpeed(table){
   if(table!=='boss' && PREMIUM_TABLES.includes(table) && !isPremiumUnlocked()){ openPremium(); return; }
+  const passed = passedTables();
+  if(table==='boss' && passed.length<2){ playDuck(); flash('Passe 2 tabuadas para liberar o Desafio Misto! 🔒','err'); return; }
+  const op = SUBJECTS[subject].op;
+  document.getElementById('spdSub').textContent = table==='boss'
+    ? `10 perguntas misturando: ${passed.map(t=>op+t).join('  ')}. Escolha a velocidade:`
+    : 'Escolha a velocidade. Mais rápido = criaturas mais raras!';
   const creSet = subject==='sub' ? CREATURES_SUB : CREATURES_ALL;
   const cm = getCM();
-  document.getElementById('spdTitle').textContent = table==='boss' ? '👑 Desafio Misto' : `Tabuada do ${table} (${SUBJECTS[subject].op})`;
+  document.getElementById('spdTitle').textContent = table==='boss' ? '🔀 Desafio Misto' : `Tabuada do ${table} (${SUBJECTS[subject].op})`;
   const list = document.getElementById('spdList');
   list.innerHTML = '';
   [0,5,4,3,2].forEach(d=>{
@@ -2714,7 +2726,7 @@ function updateStoryProgress(){
     return tot + [0,5,4,3,2].reduce((a,d)=>a+(cm[d]||[]).length,0);
   }, 0);
   const el = document.getElementById('storyProgress');
-  if(el) el.textContent = `${totalCre}/${TOTAL_CRE} criaturas resgatadas`;
+  if(el) el.textContent = `${totalCre}/${TOTAL_CRE}`;
 }
 
 initFirebase();
