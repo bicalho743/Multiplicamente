@@ -243,7 +243,7 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 .cre-emoji{font-size:1.9rem;} .cre-name{font-size:.72rem;font-weight:800;color:var(--dark);margin-top:2px;text-align:center;}
 
 /* SETTINGS */
-.settings-section{flex:1;padding:.8rem .9rem;display:flex;flex-direction:column;gap:.8rem;overflow:hidden;}
+.settings-section{flex:1;padding:.8rem .9rem;display:flex;flex-direction:column;gap:.8rem;overflow-y:auto;}
 .settings-card{background:var(--white);border:2.5px solid var(--gray);border-radius:var(--r);padding:.9rem;}
 .settings-card h3{font-weight:800;font-size:.9rem;color:var(--dark);margin-bottom:.7rem;display:flex;align-items:center;gap:.35rem;}
 .vol-row{display:flex;align-items:center;gap:.6rem;}
@@ -292,10 +292,12 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 .ans-btn.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red-sh);box-shadow:0 4px 0 var(--red);animation:shake .4s;}
 @keyframes wiggle{0%,100%{transform:scale(1)}40%{transform:scale(1.06)}70%{transform:scale(.97)}}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.ans-btn:disabled{opacity:1;-webkit-text-fill-color:inherit;}
 
 /* RESULT BAR */
-.result-bar{flex-shrink:0;padding:.75rem 1rem;border-top:2.5px solid var(--gray);display:flex;align-items:center;gap:.7rem;min-height:60px;}
+.result-bar{position:absolute;bottom:0;left:0;right:0;padding:.75rem 1rem;border-top:2.5px solid var(--gray);display:flex;align-items:center;gap:.7rem;min-height:68px;z-index:10;}
 .result-bar.hidden{display:none;}
+#sGame.rb-visible .ans-area{padding-bottom:80px;}
 .rb-correct{border-top-color:var(--green);background:var(--green-bg);}
 .rb-wrong{border-top-color:var(--red);background:var(--red-bg);}
 .rb-icon{font-size:1.7rem;flex-shrink:0;} .rb-text{flex:1;}
@@ -1977,6 +1979,7 @@ function streakOf(p){if(!p||!p.lastDate)return 0;const yest=new Date();yest.setD
 function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 const TOTAL_CRE = 180; // 4 operações × 5 coleções × 9 tabuadas
 function renderHome(){
+  document.querySelectorAll('.subj-btn').forEach(b=>b.classList.toggle('active', b.dataset.s===subject));
   const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
   set('homeAv',P.av);set('homeName',P.name);set('homeGems','💎 '+(P.gems||0));
   set('hudStars',P.stars||0);set('hudStreak',streakOf(P));set('settingsName',P.name);
@@ -2105,6 +2108,11 @@ function renderJourney(){
       } else {
         div.onclick = () => openSpeed(n.t);
       }
+    } else {
+      div.onclick = () => {
+        playDuck();
+        flash('Complete a fase anterior para desbloquear! 🔒', 'err');
+      };
     }
     canvas.appendChild(div);
   });
@@ -2248,18 +2256,18 @@ function startGame(table){
     openPremium(); return;
   }
   clearInterval(tIv);clearTimeout(autoT);GS={table,questions:mkQ(table),cur:0,ok:0,wrong:0,combo:0,maxCombo:0,hearts:3,diff};
-  initPowerups();document.getElementById('resultBar').className='result-bar hidden';show('sGame');renderQ();
+  initPowerups();document.getElementById('resultBar').className='result-bar hidden';document.getElementById('sGame').classList.remove('rb-visible');show('sGame');renderQ();
 }
 function restartLast(){if(GS)startGame(GS.table)}
 function renderQ(){
-  clearInterval(tIv);clearTimeout(autoT);waitNext=false;document.getElementById('resultBar').className='result-bar hidden';
+  clearInterval(tIv);clearTimeout(autoT);waitNext=false;document.getElementById('resultBar').className='result-bar hidden';document.getElementById('sGame').classList.remove('rb-visible');
   const q=GS.questions[GS.cur];const ans=q.ans!==undefined?q.ans:q.a*q.b;
   document.getElementById('progFill').style.width=(GS.cur/GS.questions.length*100)+'%';
   document.getElementById('heartsDisp').textContent='💖'.repeat(GS.hearts)||'💔';
   document.getElementById('qTip').textContent=q.tip||'';document.getElementById('qText').textContent=`${q.a} ${q.op||'×'} ${q.b}`;
   const cb=document.getElementById('comboBanner');if(GS.combo>=5)cb.textContent=`🔥 Combo ×${GS.combo}! Incrível!`;else if(GS.combo>=3)cb.textContent=`⚡ Combo ×${GS.combo}!`;else cb.textContent='';
   renderVis(q);
-  const opts=mkAns(ans,q);for(let i=0;i<4;i++){const b=document.getElementById('a'+i);b.textContent=opts[i];b.className='ans-btn';b.style.opacity='';b.disabled=false;b.onclick=()=>pick(opts[i],ans,b)}
+  const opts=mkAns(ans,q);for(let i=0;i<4;i++){const b=document.getElementById('a'+i);b.textContent=opts[i];b.className='ans-btn';b.style.opacity='';b.style.display='';b.disabled=false;b.onclick=()=>pick(opts[i],ans,b)}
   setupTimer();
 }
 // Mostra a ideia da conta (grupos), não só a quantidade do resultado
@@ -2286,7 +2294,7 @@ function setupTimer(){
 function updateRing(rem,total,arc,num,C){const pct=rem/total;arc.style.strokeDashoffset=C*(1-pct);num.textContent=Math.ceil(rem);arc.className='qr-arc'+(pct>.5?'':pct>.25?' warn':' hot')}
 function timeOut(){const q=GS.questions[GS.cur];const ans=q.ans!==undefined?q.ans:q.a*q.b;GS.combo=0;GS.wrong++;GS.hearts--;playDuck();showRB(false,`Tempo! A resposta era ${ans}`,'Tente mais rápido da próxima vez! ⏱');for(let i=0;i<4;i++){const b=document.getElementById('a'+i);b.disabled=true;if(parseInt(b.textContent)===ans)b.classList.add('correct')}if(GS.hearts<=0){setTimeout(()=>endGame(false),1500);return}}
 function pick(sel,correct,btn){if(waitNext)return;clearInterval(tIv);for(let i=0;i<4;i++)document.getElementById('a'+i).disabled=true;if(sel===correct){btn.classList.add('correct');GS.ok++;GS.combo++;GS.maxCombo=Math.max(GS.maxCombo,GS.combo);P.totalOk=(P.totalOk||0)+1;playSuccess();if(GS.combo>=3)showComboPop(GS.combo);else flash(PRAISES[~~(Math.random()*PRAISES.length)],'ok');showRB(true,'Correto! 🎉',`${sel} é a resposta certa`);updateMissionProgress('combo',GS.combo);autoT=setTimeout(nextQ,GS.combo>=3?1300:1000);}else{btn.classList.add('wrong');for(let i=0;i<4;i++){const b=document.getElementById('a'+i);if(parseInt(b.textContent)===correct)b.classList.add('correct')}GS.combo=0;GS.wrong++;GS.hearts--;P.totalWrong=(P.totalWrong||0)+1;playDuck();showRB(false,`A resposta era ${correct}`,`${GS.questions[GS.cur].a} ${GS.questions[GS.cur].op||'×'} ${GS.questions[GS.cur].b} = ${correct}`);if(GS.hearts<=0){setTimeout(()=>endGame(false),1600);return}}}
-function showRB(ok,title,sub){waitNext=true;const bar=document.getElementById('resultBar');bar.className='result-bar '+(ok?'rb-correct':'rb-wrong');document.getElementById('rbIcon').textContent=ok?'✅':'❌';document.getElementById('rbTitle').textContent=title;document.getElementById('rbSub').textContent=sub}
+function showRB(ok,title,sub){waitNext=true;const bar=document.getElementById('resultBar');bar.className='result-bar '+(ok?'rb-correct':'rb-wrong');document.getElementById('rbIcon').textContent=ok?'✅':'❌';document.getElementById('rbTitle').textContent=title;document.getElementById('rbSub').textContent=sub;document.getElementById('sGame').classList.add('rb-visible');}
 let autoT=null;
 function nextQ(){clearTimeout(autoT);if(!waitNext||GS.hearts<=0)return;GS.cur++;if(GS.cur>=GS.questions.length){endGame(true);return}if(GS.cur===5){openModal('mBreak');return}renderQ()}
 function endGame(won){
