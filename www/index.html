@@ -75,7 +75,7 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 @keyframes splashOut{to{opacity:0;transform:scale(1.05)}}
 .splash-owl{font-size:5rem;animation:splashOwl 1s ease-in-out infinite alternate;}
 @keyframes splashOwl{from{transform:translateY(0) rotate(-5deg)}to{transform:translateY(-18px) rotate(5deg)}}
-.splash-title{font-size:2.2rem;font-weight:900;color:#fff;text-shadow:0 3px 0 rgba(0,0,0,.2);letter-spacing:-1px;}
+.splash-title{font-size:clamp(1.6rem,9vw,2.2rem);font-weight:900;color:#fff;text-shadow:0 3px 0 rgba(0,0,0,.2);letter-spacing:-1px;max-width:100%;padding:0 16px;text-align:center;line-height:1.1;overflow-wrap:anywhere;}
 .splash-sub{font-size:.95rem;font-weight:700;color:rgba(255,255,255,.8);}
 .splash-dots{display:flex;gap:.4rem;margin-top:.5rem;}
 .splash-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.4);animation:dotPulse 1.2s ease-in-out infinite;}
@@ -708,7 +708,7 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 <!-- SPLASH -->
 <div id="sSplash">
   <div class="splash-owl">🦉</div>
-  <div class="splash-title">MultiplicaMente</div>
+  <div class="splash-title">Multiplica<wbr>Mente</div>
   <div class="splash-sub">Aventura da Tabuada!</div>
   <div class="splash-dots">
     <div class="splash-dot"></div>
