@@ -24,6 +24,8 @@ public class BillingPlugin extends Plugin implements PurchasesUpdatedListener {
         billingClient = BillingClient.newBuilder(getContext())
                 .setListener(this)
                 .enablePendingPurchases(PendingPurchasesParams.newBuilder().enableOneTimeProducts().build())
+                // Billing 8: reconecta sozinho se o serviço do Google Play cair
+                .enableAutoServiceReconnection()
                 .build();
     }
 
@@ -91,7 +93,9 @@ public class BillingPlugin extends Plugin implements PurchasesUpdatedListener {
         );
         billingClient.queryProductDetailsAsync(
                 QueryProductDetailsParams.newBuilder().setProductList(products).build(),
-                (billingResult, productDetailsList) -> {
+                (billingResult, queryResult) -> {
+                    // Billing 8: a resposta vem em QueryProductDetailsResult
+                    List<ProductDetails> productDetailsList = queryResult.getProductDetailsList();
                     if (billingResult.getResponseCode() != BillingClient.BillingResponseCode.OK
                             || productDetailsList.isEmpty()) {
                         call.reject("Product not found: " + billingResult.getDebugMessage());
@@ -122,18 +126,36 @@ public class BillingPlugin extends Plugin implements PurchasesUpdatedListener {
                             .build();
                     BillingResult billingResult2 = billingClient.launchBillingFlow(activity, flowParams);
                     Log.d(TAG, "launchBillingFlow result: " + billingResult2.getResponseCode() + " " + billingResult2.getDebugMessage());
+                    // Se a janela de compra não abriu, avisa o app em vez de deixá-lo esperando
+                    if (billingResult2.getResponseCode() != BillingClient.BillingResponseCode.OK && pendingPurchaseCall != null) {
+                        pendingPurchaseCall.reject("Purchase failed: " + billingResult2.getDebugMessage());
+                        pendingPurchaseCall = null;
+                    }
                 }
         );
     }
 
     @Override
     public void onPurchasesUpdated(@NonNull BillingResult result, List<Purchase> purchases) {
-        if (pendingPurchaseCall == null) return;
+        // Compras aprovadas mais tarde (ex.: pagamento pendente) chegam sem chamada aberta:
+        // precisam ser reconhecidas mesmo assim, senão o Google reembolsa em 3 dias
+        if (pendingPurchaseCall == null) {
+            if (result.getResponseCode() == BillingClient.BillingResponseCode.OK && purchases != null) {
+                for (Purchase purchase : purchases) {
+                    if (purchase.getProducts().contains(PRODUCT_ID) &&
+                            purchase.getPurchaseState() == Purchase.PurchaseState.PURCHASED &&
+                            !purchase.isAcknowledged()) {
+                        acknowledgePurchase(purchase);
+                    }
+                }
+            }
+            return;
+        }
         if (result.getResponseCode() == BillingClient.BillingResponseCode.OK && purchases != null) {
             for (Purchase purchase : purchases) {
                 if (purchase.getProducts().contains(PRODUCT_ID) &&
                         purchase.getPurchaseState() == Purchase.PurchaseState.PURCHASED) {
-                    acknowledgePurchase(purchase);
+                    if (!purchase.isAcknowledged()) acknowledgePurchase(purchase);
                     JSObject ret = new JSObject();
                     ret.put("success", true);
                     ret.put("purchaseToken", purchase.getPurchaseToken());
