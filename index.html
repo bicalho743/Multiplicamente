@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MultiplicaMente — Jogo de tabuada para crianças</title>
+<meta name="description" content="Jogo de tabuada para crianças: multiplicação, divisão, soma e subtração numa jornada com fases, criaturas para colecionar e desafios. Tabuadas do 2 ao 5 grátis, sem anúncios e funciona sem internet.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="MultiplicaMente — A tabuada vira aventura">
+<meta property="og:description" content="Jogo de tabuada para crianças. Tabuadas do 2 ao 5 grátis, sem anúncios e funciona sem internet.">
+<meta property="og:image" content="https://bicalho743.github.io/Multiplicamente/marketing/og.jpg">
+<meta property="og:url" content="https://bicalho743.github.io/Multiplicamente/">
+<meta name="theme-color" content="#58CC02">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🦉</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green:#58CC02;--green-sh:#3f9400;--green-dk:#2e7d00;--green-bg:#e9ffd6;
+  --blue:#1CB0F6;--blue-sh:#0f6d99;--blue-bg:#e3f6ff;
+  --purple:#CE82FF;--purple-dk:#7c3aed;--yellow:#FFC800;--yellow-bg:#fff6cc;--orange:#FF9600;
+  --bg:#f7faf5;--card:#ffffff;--text:#2d3436;--muted:#64707a;--line:#e3e8e1;
+  --shadow:0 10px 30px rgba(20,40,10,.10);
+}
+@media (prefers-color-scheme: dark){
+  :root{--bg:#10150f;--card:#1b2219;--text:#eef3ec;--muted:#a7b2a4;--line:#2c3629;
+    --green-bg:#1c2e10;--blue-bg:#0f2633;--yellow-bg:#2e2808;--shadow:0 10px 30px rgba(0,0,0,.35);}
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Nunito',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;font-weight:600;overflow-x:hidden}
+a{color:inherit}
+img{max-width:100%;height:auto;display:block}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+
+/* Botões no estilo do app (sombra "3D") */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;padding:.95rem 1.6rem;border-radius:16px;font-weight:900;font-size:1.05rem;text-decoration:none;transition:transform .1s,box-shadow .1s;border:none;cursor:pointer}
+.btn:active{transform:translateY(4px)}
+.btn-green{background:var(--green);color:#fff;box-shadow:0 5px 0 var(--green-sh)}
+.btn-green:active{box-shadow:0 1px 0 var(--green-sh)}
+.btn-white{background:#fff;color:var(--green-dk);box-shadow:0 5px 0 rgba(0,0,0,.18)}
+.btn-white:active{box-shadow:0 1px 0 rgba(0,0,0,.18)}
+.btn-sm{padding:.6rem 1.1rem;font-size:.95rem;border-radius:12px}
+
+/* Topo */
+header{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(10px);border-bottom:2px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:64px;gap:1rem}
+.brand{display:flex;align-items:center;gap:.5rem;font-weight:900;font-size:1.25rem;text-decoration:none}
+.brand span{font-size:1.7rem}
+.nav-links{display:flex;gap:1.4rem;font-weight:800;color:var(--muted)}
+.nav-links a{text-decoration:none}
+.nav-links a:hover{color:var(--green)}
+@media (max-width:760px){.nav-links{display:none}}
+
+/* Destaque */
+.hero{background:linear-gradient(135deg,#58CC02 0%,#1CB0F6 60%,#CE82FF 110%);color:#fff;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle,rgba(255,255,255,.16) 2px,transparent 2px);background-size:36px 36px;pointer-events:none}
+.hero-grid{position:relative;display:grid;grid-template-columns:1.15fr .85fr;gap:2.5rem;align-items:center;padding:4rem 0 3.5rem}
+.tag{display:inline-block;background:rgba(255,255,255,.2);border:2px solid rgba(255,255,255,.45);border-radius:100px;padding:.3rem .9rem;font-weight:900;font-size:.9rem;margin-bottom:1rem}
+.hero h1{font-size:clamp(2.3rem,5.2vw,3.7rem);line-height:1.05;font-weight:900;letter-spacing:-1px;text-shadow:0 4px 0 rgba(0,0,0,.15)}
+.hero p.lead{font-size:clamp(1.05rem,2vw,1.25rem);margin:1.1rem 0 1.6rem;opacity:.96;max-width:34rem}
+.chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1.2rem}
+.chip{background:rgba(255,255,255,.18);border:2px solid rgba(255,255,255,.4);border-radius:100px;padding:.3rem .8rem;font-weight:800;font-size:.9rem}
+.phone{width:min(300px,78vw);margin:0 auto;border-radius:44px;background:#1d1d1f;padding:12px;box-shadow:0 30px 70px rgba(0,0,0,.35),0 0 0 5px rgba(255,255,255,.22)}
+.phone img{border-radius:33px;width:100%;aspect-ratio:540/1169;object-fit:cover;background:#fff}
+@media (max-width:860px){.hero-grid{grid-template-columns:1fr;text-align:center;padding:3rem 0}.hero p.lead{margin-left:auto;margin-right:auto}.chips{justify-content:center}}
+
+/* Seções */
+section{padding:4.5rem 0}
+.sec-title{text-align:center;max-width:44rem;margin:0 auto 2.5rem}
+.sec-title h2{font-size:clamp(1.8rem,3.6vw,2.6rem);font-weight:900;line-height:1.15;letter-spacing:-.5px}
+.sec-title p{color:var(--muted);font-size:1.1rem;margin-top:.6rem}
+.kicker{display:inline-block;font-weight:900;font-size:.85rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--green);margin-bottom:.4rem}
+
+/* Vídeo */
+.video-box{max-width:900px;margin:0 auto;border-radius:24px;overflow:hidden;box-shadow:var(--shadow);border:4px solid var(--card);background:#000}
+.video-box video{width:100%;display:block;aspect-ratio:16/9}
+
+/* Como funciona */
+.features{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem}
+.feat{background:var(--card);border:2px solid var(--line);border-radius:24px;padding:1.4rem;display:grid;grid-template-columns:140px 1fr;gap:1.3rem;align-items:center;box-shadow:var(--shadow)}
+.feat img{border-radius:18px;border:3px solid var(--line);aspect-ratio:540/1169;object-fit:cover;width:140px}
+.feat h3{font-size:1.3rem;font-weight:900;line-height:1.2;margin-bottom:.4rem}
+.feat p{color:var(--muted)}
+.feat .ico{font-size:1.8rem;display:block;margin-bottom:.3rem}
+@media (max-width:860px){.features{grid-template-columns:1fr}}
+@media (max-width:440px){.feat{grid-template-columns:1fr;text-align:center}.feat img{width:170px;margin:0 auto}}
+
+/* Pais */
+.parents{background:var(--green-bg)}
+.p-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.1rem}
+.p-card{background:var(--card);border-radius:20px;padding:1.3rem;border:2px solid var(--line)}
+.p-card .ico{font-size:2rem}
+.p-card h3{font-weight:900;font-size:1.1rem;margin:.3rem 0 .2rem}
+.p-card p{color:var(--muted);font-size:.97rem}
+@media (max-width:860px){.p-grid{grid-template-columns:1fr 1fr}}
+@media (max-width:520px){.p-grid{grid-template-columns:1fr}}
+
+/* Preço */
+.plans{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;max-width:860px;margin:0 auto}
+.plan{background:var(--card);border:3px solid var(--line);border-radius:26px;padding:1.8rem;position:relative}
+.plan.pro{border-color:var(--yellow);box-shadow:0 6px 0 #c49a00}
+.plan h3{font-size:1.4rem;font-weight:900}
+.price{font-size:2.4rem;font-weight:900;margin:.4rem 0 .2rem;line-height:1}
+.price small{font-size:1rem;color:var(--muted);font-weight:800}
+.plan ul{list-style:none;margin-top:1rem;display:grid;gap:.55rem}
+.plan li{padding-left:1.8rem;position:relative}
+.plan li::before{content:'✅';position:absolute;left:0}
+.badge{position:absolute;top:-14px;right:20px;background:var(--yellow);color:#5c4300;font-weight:900;font-size:.85rem;padding:.25rem .8rem;border-radius:100px}
+@media (max-width:700px){.plans{grid-template-columns:1fr}}
+
+/* Professores */
+.teach{background:linear-gradient(135deg,#1CB0F6,#7c3aed);color:#fff;border-radius:28px;padding:2.4rem;display:grid;grid-template-columns:1fr auto;gap:1.5rem;align-items:center}
+.teach h2{font-size:clamp(1.5rem,3vw,2rem);font-weight:900;line-height:1.2}
+.teach p{opacity:.95;margin-top:.5rem}
+@media (max-width:700px){.teach{grid-template-columns:1fr;text-align:center}}
+
+/* Dúvidas */
+.faq{max-width:780px;margin:0 auto;display:grid;gap:.7rem}
+details{background:var(--card);border:2px solid var(--line);border-radius:18px;padding:1rem 1.2rem}
+summary{font-weight:900;font-size:1.05rem;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:1rem}
+summary::-webkit-details-marker{display:none}
+summary::after{content:'+';color:var(--green);font-size:1.4rem;line-height:1}
+details[open] summary::after{content:'−'}
+details p{color:var(--muted);margin-top:.6rem}
+
+/* Chamada final e rodapé */
+.final{text-align:center;background:linear-gradient(135deg,#58CC02,#1CB0F6);color:#fff}
+.final h2{font-size:clamp(1.9rem,4vw,2.8rem);font-weight:900;line-height:1.15}
+.final p{margin:.7rem 0 1.6rem;font-size:1.1rem;opacity:.95}
+footer{padding:2rem 0;color:var(--muted);font-size:.92rem}
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem}
+.foot a{font-weight:800}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#"><span>🦉</span>MultiplicaMente</a>
+    <nav class="nav-links">
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#pais">Para pais</a>
+      <a href="#preco">Preço</a>
+      <a href="#duvidas">Dúvidas</a>
+    </nav>
+    <a class="btn btn-green btn-sm" href="https://play.google.com/store/apps/details?id=com.solano.multiplicamente">Baixar grátis</a>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="tag">🎮 Jogo de tabuada para crianças</span>
+      <h1>A tabuada vira aventura.</h1>
+      <p class="lead">Seu filho aprende multiplicação, divisão, soma e subtração jogando: uma jornada com fases, criaturas para resgatar e desafios contra o relógio.</p>
+      <a class="btn btn-white" href="https://play.google.com/store/apps/details?id=com.solano.multiplicamente">▶ Baixar grátis na Google Play</a>
+      <div class="chips">
+        <span class="chip">✅ Tabuadas do 2 ao 5 grátis</span>
+        <span class="chip">🚫 Sem anúncios</span>
+        <span class="chip">📶 Funciona sem internet</span>
+      </div>
+    </div>
+    <div class="phone"><img src="marketing/telas/jornada.jpg" alt="Tela da jornada do MultiplicaMente, com as fases da tabuada em um caminho colorido" width="540" height="1169"></div>
+  </div>
+</section>
+
+<section id="video">
+  <div class="wrap">
+    <div class="sec-title">
+      <span class="kicker">Veja em 20 segundos</span>
+      <h2>Aprender a tabuada nunca foi tão divertido</h2>
+    </div>
+    <div class="video-box">
+      <video controls playsinline preload="none" poster="marketing/video_capa.jpg">
+        <source src="marketing/MultiplicaMente_promo_horizontal_1920x1080.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</section>
+
+<section id="como-funciona">
+  <div class="wrap">
+    <div class="sec-title">
+      <span class="kicker">Como funciona</span>
+      <h2>Feito para a criança querer jogar de novo</h2>
+      <p>Cada tabuada é uma fase. Ganhou uma estrela, a próxima é liberada.</p>
+    </div>
+    <div class="features">
+      <div class="feat">
+        <img src="marketing/telas/jornada.jpg" alt="Jornada com as fases da tabuada" loading="lazy" width="540" height="1169">
+        <div><span class="ico">🗺️</span><h3>Uma jornada de fases</h3><p>A criança avança pelo caminho, tabuada por tabuada, e sempre sabe qual é o próximo desafio.</p></div>
+      </div>
+      <div class="feat">
+        <img src="marketing/telas/conta.jpg" alt="Pergunta 4 vezes 10 com bolinhas em grupos" loading="lazy" width="540" height="1169">
+        <div><span class="ico">🟢</span><h3>Cada conta vira desenho</h3><p>As bolinhas em grupos mostram o que é multiplicar. Ela entende, não só decora.</p></div>
+      </div>
+      <div class="feat">
+        <img src="marketing/telas/vitoria.jpg" alt="Tela de vitória com três estrelas e criatura resgatada" loading="lazy" width="540" height="1169">
+        <div><span class="ico">🐉</span><h3>180 criaturas para resgatar</h3><p>Fez a tabuada sem errar? Uma criatura nova entra na coleção. São 5 coleções em cada operação.</p></div>
+      </div>
+      <div class="feat">
+        <img src="marketing/telas/desafio.jpg" alt="Desafio Misto com relógio de 3 segundos" loading="lazy" width="540" height="1169">
+        <div><span class="ico">🔀</span><h3>Desafio Misto contra o relógio</h3><p>Mistura as tabuadas que ela já passou, com tempo de 5 a 2 segundos. Perfeito para revisar.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pais" class="parents">
+  <div class="wrap">
+    <div class="sec-title">
+      <span class="kicker">Para pais e responsáveis</span>
+      <h2>Seguro para a criança, simples para você</h2>
+    </div>
+    <div class="p-grid">
+      <div class="p-card"><div class="ico">📊</div><h3>Relatório dos pais</h3><p>Veja precisão, dias seguidos, progresso por tabuada e acertos da semana, protegidos por PIN.</p></div>
+      <div class="p-card"><div class="ico">🚫</div><h3>Sem anúncios e sem chat</h3><p>Nenhuma propaganda e nenhum contato com estranhos. Só a criança e a tabuada.</p></div>
+      <div class="p-card"><div class="ico">🔒</div><h3>Compras só com adulto</h3><p>Compra e conta na nuvem ficam atrás de uma pergunta para adultos.</p></div>
+      <div class="p-card"><div class="ico">📶</div><h3>Funciona sem internet</h3><p>Ótimo para viagens e para quem controla o uso de dados.</p></div>
+      <div class="p-card"><div class="ico">👨‍👩‍👧</div><h3>Vários perfis</h3><p>Cada filho tem seu próprio perfil, avatar e progresso no mesmo celular.</p></div>
+      <div class="p-card"><div class="ico">☁️</div><h3>Nuvem opcional</h3><p>Se quiser, salve o progresso na nuvem e continue em outro celular. Você pode excluir a conta quando quiser.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="preco">
+  <div class="wrap">
+    <div class="sec-title">
+      <span class="kicker">Preço</span>
+      <h2>Comece grátis. Pague uma vez só, se quiser mais.</h2>
+    </div>
+    <div class="plans">
+      <div class="plan">
+        <h3>Grátis</h3>
+        <div class="price">R$ 0</div>
+        <ul>
+          <li>Tabuadas do 2 ao 5</li>
+          <li>Nas 4 operações: ×, ÷, + e −</li>
+          <li>Coleção de criaturas</li>
+          <li>Desafio Misto e missões diárias</li>
+          <li>Relatório dos pais</li>
+        </ul>
+      </div>
+      <div class="plan pro">
+        <span class="badge">👑 Premium</span>
+        <h3>Completo</h3>
+        <div class="price">R$ 9,99 <small>pagamento único</small></div>
+        <ul>
+          <li>Tudo da versão grátis</li>
+          <li>Tabuadas do 6 ao 10</li>
+          <li>Nas 4 operações: ×, ÷, + e −</li>
+          <li>Todas as 180 criaturas</li>
+          <li>Sem assinatura, sem cobrança mensal</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="teach">
+      <div>
+        <h2>👩‍🏫 Professor, indique para a sua turma</h2>
+        <p>Ideal para revisar a tabuada em casa do 2º ao 5º ano. Quer usar com seus alunos? Fale com a gente.</p>
+      </div>
+      <a class="btn btn-white" href="mailto:solanobicalho@yahoo.com.br?subject=MultiplicaMente%20para%20escolas">✉️ Falar com a gente</a>
+    </div>
+  </div>
+</section>
+
+<section id="duvidas">
+  <div class="wrap">
+    <div class="sec-title">
+      <span class="kicker">Dúvidas frequentes</span>
+      <h2>Perguntas dos pais</h2>
+    </div>
+    <div class="faq">
+      <details><summary>Para qual idade é o MultiplicaMente?</summary><p>Para crianças a partir de 6 anos, principalmente do 2º ao 5º ano, que estão aprendendo ou revisando a tabuada.</p></details>
+      <details><summary>Precisa criar conta?</summary><p>Não. A criança joga sem conta e o progresso fica salvo no celular. A conta na nuvem é opcional e só um adulto pode criá-la.</p></details>
+      <details><summary>Funciona sem internet?</summary><p>Sim. Depois de instalado, o jogo funciona sem internet. A internet só é usada para salvar na nuvem e para a compra do Premium.</p></details>
+      <details><summary>O Premium é assinatura?</summary><p>Não. É um pagamento único de R$ 9,99, feito pelo Google Play. Não há cobrança mensal.</p></details>
+      <details><summary>Quais dados o app guarda?</summary><p>O nome da criança e o progresso no jogo ficam no celular. Se o adulto criar uma conta na nuvem, o e-mail e o progresso são guardados com segurança no Google Firebase. Não vendemos dados nem mostramos anúncios. <a href="privacidade.html">Leia a política de privacidade</a>.</p></details>
+      <details><summary>Como excluo a conta e os dados?</summary><p>No app: <strong>⚙️ Config → Conta e sincronização → Excluir conta e dados da nuvem</strong>. Também pode pedir pelo e-mail <a href="mailto:solanobicalho@yahoo.com.br">solanobicalho@yahoo.com.br</a>. Os dados do celular são apagados ao desinstalar o app.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="final">
+  <div class="wrap">
+    <h2>Pronto para a aventura da tabuada?</h2>
+    <p>Comece grátis hoje. Sem anúncios, sem cadastro.</p>
+    <a class="btn btn-white" href="https://play.google.com/store/apps/details?id=com.solano.multiplicamente">▶ Baixar grátis na Google Play</a>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap foot">
+    <div>🦉 MultiplicaMente — Aventura da Tabuada · © 2026</div>
+    <div><a href="privacidade.html">Política de privacidade</a> · <a href="mailto:solanobicalho@yahoo.com.br">Contato</a></div>
+  </div>
+</footer>
+
+</body>
+</html>

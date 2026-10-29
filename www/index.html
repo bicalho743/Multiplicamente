@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>MultiplicaMente 🦉</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -75,7 +75,7 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 @keyframes splashOut{to{opacity:0;transform:scale(1.05)}}
 .splash-owl{font-size:5rem;animation:splashOwl 1s ease-in-out infinite alternate;}
 @keyframes splashOwl{from{transform:translateY(0) rotate(-5deg)}to{transform:translateY(-18px) rotate(5deg)}}
-.splash-title{font-size:2.2rem;font-weight:900;color:#fff;text-shadow:0 3px 0 rgba(0,0,0,.2);letter-spacing:-1px;}
+.splash-title{font-size:clamp(1.6rem,9vw,2.2rem);font-weight:900;color:#fff;text-shadow:0 3px 0 rgba(0,0,0,.2);letter-spacing:-1px;max-width:100%;padding:0 16px;text-align:center;line-height:1.1;overflow-wrap:anywhere;}
 .splash-sub{font-size:.95rem;font-weight:700;color:rgba(255,255,255,.8);}
 .splash-dots{display:flex;gap:.4rem;margin-top:.5rem;}
 .splash-dot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.4);animation:dotPulse 1.2s ease-in-out infinite;}
@@ -91,8 +91,8 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
   cursor:pointer!important;
 }
 .jlocked-premium .jnode-num{font-size:1.3rem;color:#CE82FF;}
-.jlocked-premium .jnode-lbl{color:#CE82FF;font-size:.55rem;}
-.premium-badge{position:absolute;top:-6px;right:-6px;background:#FFC800;color:#6b4c00;font-size:.55rem;font-weight:900;border-radius:100px;padding:.1rem .3rem;border:2px solid #fff;}
+.jlocked-premium .jnode-lbl{color:#CE82FF;font-size:.68rem;}
+.premium-badge{position:absolute;top:-6px;right:-6px;background:#FFC800;color:#6b4c00;font-size:.65rem;font-weight:900;border-radius:100px;padding:.1rem .3rem;border:2px solid #fff;}
 
 /* ── SHARE BUTTON ────────────────────────────────────────── */
 .btn-share{background:linear-gradient(135deg,#1CB0F6,#0f6d99);color:#fff;box-shadow:0 5px 0 #0a4d70;}
@@ -124,13 +124,13 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 }
 
 /* LOGIN — redesign compacto */
-#sLogin{background:var(--bg-screen);display:flex;flex-direction:column;height:100%;position:fixed;inset:0;}
+#sLogin{background:var(--bg-screen);flex-direction:column;height:100%;position:fixed;inset:0;}
 .login-top{background:var(--green);padding:.7rem 1.2rem .9rem;display:flex;align-items:center;gap:.6rem;flex-shrink:0;border-radius:0 0 20px 20px;box-shadow:0 4px 0 var(--green-sh);}
 .login-top-owl{font-size:1.8rem;animation:owlBob 2s ease-in-out infinite;}
 @keyframes owlBob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-5px) rotate(3deg)}}
 .login-top-text{flex:1;}
 .login-top-text h1{font-size:1.2rem;font-weight:900;color:#fff;text-shadow:0 2px 0 rgba(0,0,0,.15);line-height:1;}
-.login-top-text p{color:rgba(255,255,255,.85);font-size:.72rem;font-weight:700;}
+.login-top-text p{color:rgba(255,255,255,.85);font-size:.8rem;font-weight:700;}
 .login-top-cloud{font-size:.72rem;font-weight:700;color:rgba(255,255,255,.8);text-align:right;cursor:pointer;background:rgba(0,0,0,.15);border-radius:8px;padding:.3rem .5rem;flex-shrink:0;}
 /* profiles */
 .login-body{flex:1;min-height:0;overflow-y:scroll;overflow-x:hidden;padding:.9rem 1.1rem 5rem;display:flex;flex-direction:column;gap:.55rem;-webkit-overflow-scrolling:touch;}
@@ -145,7 +145,7 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 .profile-item{display:flex;align-items:center;gap:.7rem;background:var(--bg-card);border:2px solid var(--gray);border-radius:var(--r);padding:.7rem .9rem;cursor:pointer;transition:all .15s;}
 .profile-item:active{transform:scale(.97);}
 .pi-av{font-size:1.6rem;width:40px;height:40px;background:var(--blue-bg);border-radius:10px;display:flex;align-items:center;justify-content:center;border:2px solid var(--blue);flex-shrink:0;}
-.pi-info{flex:1;} .pi-name{font-weight:800;font-size:.95rem;color:var(--dark);} .pi-stats{font-size:.72rem;color:var(--gray-dk);font-weight:700;}
+.pi-info{flex:1;} .pi-name{font-weight:800;font-size:.95rem;color:var(--dark);} .pi-stats{font-size:.8rem;color:var(--gray-dk);font-weight:700;}
 /* add player collapsible */
 .add-player-toggle{display:flex;align-items:center;justify-content:center;gap:.4rem;padding:.6rem;background:none;border:2px dashed var(--gray);border-radius:var(--r);width:100%;font-family:'Nunito',sans-serif;font-weight:800;font-size:.88rem;color:var(--gray-dk);cursor:pointer;transition:all .2s;}
 .add-player-toggle:hover{border-color:var(--blue);color:var(--blue);}
@@ -187,12 +187,12 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 .home-topbar{display:flex;align-items:center;justify-content:space-between;padding:.7rem 1.1rem .5rem;border-bottom:2px solid var(--gray);flex-shrink:0;}
 .home-user{display:flex;align-items:center;gap:.55rem;}
 .home-av{width:38px;height:38px;font-size:1.35rem;background:var(--green-bg);border-radius:10px;display:flex;align-items:center;justify-content:center;border:2px solid var(--green);}
-.home-name{font-weight:800;font-size:.95rem;} .home-gems{font-size:.75rem;color:var(--gray-dk);font-weight:700;}
+.home-name{font-weight:800;font-size:.95rem;} .home-gems{font-size:.82rem;color:var(--gray-dk);font-weight:700;}
 .hud-pills{display:flex;gap:.4rem;}
 .pill{display:flex;align-items:center;gap:.25rem;border-radius:100px;padding:.3rem .55rem;font-weight:800;font-size:.82rem;background:var(--yellow-bg);color:var(--yellow-sh);}
 .pill-b{background:var(--blue-bg);color:var(--blue-dk);}
 .home-tabs{display:flex;border-bottom:2px solid var(--gray);flex-shrink:0;}
-.htab{flex:1;padding:.65rem;font-family:'Nunito',sans-serif;font-weight:800;font-size:.82rem;background:none;border:none;color:var(--gray-dk);cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:.25rem;}
+.htab{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:.7rem .2rem;font-family:'Nunito',sans-serif;font-weight:800;font-size:.8rem;background:none;border:none;color:var(--gray-dk);cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:.25rem;}
 .htab.active{color:var(--green);border-bottom-color:var(--green);}
 .tab-panel{display:none;flex:1;overflow:hidden;flex-direction:column;}
 .tab-panel.active{display:flex;}
@@ -228,7 +228,13 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 
 /* HOME BOTTOM */
 .home-bottom{padding:.5rem .9rem .8rem;border-top:2px solid var(--gray);display:flex;gap:.4rem;flex-shrink:0;}
-.boss-btn{flex:1;padding:.8rem;background:var(--dark);color:#fff;border:none;border-radius:var(--r);font-family:'Nunito',sans-serif;font-weight:800;font-size:.9rem;cursor:pointer;box-shadow:0 4px 0 #1a1a1a;display:flex;align-items:center;justify-content:center;gap:.35rem;transition:all .1s;}
+.boss-btn{flex:1;min-width:0;padding:.5rem .8rem;background:var(--dark);color:#fff;border:none;border-radius:var(--r);font-family:'Nunito',sans-serif;font-weight:800;font-size:.95rem;cursor:pointer;box-shadow:0 4px 0 #1a1a1a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;transition:all .1s;line-height:1.2;}
+.boss-sub{font-size:.72rem;font-weight:700;opacity:.9;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.boss-btn.locked{filter:grayscale(1);opacity:.6;}
+.home-chips{display:flex;gap:.4rem;padding:.4rem .9rem 0;flex-shrink:0;}
+.home-chip{flex:1;min-width:0;display:flex;align-items:center;justify-content:center;gap:.35rem;padding:.4rem .6rem;border-radius:100px;font-family:'Nunito',sans-serif;font-weight:800;font-size:.8rem;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.home-chip.story{background:linear-gradient(135deg,#1a3a00,#2e6e00);color:#fff;border:none;}
+.home-chip.miss{background:var(--blue-bg);color:var(--blue-dk);border:2px solid var(--blue);}
 .boss-btn:active{transform:translateY(4px);box-shadow:none;}
 .dash-btn{width:48px;height:48px;background:var(--purple);border:none;border-radius:var(--r);font-size:1.3rem;cursor:pointer;box-shadow:0 4px 0 var(--purple-sh);display:flex;align-items:center;justify-content:center;transition:all .1s;flex-shrink:0;}
 .dash-btn:active{transform:translateY(4px);box-shadow:none;}
@@ -240,10 +246,10 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 .cre-card.un{border-color:var(--yellow);background:var(--yellow-bg);box-shadow:0 3px 0 var(--yellow-sh);animation:creIdle 3s ease-in-out infinite;}
 @keyframes creIdle{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
 .cre-card.lk{opacity:.35;filter:grayscale(1);}
-.cre-emoji{font-size:1.9rem;} .cre-name{font-size:.6rem;font-weight:800;color:var(--dark);margin-top:2px;text-align:center;}
+.cre-emoji{font-size:1.9rem;} .cre-name{font-size:.72rem;font-weight:800;color:var(--dark);margin-top:2px;text-align:center;}
 
 /* SETTINGS */
-.settings-section{flex:1;padding:.8rem .9rem;display:flex;flex-direction:column;gap:.8rem;overflow:hidden;}
+.settings-section{flex:1;padding:.8rem .9rem;display:flex;flex-direction:column;gap:.8rem;overflow-y:auto;}
 .settings-card{background:var(--white);border:2.5px solid var(--gray);border-radius:var(--r);padding:.9rem;}
 .settings-card h3{font-weight:800;font-size:.9rem;color:var(--dark);margin-bottom:.7rem;display:flex;align-items:center;gap:.35rem;}
 .vol-row{display:flex;align-items:center;gap:.6rem;}
@@ -253,7 +259,7 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 /* GAME */
 #sGame{background:var(--white);}
 .game-topbar{display:flex;align-items:center;gap:.6rem;padding:.6rem 1rem .4rem;flex-shrink:0;}
-.close-btn{width:34px;height:34px;background:none;border:none;cursor:pointer;font-size:1.1rem;color:var(--gray-dk);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.close-btn{width:44px;height:44px;background:none;border:none;cursor:pointer;font-size:1.3rem;color:var(--gray-dk);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
 .close-btn:hover{background:var(--gray);}
 .prog-wrap{flex:1;}
 .prog-bar{height:14px;background:var(--gray);border-radius:100px;overflow:hidden;}
@@ -264,7 +270,7 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 /* Q CARD */
 .q-card{margin:.2rem 1rem .6rem;background:var(--white);border:2.5px solid var(--gray);border-radius:var(--r-lg);padding:.9rem 1rem .8rem;flex-shrink:0;}
 .q-top-row{display:flex;align-items:center;justify-content:space-between;width:100%;margin-bottom:.5rem;}
-.q-tip{font-size:.78rem;font-weight:700;color:var(--blue);font-style:italic;flex:1;}
+.q-tip{font-size:.95rem;font-weight:700;color:var(--blue);font-style:italic;flex:1;}
 /* inline timer ring */
 .q-ring{position:relative;width:58px;height:58px;flex-shrink:0;}
 .q-ring svg{width:58px;height:58px;transform:rotate(-90deg);}
@@ -274,8 +280,13 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 .qr-no-timer{width:58px;height:58px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:1.4rem;background:var(--gray);border-radius:50%;}
 .qr-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:1.2rem;color:var(--dark);}
 .q-main{font-weight:900;font-size:3rem;color:var(--dark);letter-spacing:-1px;line-height:1;text-align:center;width:100%;}
-.q-vis{display:flex;flex-wrap:wrap;gap:3px;justify-content:center;background:var(--gray);border-radius:10px;padding:.45rem .5rem;margin-top:.5rem;min-height:34px;max-height:62px;overflow:hidden;width:100%;}
-.vdot{width:10px;height:10px;border-radius:50%;background:var(--green);animation:popD .25s backwards;}
+.q-vis{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;align-items:center;background:var(--gray);border-radius:10px;padding:.45rem .5rem;margin-top:.5rem;min-height:34px;max-height:96px;overflow:hidden;width:100%;}
+.q-vis:empty{display:none;}
+.vdot{width:8px;height:8px;border-radius:50%;background:var(--green);animation:popD .25s backwards;}
+.vdot.b{background:var(--blue);}
+.vdot.x{background:var(--red);opacity:.35;}
+.vgrp{display:grid;grid-template-columns:repeat(5,8px);gap:2px;padding:3px;border:2px solid rgba(0,0,0,.12);border-radius:6px;background:var(--bg-card);}
+.vplus{font-weight:900;color:var(--gray-dk);font-size:1rem;}
 @keyframes popD{from{transform:scale(0)}to{transform:scale(1)}}
 
 /* ANSWERS */
@@ -287,14 +298,16 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 .ans-btn.wrong{background:var(--red-bg);border-color:var(--red);color:var(--red-sh);box-shadow:0 4px 0 var(--red);animation:shake .4s;}
 @keyframes wiggle{0%,100%{transform:scale(1)}40%{transform:scale(1.06)}70%{transform:scale(.97)}}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-7px)}75%{transform:translateX(7px)}}
+.ans-btn:disabled{opacity:1;-webkit-text-fill-color:inherit;}
 
 /* RESULT BAR */
-.result-bar{flex-shrink:0;padding:.75rem 1rem;border-top:2.5px solid var(--gray);display:flex;align-items:center;gap:.7rem;min-height:60px;}
+.result-bar{position:absolute;bottom:0;left:0;right:0;padding:.75rem 1rem;border-top:2.5px solid var(--gray);display:flex;align-items:center;gap:.7rem;min-height:68px;z-index:10;}
 .result-bar.hidden{display:none;}
+#sGame.rb-visible .ans-area{padding-bottom:80px;}
 .rb-correct{border-top-color:var(--green);background:var(--green-bg);}
 .rb-wrong{border-top-color:var(--red);background:var(--red-bg);}
 .rb-icon{font-size:1.7rem;flex-shrink:0;} .rb-text{flex:1;}
-.rb-title{font-weight:800;font-size:.9rem;} .rb-sub{font-size:.78rem;font-weight:600;color:var(--gray-dk);}
+.rb-title{font-weight:800;font-size:.9rem;} .rb-sub{font-size:.88rem;font-weight:600;color:var(--gray-dk);}
 .rb-correct .rb-title{color:var(--green-sh);} .rb-wrong .rb-title{color:var(--red-sh);}
 .rb-btn{padding:.65rem 1.1rem;border:none;border-radius:var(--r);font-family:'Nunito',sans-serif;font-weight:800;font-size:.88rem;cursor:pointer;flex-shrink:0;transition:all .1s;}
 .rb-correct .rb-btn{background:var(--green);color:#fff;box-shadow:0 3px 0 var(--green-sh);}
@@ -305,7 +318,7 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 .modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-end;z-index:200;}
 .modal-ov.open{display:flex;animation:fadeOv .2s;}
 @keyframes fadeOv{from{opacity:0}to{opacity:1}}
-.modal-sheet{width:100%;background:var(--white);border-radius:24px 24px 0 0;padding:1.4rem 1.4rem 1.8rem;animation:slideUp .3s ease-out;}
+.modal-sheet{width:100%;max-height:90%;overflow-y:auto;-webkit-overflow-scrolling:touch;background:var(--white);border-radius:24px 24px 0 0;padding:1.4rem 1.4rem 1.8rem;animation:slideUp .3s ease-out;}
 @keyframes slideUp{from{transform:translateY(60px);opacity:0}to{transform:translateY(0);opacity:1}}
 .break-emoji{font-size:3.8rem;text-align:center;display:block;animation:bnc .7s ease-in-out infinite alternate;}
 @keyframes bnc{from{transform:translateY(0)}to{transform:translateY(-10px)}}
@@ -360,6 +373,9 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
   .table-section{padding:.4rem 1rem .6rem;}
   .ans-area{padding:0 1.2rem;gap:.6rem;}
   .q-card{margin:.3rem 1.2rem .7rem;padding:1rem 1.2rem;}
+  /* mantém login e modais dentro do card no tablet */
+  #sLogin{position:absolute;}
+  .modal-sheet{max-width:440px;margin:0 auto;}
 }
 
 /* ── JOURNEY PATH ────────────────────────────────────────────────── */
@@ -411,7 +427,7 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 }
 .jnode:active:not(.jlocked){transform:translate(-50%,-50%) scale(.88);}
 .jnode-num{font-weight:900;line-height:1;}
-.jnode-lbl{font-size:.58rem;font-weight:700;margin-top:2px;text-align:center;}
+.jnode-lbl{font-size:.7rem;font-weight:700;margin-top:2px;text-align:center;}
 .jdone{
   width:68px;height:68px;
   background:var(--green-bg);border-color:var(--green);
@@ -467,7 +483,7 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
   position:absolute;
   font-size:2rem;
   z-index:4;
-  transform:translate(-50%,-100%) translateY(-8px);
+  transform:translate(-50%,-50%);
   filter:drop-shadow(0 3px 6px rgba(0,0,0,.18));
   animation:charFloat 1.2s ease-in-out infinite alternate;
   transition:
@@ -476,8 +492,8 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
   pointer-events:none;
 }
 @keyframes charFloat{
-  from{transform:translate(-50%,-100%) translateY(-8px)}
-  to  {transform:translate(-50%,-100%) translateY(-18px)}
+  from{transform:translate(-50%,-50%) translateY(0)}
+  to  {transform:translate(-50%,-50%) translateY(-10px)}
 }
 
 /* start / finish banners */
@@ -531,11 +547,14 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
   font-family:'Nunito',sans-serif;font-weight:800;font-size:.8rem;
   cursor:pointer;transition:all .15s;}
 .subj-btn.active{color:#fff;box-shadow:0 3px 0 rgba(0,0,0,.2);}
-.subj-btn.sm-active{background:var(--green);border-color:var(--green-sh);}
+.subj-btn.active[data-s="mult"]{background:var(--green);border-color:var(--green-sh);}
+.subj-btn.active[data-s="div"]{background:var(--blue);border-color:var(--blue-sh);}
+.subj-btn.active[data-s="add"]{background:#FF9600;border-color:#c47200;}
+.subj-btn.active[data-s="sub"]{background:var(--red);border-color:var(--red-sh);}
 .subj-btn:active{transform:scale(.95);}
 /* help button */
-.help-btn{width:28px;height:28px;background:var(--gray);border:none;border-radius:50%;
-  font-family:'Nunito',sans-serif;font-weight:900;font-size:.85rem;
+.help-btn{width:40px;height:40px;background:var(--gray);border:none;border-radius:50%;
+  font-family:'Nunito',sans-serif;font-weight:900;font-size:1.05rem;
   color:var(--gray-dk);cursor:pointer;display:flex;align-items:center;justify-content:center;
   transition:background .15s;flex-shrink:0;}
 .help-btn:hover{background:var(--blue-bg);color:var(--blue-dk);}
@@ -573,16 +592,16 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 .missions-hdr{font-weight:900;font-size:.75rem;color:var(--blue-dk);margin-bottom:.35rem;display:flex;justify-content:space-between;}
 .mission-row{display:flex;align-items:center;gap:.45rem;margin-bottom:.28rem;}
 .mission-row:last-child{margin-bottom:0;}
-.mcheck{width:18px;height:18px;border-radius:50%;border:2px solid var(--blue);display:flex;align-items:center;justify-content:center;font-size:.65rem;flex-shrink:0;}
+.mcheck{width:22px;height:22px;border-radius:50%;border:2px solid var(--blue);display:flex;align-items:center;justify-content:center;font-size:.65rem;flex-shrink:0;}
 .mcheck.done{background:var(--blue);}
-.mlbl{flex:1;font-size:.7rem;font-weight:700;color:var(--dark);}
+.mlbl{flex:1;font-size:.82rem;font-weight:700;color:var(--dark);}
 .mbar-wrap{width:52px;height:5px;background:var(--gray);border-radius:100px;overflow:hidden;}
 .mbar-fill{height:100%;background:var(--blue);border-radius:100px;transition:width .4s;}
-.mrew{font-size:.68rem;font-weight:800;color:var(--blue-dk);}
+.mrew{font-size:.78rem;font-weight:800;color:var(--blue-dk);}
 
 /* ── POWER-UPS ───────────────────────────────────────────── */
 .pu-row{display:flex;gap:.35rem;padding:.3rem .9rem;flex-shrink:0;}
-.pu-btn{flex:1;padding:.45rem .25rem;background:var(--yellow-bg);border:2px solid var(--yellow);border-radius:12px;font-family:'Nunito',sans-serif;font-weight:800;font-size:.62rem;color:var(--yellow-sh);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:1px;box-shadow:0 3px 0 var(--yellow-sh);transition:all .1s;}
+.pu-btn{flex:1;padding:.45rem .25rem;background:var(--yellow-bg);border:2px solid var(--yellow);border-radius:12px;font-family:'Nunito',sans-serif;font-weight:800;font-size:.78rem;color:var(--yellow-sh);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:1px;box-shadow:0 3px 0 var(--yellow-sh);transition:all .1s;}
 .pu-btn:active{transform:translateY(3px);box-shadow:none;}
 .pu-btn.used,.pu-btn:disabled{opacity:.35;pointer-events:none;}
 .pu-icon{font-size:1.1rem;}
@@ -633,7 +652,7 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 .rank-av{font-size:1.5rem;flex-shrink:0;}
 .rank-info{flex:1;}
 .rank-name{font-weight:800;font-size:.9rem;color:var(--dark);}
-.rank-sub{font-size:.72rem;font-weight:700;color:var(--gray-dk);}
+.rank-sub{font-size:.8rem;font-weight:700;color:var(--gray-dk);}
 .rank-pts{font-weight:900;font-size:1rem;color:var(--green);flex-shrink:0;}
 .rank-arrow{font-size:.85rem;font-weight:900;flex-shrink:0;width:20px;text-align:center;}
 .rank-arrow.up{color:var(--green);}
@@ -660,6 +679,31 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 .btn-danger-outline:active{background:var(--red-bg);}
 @keyframes fadeOut{0%{opacity:1}100%{opacity:0}}
 
+/* ── FLASH LONGO ─────────────────────────────────────────── */
+.fb-txt.fb-long{font-size:1.15rem;max-width:85%;text-align:center;border-radius:18px;line-height:1.3;}
+
+/* ── SELETOR DE VELOCIDADE ───────────────────────────────── */
+.spd-list{display:flex;flex-direction:column;gap:.4rem;margin-bottom:.7rem;}
+.spd-opt{display:flex;align-items:center;gap:.7rem;width:100%;padding:.5rem .8rem;background:var(--bg-card);border:2.5px solid var(--gray);border-radius:var(--r);font-family:'Nunito',sans-serif;cursor:pointer;box-shadow:0 3px 0 var(--gray);text-align:left;transition:transform .1s;}
+.spd-opt:active{transform:translateY(3px);box-shadow:none;}
+.spd-opt.sel{border-width:3px;}
+.spd-ic{font-size:1.35rem;width:32px;text-align:center;flex-shrink:0;}
+.spd-txt{flex:1;}
+.spd-name{font-weight:900;font-size:.95rem;color:var(--dark);}
+.spd-sub{font-weight:700;font-size:.75rem;color:var(--gray-dk);}
+.spd-cre{font-size:1.5rem;flex-shrink:0;}
+.spd-cre.lk{filter:brightness(0);opacity:.25;}
+
+/* ── RECORDES ────────────────────────────────────────────── */
+.rec-wrap{flex:1;overflow-y:auto;padding:.7rem .9rem 1rem;}
+.rec-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:.8rem;}
+.rec-card{background:var(--bg-card);border:2.5px solid var(--gray);border-radius:var(--r);padding:.7rem .5rem;text-align:center;box-shadow:0 3px 0 var(--gray);}
+.rec-ic{font-size:1.6rem;}
+.rec-val{font-weight:900;font-size:1.5rem;color:var(--dark);line-height:1.1;}
+.rec-lbl{font-weight:800;font-size:.75rem;color:var(--gray-dk);}
+.rec-week{background:var(--green-bg);border:2.5px solid var(--green);border-radius:var(--r);padding:.7rem .9rem;margin-bottom:.8rem;font-weight:800;color:var(--green-sh);font-size:.9rem;display:flex;align-items:center;gap:.6rem;}
+.rec-week b{font-size:1.4rem;}
+
 </style>
 </head>
 <body>
@@ -670,7 +714,7 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 <!-- SPLASH -->
 <div id="sSplash">
   <div class="splash-owl">🦉</div>
-  <div class="splash-title">MultiplicaMente</div>
+  <div class="splash-title">Multiplica<wbr>Mente</div>
   <div class="splash-sub">Aventura da Tabuada!</div>
   <div class="splash-dots">
     <div class="splash-dot"></div>
@@ -718,7 +762,7 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
       🌳 Era uma vez um Corujão mágico que guardava as criaturas da Floresta dos Números...<br><br>
       ⚡ Um dia, um feitiço misturou todos os números e as criaturas fugiram assustadas!<br><br>
       🧩 Para resgatar cada criatura, você precisa <strong>dominar a tabuada</strong> daquele número. Quanto mais rápido e certeiro, mais criaturas raras você descobre!<br><br>
-      🏆 Será que você consegue resgatar todas as <strong>135 criaturas</strong>?
+      🏆 Será que você consegue resgatar todas as <strong>180 criaturas</strong>?
     </div>
     <button class="btn btn-green" onclick="closeModal('mStory')">🚀 Vamos começar!</button>
   </div>
@@ -747,13 +791,6 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
     </div>
   </div>
 
-  <!-- Banner premium compacto -->
-  <div onclick="openModal('mPremium')" style="margin:.55rem .9rem 0;background:linear-gradient(135deg,#3d1f8e,#6a35d4);border-radius:var(--r);padding:.5rem .9rem;cursor:pointer;display:flex;align-items:center;gap:.5rem;box-shadow:0 3px 0 #2a1060;flex-shrink:0;">
-    <span style="font-size:1.1rem;">👑</span>
-    <div style="flex:1;font-weight:900;font-size:.78rem;color:#fff;">Premium · <span class="premium-price-val">R$ 9,90</span> · todas as tabuadas + 135 criaturas</div>
-    <span style="background:#FFC800;color:#6b4c00;font-size:.65rem;font-weight:900;border-radius:100px;padding:.15rem .4rem;">VER</span>
-  </div>
-
   <div class="login-body">
     <!-- Perfis existentes — renderizado pelo JS com profile-big para o 1º -->
     <div id="profilesArea"></div>
@@ -766,7 +803,9 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
       <div class="sec-lbl">Novo jogador</div>
       <input class="inp" id="newName" placeholder="Nome da criança" maxlength="20">
       <div class="av-grid" id="avGrid"></div>
-      <input class="inp" id="newPin" type="password" placeholder="PIN dos pais (4 dígitos)" maxlength="4" inputmode="numeric">
+      <input class="inp" id="newPin" type="password" placeholder="PIN dos pais (4 números)" maxlength="4" inputmode="numeric">
+      <div style="font-size:.75rem;font-weight:700;color:var(--gray-dk);margin:-.2rem 0 .4rem;">🔒 Um adulto escolhe o PIN. Ele protege o relatório dos pais.</div>
+      <div class="auth-err" id="newErr"></div>
       <button class="btn btn-green" onclick="createProfile()">🎮 Criar e jogar</button>
     </div>
 
@@ -774,10 +813,10 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
     <div class="cloud-section">
       <div class="cloud-toggle" onclick="toggleCloudSection()">
         <span class="cloud-toggle-icon">☁️</span>
-        <span class="cloud-toggle-lbl" id="cloudToggleLbl">Salvar progresso na nuvem</span>
-        <span class="cloud-toggle-arr open" id="cloudToggleArr">▾</span>
+        <span class="cloud-toggle-lbl" id="cloudToggleLbl">Salvar progresso na nuvem (adultos)</span>
+        <span class="cloud-toggle-arr" id="cloudToggleArr">▾</span>
       </div>
-      <div class="cloud-body open" id="cloudBody">
+      <div class="cloud-body" id="cloudBody">
         <div id="fbUserArea" style="display:none;margin-bottom:.7rem;">
           <div class="user-chip" id="fbUserChip">
             <span id="fbUserIcon">👤</span>
@@ -829,63 +868,39 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
   </div>
   <!-- subject switcher -->
   <div class="subj-row">
-    <button class="subj-btn active" data-s="mult" onclick="setSubject('mult',this)" style="background:var(--green);border-color:var(--green-sh);color:#fff;">✖️ ×</button>
+    <button class="subj-btn active" data-s="mult" onclick="setSubject('mult',this)">✖️ ×</button>
     <button class="subj-btn" data-s="div" onclick="setSubject('div',this)">➗ ÷</button>
     <button class="subj-btn" data-s="add" onclick="setSubject('add',this)">➕ +</button>
     <button class="subj-btn" data-s="sub" onclick="setSubject('sub',this)">➖ −</button>
   </div>
   <div class="home-tabs">
     <button class="htab active" onclick="htab('missions',this)">🎯 Jornada</button>
-    <button class="htab" onclick="htab('ranking',this)">🏆 Ranking</button>
+    <button class="htab" onclick="htab('ranking',this)">🏅 Recordes</button>
     <button class="htab" onclick="htab('collection',this)">🐉 Coleção</button>
     <button class="htab" onclick="htab('settings',this)">⚙️ Config</button>
   </div>
 
   <!-- MISSIONS — JOURNEY MAP -->
   <div class="tab-panel active" id="tabMissions">
-    <!-- Story + Missions numa única linha colapsável -->
-    <div style="display:flex;align-items:center;gap:.4rem;padding:.35rem .9rem 0;flex-shrink:0;">
-      <!-- Story mini -->
-      <div onclick="openModal('mStory')" style="flex:1;background:linear-gradient(135deg,#1a3a00,#2e6e00);border-radius:10px;padding:.35rem .6rem;cursor:pointer;display:flex;align-items:center;gap:.4rem;">
-        <span style="font-size:1.1rem;">🦉</span>
-        <div style="flex:1;"><div style="font-weight:800;font-size:.7rem;color:#fff;">Missão das Criaturas</div><div id="storyProgress" style="font-size:.62rem;color:rgba(255,255,255,.75);">0/135 resgatadas</div></div>
-      </div>
-      <!-- Missions mini toggle -->
-      <div onclick="toggleMissionsPanel()" id="missionsMini" style="background:var(--blue-bg);border:2px solid var(--blue);border-radius:10px;padding:.35rem .6rem;cursor:pointer;text-align:center;flex-shrink:0;">
-        <div style="font-weight:900;font-size:.7rem;color:var(--blue-dk);">🎯 Missões</div>
-        <div style="font-size:.62rem;font-weight:700;color:var(--blue-sh);" id="missionMiniStatus">0/3</div>
-      </div>
+    <!-- Missão das criaturas + missões do dia: uma linha fina -->
+    <div class="home-chips">
+      <button class="home-chip story" onclick="openModal('mStory')">🦉 <span id="storyProgress">0/180</span> criaturas</button>
+      <button class="home-chip miss" id="missionsMini" onclick="toggleMissionsPanel()">🎯 Missões <span id="missionMiniStatus">0/3</span></button>
     </div>
     <!-- Missions expandable panel (fechado por padrão) -->
     <div id="missionsPanel" style="display:none;margin:.3rem .9rem 0;background:var(--blue-bg);border:2px solid var(--blue);border-radius:var(--r);padding:.5rem .7rem;flex-shrink:0;">
       <div id="missionsList"></div>
     </div>
-    <!-- compact difficulty strip -->
-    <div class="diff-strip">
-      <div class="diff-strip-lbl">⏱️</div>
-      <div class="dbn-sm sel" data-d="0" onclick="setDiff(0,this)">♾️</div>
-      <div class="dbn-sm" data-d="5" onclick="setDiff(5,this)">5s</div>
-      <div class="dbn-sm" data-d="4" onclick="setDiff(4,this)">4s</div>
-      <div class="dbn-sm" data-d="3" onclick="setDiff(3,this)">3s</div>
-      <div class="dbn-sm" data-d="2" onclick="setDiff(2,this)">2s</div>
-      <div class="diff-strip-badge" id="diffBadge">Sem timer</div>
-    </div>
-    <!-- premium banner — abre modal, não desbloqueia direto -->
-    <div id="homePremiumBanner" onclick="openModal('mPremium')" style="margin:.3rem .9rem 0;background:linear-gradient(135deg,#3d1f8e,#6a35d4);border-radius:var(--r);padding:.4rem .9rem;cursor:pointer;display:flex;align-items:center;gap:.5rem;box-shadow:0 3px 0 #2a1060;flex-shrink:0;">
-      <span style="font-size:1.1rem;">👑</span>
-      <div style="flex:1;font-weight:800;font-size:.75rem;color:#fff;">Premium · <span class="premium-price-val">R$ 9,90</span> · tabuadas 6–10 + 135 criaturas</div>
-      <span style="background:#FFC800;color:#6b4c00;font-size:.65rem;font-weight:900;border-radius:100px;padding:.15rem .4rem;">VER</span>
-    </div>
+    <!-- velocidade é escolhida ao tocar na tabuada (modal mSpeed) -->
     <!-- scrollable path -->
-    <div class="journey-wrap" id="journeyWrap">
+    <div class="journey-wrap" id="journeyWrap" style="margin-top:.4rem;">
       <div class="journey-canvas" id="journeyCanvas"></div>
     </div>
   </div>
 
-  <!-- RANKING (visible to child) -->
+  <!-- RECORDES pessoais (+ placar da família se houver mais de um perfil) -->
   <div class="tab-panel" id="tabRanking">
-    <div id="rankPodium"></div>
-    <div class="rank-list" id="rankList"></div>
+    <div class="rec-wrap" id="recWrap"></div>
   </div>
 
   <!-- COLLECTION -->
@@ -924,7 +939,7 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
       <div class="settings-card">
         <h3>👑 Premium</h3>
         <div style="font-size:.85rem;font-weight:700;color:var(--gray-dk);margin-bottom:.7rem;" id="premiumStatus">Versão gratuita · Tabuadas 2–5</div>
-        <button class="btn btn-green" onclick="openModal('mPremium')" id="premiumBtn">🔓 Desbloquear Premium · <span class="premium-price-val">R$ 9,90</span></button>
+        <button class="btn btn-green" onclick="openPremium()" id="premiumBtn">🔓 Desbloquear Premium · <span class="premium-price-val">R$ 9,90</span></button>
       </div>
       <div class="settings-card">
         <h3>☁️ Conta e sincronização</h3>
@@ -936,7 +951,7 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
   </div>
 
   <div class="home-bottom">
-    <button class="boss-btn" id="bossBtn" onclick="startGame('boss')" style="background:var(--green);box-shadow:0 4px 0 var(--green-sh);">👑 Desafio Misto</button>
+    <button class="boss-btn" id="bossBtn" onclick="openSpeed('boss')" style="background:var(--green);box-shadow:0 4px 0 var(--green-sh);"><span>🔀 Desafio Misto</span><span class="boss-sub" id="bossSub">mistura as tabuadas que você já passou</span></button>
     <button class="dash-btn" onclick="showParentPin()">📊</button>
   </div>
 </div>
@@ -951,9 +966,9 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
   <div class="combo-banner" id="comboBanner"></div>
   <!-- Power-ups -->
   <div class="pu-row" id="puRow">
-    <button class="pu-btn" id="pu0" onclick="usePowerup(0)"><span class="pu-icon">⏭️</span>Pular<span style="font-size:.6rem;color:var(--gray-dk);">5💎</span></button>
-    <button class="pu-btn" id="pu1" onclick="usePowerup(1)"><span class="pu-icon">✂️</span>50/50<span style="font-size:.6rem;color:var(--gray-dk);">8💎</span></button>
-    <button class="pu-btn" id="pu2" onclick="usePowerup(2)"><span class="pu-icon">💖</span>+Vida<span style="font-size:.6rem;color:var(--gray-dk);">12💎</span></button>
+    <button class="pu-btn" id="pu0" onclick="usePowerup(0)"><span class="pu-icon">⏭️</span>Pular<span style="font-size:.72rem;color:var(--gray-dk);">5💎</span></button>
+    <button class="pu-btn" id="pu1" onclick="usePowerup(1)"><span class="pu-icon">✂️</span>50/50<span style="font-size:.72rem;color:var(--gray-dk);">8💎</span></button>
+    <button class="pu-btn" id="pu2" onclick="usePowerup(2)"><span class="pu-icon">💖</span>+Vida<span style="font-size:.72rem;color:var(--gray-dk);">12💎</span></button>
   </div>
   <div class="q-card">
     <div class="q-top-row">
@@ -995,6 +1010,7 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
       <input class="inp" id="pinInput" type="password" placeholder="• • • •" maxlength="4" inputmode="numeric">
       <div class="pin-err" id="pinErr"></div>
       <div style="margin-top:.9rem;"><button class="btn btn-green" onclick="checkPin()">🔓 Entrar</button></div>
+      <button class="btn btn-outline" style="margin-top:.5rem;font-size:.85rem;padding:.65rem;" onclick="forgotPin()">Esqueci o PIN</button>
     </div>
   </div>
 </div>
@@ -1010,7 +1026,7 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
       <div class="ds-card"><div class="ds-big" id="dGames">0</div><div class="ds-lbl">Partidas</div></div>
       <div class="ds-card"><div class="ds-big" id="dAcc">—%</div><div class="ds-lbl">Precisão</div></div>
       <div class="ds-card"><div class="ds-big" id="dStrk">0🔥</div><div class="ds-lbl">Dias seguidos</div></div>
-      <div class="ds-card"><div class="ds-big" id="dCre">0/9</div><div class="ds-lbl">Criaturas</div></div>
+      <div class="ds-card"><div class="ds-big" id="dCre">0/180</div><div class="ds-lbl">Criaturas</div></div>
     </div>
     <div class="sub-title">Progresso por tabuada</div>
     <div id="tableProgArea"></div>
@@ -1032,12 +1048,12 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
     <div class="help-row">
       <div class="help-icon">🔥</div>
       <div class="help-info"><h4>Ofensiva (dias seguidos)</h4>
-      <p>Aumenta a cada dia que você joga. Se pular um dia, volta para 1. Tente manter sua ofensiva!</p></div>
+      <p>Aumenta a cada dia em que você termina pelo menos uma partida. Se pular um dia, recomeça. Tente manter sua ofensiva!</p></div>
     </div>
     <div class="help-row">
       <div class="help-icon">⭐</div>
       <div class="help-info"><h4>Estrelas</h4>
-      <p>Ganhas ao completar tabuadas.<br>1⭐ = passou • 2⭐ = 80%+ de acertos • 3⭐ = perfeito sem erros</p></div>
+      <p>Ganhas ao completar tabuadas.<br>1⭐ = passou (já libera a próxima!) • 2⭐ = 80%+ de acertos • 3⭐ = perfeito sem erros</p></div>
     </div>
     <div class="help-row">
       <div class="help-icon">💎</div>
@@ -1052,7 +1068,7 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
     <div class="help-row">
       <div class="help-icon">⏱️</div>
       <div class="help-info"><h4>Níveis de dificuldade</h4>
-      <p>Sem timer (♾️) → 5s → 4s → 3s → 2s. Mais difícil = criaturas mais raras e mais gemas!</p></div>
+      <p>Ao tocar numa tabuada você escolhe: sem tempo (♾️), 5s, 4s, 3s ou 2s. Mais rápido = criaturas mais raras e mais gemas!</p></div>
     </div>
     <button class="btn btn-green" onclick="closeModal('mHelp')">Entendi! 🚀</button>
   </div>
@@ -1076,7 +1092,7 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
     <div class="stars-row" id="winStars"></div>
     <div class="rewards-row" id="winRewards"></div>
     <button class="btn btn-share" onclick="shareResult()" style="margin-bottom:.5rem;">📤 Compartilhar resultado</button>
-    <button class="btn btn-green" onclick="closeModal('mWin');goHome()">CONTINUAR 🚀</button>
+    <button class="btn btn-green" onclick="closeWin()">CONTINUAR 🚀</button>
   </div>
 </div>
 
@@ -1088,7 +1104,7 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
     <div class="sheet-sub">As tabuadas 6 a 10 fazem parte da versão completa!</div>
     <div style="background:var(--yellow-bg);border:2px solid var(--yellow);border-radius:var(--r);padding:.8rem;margin-bottom:1rem;text-align:center;">
       <div style="font-weight:900;font-size:1.1rem;color:var(--yellow-sh);">✨ MultiplicaMente Premium</div>
-      <div style="font-size:.85rem;font-weight:700;color:var(--yellow-sh);margin-top:.3rem;">Tabuadas 2–10 · Divisão · Adição · Criaturas raras</div>
+      <div style="font-size:.85rem;font-weight:700;color:var(--yellow-sh);margin-top:.3rem;">Tabuadas 6 a 10 em ×, ÷, + e − · 180 criaturas</div>
       <div style="font-size:1.4rem;font-weight:900;color:var(--green-sh);margin-top:.5rem;"><span class="premium-price-val">R$ 9,90</span> · pagamento único</div>
     </div>
     <button class="btn btn-green" onclick="unlockPremium()">🔓 Desbloquear agora · <span class="premium-price-val">R$ 9,90</span></button>
@@ -1112,19 +1128,9 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 <div class="modal-ov" id="mPremiumUpsell">
   <div class="modal-sheet">
     <span class="break-emoji">🎉</span>
-    <div class="sheet-title">Você dominou as tabuadas grátis!</div>
-    <div class="sheet-sub">Desbloqueie as tabuadas 6 a 10 e torne-se um mestre da matemática!</div>
-    <div style="background:linear-gradient(135deg,#fff9cc,#fff3aa);border:2.5px solid var(--yellow);border-radius:var(--r-lg);padding:1rem;margin-bottom:1rem;">
-      <div style="display:flex;flex-direction:column;gap:.4rem;">
-        <div style="font-weight:800;font-size:.9rem;color:var(--yellow-sh);">✨ Premium inclui:</div>
-        <div style="font-size:.85rem;font-weight:700;color:var(--dark);">🔢 Tabuadas 6, 7, 8, 9 e 10</div>
-        <div style="font-size:.85rem;font-weight:700;color:var(--dark);">➗ Divisão completa</div>
-        <div style="font-size:.85rem;font-weight:700;color:var(--dark);">➕ Adição completa</div>
-        <div style="font-size:.85rem;font-weight:700;color:var(--dark);">🐉 135 criaturas para colecionar</div>
-        <div style="font-weight:900;font-size:1.3rem;color:var(--green-sh);text-align:center;margin-top:.4rem;"><span class="premium-price-val">R$ 9,90</span> · pagamento único</div>
-      </div>
-    </div>
-    <button class="btn btn-green" onclick="unlockPremium()">👑 Desbloquear agora · <span class="premium-price-val">R$ 9,90</span></button>
+    <div class="sheet-title">Você completou as tabuadas grátis!</div>
+    <div class="sheet-sub">Novas criaturas estão esperando nas tabuadas 6 a 10! Mostre esta tela para um adulto.</div>
+    <button class="btn btn-green" onclick="parentGate(()=>{closeModal('mPremiumUpsell');openModal('mPremium');})">👨‍👩‍👧 Chamar um adulto</button>
     <button class="btn btn-outline" style="margin-top:.5rem;" onclick="closeModal('mPremiumUpsell')">Depois</button>
   </div>
 </div>
@@ -1137,8 +1143,8 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
     <div style="background:linear-gradient(135deg,#fff9cc,#fff3aa);border:2px solid var(--yellow);border-radius:var(--r);padding:.9rem;margin-bottom:1rem;">
       <div style="font-size:.85rem;font-weight:700;color:var(--dark);line-height:1.9;">
         ✅ Tabuadas 6, 7, 8, 9 e 10<br>
-        ✅ Divisão e Adição completas<br>
-        ✅ 135 criaturas colecionáveis<br>
+        ✅ Em todas as operações: ×, ÷, + e −<br>
+        ✅ 180 criaturas colecionáveis<br>
         ✅ Progresso salvo na nuvem<br>
         ✅ Pagamento único — sem assinatura
       </div>
@@ -1165,7 +1171,7 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
       <svg class="google-icon" width="20" height="20" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
       Entrar com Google
     </button>
-    <button class="btn btn-blue" onclick="closeModal('mPremiumLogin');localStorage.setItem('mm_pending_pay','1');show('sLogin')" style="margin-bottom:.5rem;">📧 Entrar com e-mail</button>
+    <button class="btn btn-blue" onclick="closeModal('mPremiumLogin');localStorage.setItem('mm_pending_pay','1');show('sLogin');openCloudSection()" style="margin-bottom:.5rem;">📧 Entrar com e-mail</button>
     <button class="btn btn-outline" onclick="closeModal('mPremiumLogin')">Cancelar</button>
   </div>
 </div>
@@ -1174,24 +1180,74 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 <div class="modal-ov" id="mLoginPrompt">
   <div class="modal-sheet">
     <span class="break-emoji">☁️</span>
-    <div class="sheet-title">Salve seu progresso!</div>
-    <div class="sheet-sub">Você já tem <strong style="color:var(--green);" id="loginPromptGems">0 💎</strong> e <strong style="color:var(--yellow-sh);" id="loginPromptStars">0 ⭐</strong>. Crie uma conta para não perder nada!</div>
-    <div style="background:var(--blue-bg);border:2px solid var(--blue);border-radius:var(--r);padding:.75rem;margin-bottom:1rem;font-size:.85rem;font-weight:700;color:var(--blue-sh);">
-      ✅ Progresso salvo na nuvem<br>
-      ✅ Acesso em qualquer celular<br>
-      ✅ Histórico completo para os pais
-    </div>
-    <button class="btn btn-google" onclick="closeModal('mLoginPrompt');show('sLogin');signInGoogle()" style="margin-bottom:.5rem;">
-      <svg style="width:18px;height:18px;" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-      Entrar com Google
-    </button>
-    <button class="btn btn-blue" onclick="closeModal('mLoginPrompt');show('sLogin')">📧 Criar conta com e-mail</button>
-    <button class="btn btn-outline" style="margin-top:.5rem;font-size:.82rem;" onclick="closeModal('mLoginPrompt')">Continuar sem conta</button>
+    <div class="sheet-title">Guarde seus tesouros!</div>
+    <div class="sheet-sub">Você já tem <strong style="color:var(--green);" id="loginPromptGems">0 💎</strong> e <strong style="color:var(--yellow-sh);" id="loginPromptStars">0 ⭐</strong>. Peça para um adulto salvar seu progresso na nuvem!</div>
+    <button class="btn btn-green" onclick="parentGate(()=>{closeModal('mLoginPrompt');show('sLogin');openCloudSection();})">👨‍👩‍👧 Chamar um adulto</button>
+    <button class="btn btn-outline" style="margin-top:.5rem;font-size:.85rem;" onclick="closeModal('mLoginPrompt')">Agora não</button>
+  </div>
+</div>
+
+<!-- AVALIAÇÃO: pedida a um adulto depois de uma boa vitória -->
+<div class="modal-ov" id="mReview">
+  <div class="modal-sheet">
+    <span class="break-emoji">🦉</span>
+    <div class="sheet-title">Está gostando do jogo?</div>
+    <div class="sheet-sub">Peça para um adulto dar uma nota na loja. Isso ajuda outras crianças a encontrar o MultiplicaMente!</div>
+    <button class="btn btn-green" onclick="parentGate(()=>{closeModal('mReview');requestStoreReview();})">⭐ Chamar um adulto</button>
+    <button class="btn btn-outline" style="margin-top:.5rem;" onclick="closeModal('mReview');reviewLater()">Agora não</button>
+  </div>
+</div>
+
+<!-- EXCLUIR CONTA -->
+<div class="modal-ov" id="mDeleteAccount">
+  <div class="modal-sheet">
+    <span class="break-emoji">⚠️</span>
+    <div class="sheet-title">Excluir conta?</div>
+    <div class="sheet-sub">A conta e todos os perfis salvos na nuvem serão apagados para sempre. O progresso guardado neste celular continua aqui.</div>
+    <button class="btn btn-red" onclick="deleteAccount()" style="margin-bottom:.4rem;">🗑️ Sim, excluir minha conta</button>
+    <button class="btn btn-outline" onclick="closeModal('mDeleteAccount')">Cancelar</button>
+  </div>
+</div>
+
+<!-- VELOCIDADE: escolhida ao tocar numa tabuada -->
+<div class="modal-ov" id="mSpeed">
+  <div class="modal-sheet">
+    <div class="sheet-title" id="spdTitle" style="font-size:1.25rem;margin-top:0;">Tabuada do 2</div>
+    <div class="sheet-sub" id="spdSub" style="margin-bottom:.6rem;font-size:.85rem;">Escolha a velocidade. Mais rápido = criaturas mais raras!</div>
+    <div class="spd-list" id="spdList"></div>
+    <button class="btn btn-outline" onclick="closeModal('mSpeed')">Voltar</button>
+  </div>
+</div>
+
+<!-- ÁREA DE ADULTOS: confirmação de idade antes de compras e contas -->
+<div class="modal-ov" id="mGate">
+  <div class="modal-sheet">
+    <span class="break-emoji">👨‍👩‍👧</span>
+    <div class="sheet-title">Pergunta para adultos</div>
+    <div class="sheet-sub">Esta parte é para pais ou responsáveis.<br>Digite o ano em que você nasceu:</div>
+    <input class="inp" id="gateInput" type="tel" inputmode="numeric" maxlength="4" placeholder="Ex.: 1985" style="text-align:center;font-size:1.3rem;letter-spacing:4px;">
+    <div class="auth-err" id="gateErr"></div>
+    <button class="btn btn-green" onclick="checkGate()" style="margin-top:.4rem;">Continuar</button>
+    <button class="btn btn-outline" onclick="closeModal('mGate')">Cancelar</button>
+  </div>
+</div>
+
+<!-- NOVO PIN (após "Esqueci o PIN") -->
+<div class="modal-ov" id="mNewPin">
+  <div class="modal-sheet">
+    <span class="break-emoji">🔑</span>
+    <div class="sheet-title">Novo PIN dos pais</div>
+    <div class="sheet-sub">Escolha 4 números que a criança não saiba.</div>
+    <input class="inp" id="newPinInput" type="password" inputmode="numeric" maxlength="4" placeholder="• • • •" style="text-align:center;font-size:1.3rem;letter-spacing:6px;">
+    <div class="auth-err" id="newPinErr"></div>
+    <button class="btn btn-green" onclick="saveNewPin()" style="margin-top:.4rem;">Salvar PIN</button>
+    <button class="btn btn-outline" onclick="closeModal('mNewPin')">Cancelar</button>
   </div>
 </div>
 
 <script>
-const PRECO_PREMIUM = "R$ 9,90";
+// Valor de reserva; o preço real vem do Google Play em initBilling()
+let PRECO_PREMIUM = "R$ 9,99";
 
 function applyPremiumPrices() {
   document.querySelectorAll('.premium-price-val').forEach(el => {
@@ -1235,7 +1291,8 @@ function loadFirebaseScripts(callback){
 }
 
 function initFirebase(){
-  showLoading('Conectando...');
+  // Sem internet: mostra os perfis na hora; o Firebase tenta carregar em segundo plano
+  if(!navigator.onLine) renderLogin(); else showLoading('Conectando...');
   // Timeout de segurança — se Firebase não carregar em 8s, mostra login mesmo assim
   const safetyTimeout = setTimeout(()=>{
     console.warn('Firebase timeout — carregando sem conexão');
@@ -1304,7 +1361,7 @@ function hideLoading(){ document.getElementById('loadingOv').classList.remove('s
 
 // ── AUTH FUNCTIONS ────────────────────────────────────────────
 async function signInGoogle(){
-  if(!fbReady){alert('Firebase não disponível. Verifique sua internet.');return;}
+  if(!fbReady){flash('Sem conexão 📵','err');return;}
   showLoading('Entrando com Google...');
   try {
     const isNative = window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform();
@@ -1351,7 +1408,7 @@ async function signInGoogleThenPay(){
 }
 
 async function signInEmail(){
-  if(!fbReady){alert('Firebase não disponível.');return;}
+  if(!fbReady){flash('Sem conexão 📵','err');return;}
   const email = document.getElementById('siEmail').value.trim();
   const pass  = document.getElementById('siPass').value;
   const err   = document.getElementById('siErr');
@@ -1367,7 +1424,7 @@ async function signInEmail(){
 }
 
 async function signUpEmail(){
-  if(!fbReady){alert('Firebase não disponível.');return;}
+  if(!fbReady){flash('Sem conexão 📵','err');return;}
   const email = document.getElementById('suEmail').value.trim();
   const pass  = document.getElementById('suPass').value;
   const err   = document.getElementById('suErr');
@@ -1384,7 +1441,7 @@ async function signUpEmail(){
 }
 
 async function resetPassword(){
-  if(!fbReady){alert('Firebase não disponível.');return;}
+  if(!fbReady){flash('Sem conexão 📵','err');return;}
   const emailEl = document.getElementById('siEmail');
   const errEl = document.getElementById('siErr');
   const email = emailEl ? emailEl.value.trim() : '';
@@ -1401,7 +1458,7 @@ async function resetPassword(){
   } catch(e) {
     hideLoading();
     const msg = traduzErroFirebase(e.code);
-    if(errEl) errEl.textContent = msg; else alert(msg);
+    if(errEl) errEl.textContent = msg; else flash(msg,'err');
   }
 }
 
@@ -1441,10 +1498,7 @@ function updateAuthUI(){
     if(fbArea)  fbArea.style.display  = 'none';
     if(authSec) authSec.style.display = 'block';
     if(cloudBtn) cloudBtn.style.display = 'none';
-    if(cloudLbl) cloudLbl.textContent = 'Salvar progresso na nuvem';
-    // Abre por padrão para facilitar login
-    if(cloudBody) cloudBody.classList.add('open');
-    if(arr) arr.classList.add('open');
+    if(cloudLbl) cloudLbl.textContent = 'Salvar progresso na nuvem (adultos)';
     return;
   }
   const name = fbUser.displayName || fbUser.email;
@@ -1453,8 +1507,6 @@ function updateAuthUI(){
   if(cloudBtn){ cloudBtn.style.display='flex'; }
   if(cloudName) cloudName.textContent = name.split(' ')[0] || name.split('@')[0];
   if(cloudLbl) cloudLbl.textContent = '☁️ Logado como '+name;
-  if(cloudBody) cloudBody.classList.add('open');
-  if(arr) arr.classList.add('open');
 }
 
 function authSwitchTab(tab, el){
@@ -1550,6 +1602,10 @@ async function initBilling(){
     billingReady = true;
     console.log('Billing initialized ✅');
     await checkExistingPurchase();
+    try {
+      const r = await Billing.getPrice();
+      if(r && r.price){ PRECO_PREMIUM = r.price; applyPremiumPrices(); updatePremiumUI(); }
+    } catch(e){ console.warn('getPrice error:', e); }
   } catch(e){
     console.warn('Billing init error:', e);
   }
@@ -1644,16 +1700,27 @@ function payViaGooglePlay(){
     flash('Disponível apenas no app da Play Store. Use um código promocional.','err');
   }
 }
-function checkPromoCode(){
+// SHA-256 de 'mm-promo:'+CÓDIGO — os códigos em texto não ficam no app.
+// Para gerar um novo: echo -n 'mm-promo:MEUCODIGO' | sha256sum
+const PROMO_HASHES = [
+  '58e6c4dcd4a38def2826b936a3530aa7aaf1238cfbcb910ba96198d02c03d108',
+  '04d002d94d33ace49733419ef2be753c14c7ef22c34244915d827f74f1024174',
+  '728a981cbcc1611ba115c5a086e4226c9ae680d0a170abc88daf2f13dc234cdb',
+  'd2e8c3d14754e073de82c1d0ba0eced5a81472570d1f9a733d7b90174a73db5d'
+];
+async function checkPromoCode(){
   const inp = document.getElementById('promoCodeInput');
   const err = document.getElementById('promoErr');
   if(!inp) return;
   const code = inp.value.trim().toUpperCase();
-  const VALID_CODES = ['BETA2025','MULTIPLICA10','TESTPREMIUM','SANTA'];
-  if(VALID_CODES.includes(code)){
-    confirmPremiumPurchase();
-  } else {
+  if(!code) return;
+  try {
+    const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('mm-promo:'+code));
+    const hex = Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+    if(PROMO_HASHES.includes(hex)){ confirmPremiumPurchase(); return; }
     if(err) err.textContent = 'Código inválido.';
+  } catch(e) {
+    if(err) err.textContent = 'Não foi possível verificar o código.';
   }
 }
 
@@ -1678,7 +1745,7 @@ function shareResult(){
   const acc = GS.ok && GS.questions ? Math.round(GS.ok/GS.questions.length*100) : 0;
   const stars = acc===100?'⭐⭐⭐':acc>=80?'⭐⭐':'⭐';
   const table = GS.table==='boss'?'Desafio Misto':'Tabuada do '+GS.table;
-  const text = `🦉 MultiplicaMente\n${P.av} ${P.name} completou a ${table}!\n${stars} ${acc}% de acertos · ${GS.ok}/${GS.questions.length} corretas\n💎 ${P.gems||0} gemas · 🔥 ${P.streak||0} dias seguidos\n\nBaixe o MultiplicaMente e aprenda a tabuada se divertindo!`;
+  const text = `🦉 MultiplicaMente\n${P.av} ${P.name} completou a ${table}!\n${stars} ${acc}% de acertos · ${GS.ok}/${GS.questions.length} corretas\n💎 ${P.gems||0} gemas · 🔥 ${streakOf(P)} dias seguidos\n\nBaixe o MultiplicaMente e aprenda a tabuada se divertindo!`;
   if(navigator.share){
     navigator.share({ title:'MultiplicaMente', text }).catch(()=>{});
   } else {
@@ -1693,7 +1760,7 @@ function renderLeaderboard(){
   const data = gd();
   const oneWeekAgo = Date.now() - 7*24*60*60*1000;
   const rankings = data.profiles.map(p=>{
-    const weekLogs = (p.logs||[]).filter(l=>{ try{ return new Date(l.date).getTime()>oneWeekAgo; }catch(e){return false;} });
+    const weekLogs = (p.logs||[]).filter(l=>logTime(l)>oneWeekAgo);
     const weekOk = weekLogs.reduce((s,l)=>s+(l.ok||0),0);
     const weekGames = weekLogs.length;
     return { name:p.name, av:p.av, weekOk, weekGames, gems:p.gems||0, stars:p.stars||0 };
@@ -1705,7 +1772,7 @@ function renderLeaderboard(){
       <div class="lb-rank">${medals[i]||'#'+(i+1)}</div>
       <div class="lb-av">${r.av}</div>
       <div class="lb-info">
-        <div class="lb-name">${r.name}</div>
+        <div class="lb-name">${esc(r.name)}</div>
         <div class="lb-score">${r.weekGames} partidas esta semana · ⭐${r.stars} · 💎${r.gems}</div>
       </div>
       <div class="lb-pts">${r.weekOk} ✅</div>
@@ -1808,6 +1875,13 @@ function setSubject(s, el){
 const TIPS={2:'💡 Só dobrar!',3:'💡 Some 3 de cada vez',4:'💡 Dobre duas vezes!',5:'💡 Sempre 0 ou 5',6:'💡 ×3 depois dobre',7:'💡 Tente ×5 + ×2',8:'💡 Dobre dobre dobre!',9:'💡 ×10 menos o número',10:'💡 Só colocar zero!'};
 const PRAISES=['Perfeito! 🔥','Arrasou! ⚡','Incrível! 🌟','Show! ✨','Mandou! 🚀','Gênio! 🧠'];
 const DLBL={0:'Sem timer',5:'5 seg 🟢',4:'4 seg 🟡',3:'3 seg 🟠',2:'2 seg 🔴'};
+// Logs antigos só têm 'date' em pt-BR ("23/10/2026, 14:05:00"), que new Date() não entende
+function logTime(l){
+  if(l.ts) return l.ts;
+  const m=/^(\d{1,2})\/(\d{1,2})\/(\d{4})[, ]*(\d{1,2})?:?(\d{2})?:?(\d{2})?/.exec(l.date||'');
+  if(!m) return NaN;
+  return new Date(+m[3],m[2]-1,+m[1],+(m[4]||0),+(m[5]||0),+(m[6]||0)).getTime();
+}
 function gd(){return JSON.parse(localStorage.getItem('mm4')||'{"profiles":[]}')}
 function sd(d){localStorage.setItem('mm4',JSON.stringify(d))}
 let P=null,Pi=0,selAv=AVATARS[0],diff=0,vol=.5,GS=null,tIv=null,waitNext=false,aCtx=null;
@@ -1842,26 +1916,28 @@ function playWin(stars){try{
 function testSounds(){playSuccess();setTimeout(playDuck,1400)}
 function setVol(v){vol=parseFloat(v);document.getElementById('volPct').textContent=Math.round(vol*100)+'%';if(P){P.vol=v;sp()}}
 function renderLogin(){
-  // Esconde banner premium na login se já comprou
-  const loginBanner = document.querySelector('#sLogin [onclick*="mPremium"]');
-  if(loginBanner) loginBanner.style.display = isPremiumUnlocked() ? 'none' : 'flex';
-
   const data=gd();
   const area=document.getElementById('profilesArea');
   area.innerHTML='';
   if(data.profiles.length){
+    // Fecha e limpa o formulário de novo jogador (fica aberto após criar o 1º perfil)
+    const form = document.getElementById('addPlayerForm');
+    const toggle = document.getElementById('addPlayerToggle');
+    if(form) form.classList.remove('open');
+    if(toggle){ toggle.style.display=''; toggle.textContent='＋ Adicionar jogador'; }
+    ['newName','newPin'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
     // First profile — big green button (primary action)
     const p0 = data.profiles[0];
     const big = document.createElement('div');
     big.className = 'profile-big';
-    big.innerHTML = `<div class="pb-av">${p0.av}</div><div class="pb-info"><div class="pb-name">${p0.name}</div><div class="pb-stats">⭐${p0.stars||0} · 💎${p0.gems||0} · 🔥${p0.streak||0}</div></div><div class="pb-play">▶</div>`;
+    big.innerHTML = `<div class="pb-av">${p0.av}</div><div class="pb-info"><div class="pb-name">${esc(p0.name)}</div><div class="pb-stats">⭐${p0.stars||0} · 💎${p0.gems||0} · 🔥${streakOf(p0)}</div></div><div class="pb-play">▶</div>`;
     big.onclick = ()=>loginAs(0);
     area.appendChild(big);
     // Additional profiles — smaller
     data.profiles.slice(1).forEach((p,i)=>{
       const d=document.createElement('div');
       d.className='profile-item';
-      d.innerHTML=`<div class="pi-av">${p.av}</div><div class="pi-info"><div class="pi-name">${p.name}</div><div class="pi-stats">⭐${p.stars||0} · 💎${p.gems||0} · 🔥${p.streak||0}</div></div><div style="color:var(--gray-dk);font-size:1rem;">▶</div>`;
+      d.innerHTML=`<div class="pi-av">${p.av}</div><div class="pi-info"><div class="pi-name">${esc(p.name)}</div><div class="pi-stats">⭐${p.stars||0} · 💎${p.gems||0} · 🔥${streakOf(p)}</div></div><div style="color:var(--gray-dk);font-size:1rem;">▶</div>`;
       d.onclick=()=>loginAs(i+1);
       area.appendChild(d);
     });
@@ -1889,12 +1965,22 @@ function toggleAddPlayer(){
 
 function toggleCloudSection(){
   const body = document.getElementById('cloudBody');
-  const arr  = document.getElementById('cloudToggleArr');
   if(!body) return;
-  body.classList.toggle('open');
-  if(arr) arr.classList.toggle('open');
+  if(body.classList.contains('open')){
+    body.classList.remove('open');
+    document.getElementById('cloudToggleArr').classList.remove('open');
+    return;
+  }
+  parentGate(openCloudSection);
 }
-function createProfile(){const nm=document.getElementById('newName').value.trim(),pin=document.getElementById('newPin').value.trim();if(!nm){alert('Digite o nome!');return}if(pin&&(pin.length!==4||isNaN(pin))){alert('PIN deve ter 4 números!');return}const data=gd();const p={name:nm,av:selAv,pin:pin||'1234',stars:0,gems:0,streak:0,lastDate:null,tableStars:{},creatures:[],totalOk:0,totalWrong:0,totalGames:0,logs:[],vol:.5};data.profiles.push(p);sd(data);loginAs(data.profiles.length-1)}
+function openCloudSection(){
+  const body = document.getElementById('cloudBody');
+  const arr  = document.getElementById('cloudToggleArr');
+  if(body) body.classList.add('open');
+  if(arr) arr.classList.add('open');
+  setTimeout(()=>{ if(body) body.scrollIntoView({behavior:'smooth',block:'start'}); }, 100);
+}
+function createProfile(){const nm=document.getElementById('newName').value.trim(),pin=document.getElementById('newPin').value.trim();const er=document.getElementById('newErr');er.textContent='';if(!nm){er.textContent='Digite o nome!';return}if(!/^\d{4}$/.test(pin)){er.textContent='Peça a um adulto para criar um PIN de 4 números.';return}const data=gd();const p={name:nm,av:selAv,pin,stars:0,gems:0,streak:0,lastDate:null,tableStars:{},creatures:[],totalOk:0,totalWrong:0,totalGames:0,logs:[],vol:.5};data.profiles.push(p);sd(data);loginAs(data.profiles.length-1)}
 function loginAs(idx){const data=gd();P=data.profiles[idx];Pi=idx;diff=P.diff||0;
   // Aplica premium comprado antes de criar perfil
   if(localStorage.getItem('mm_premium_purchased')==='1' && !P.premium){
@@ -1910,21 +1996,34 @@ function loginAs(idx){const data=gd();P=data.profiles[idx];Pi=idx;diff=P.diff||0
   }vol=P.vol||.5;document.getElementById('volSlider').value=vol;document.getElementById('volPct').textContent=Math.round(vol*100)+'%';
   // restore dark toggle state
   const dt=document.getElementById('darkToggle');if(dt)dt.checked=localStorage.getItem('mm_dark')==='1';
-  updatePremiumUI();updateStreak();renderHome();show('sHome')}
+  updatePremiumUI();renderHome();show('sHome')}
 function sp(){const data=gd();data.profiles[Pi]={...P};sd(data);saveProfileToCloud();}
 function logout(){P=null;if(fbUser){signOut();}else{renderLogin();show('sLogin');}}
-function updateStreak(){const today=new Date().toDateString();if(!P||P.lastDate===today)return;const yest=new Date();yest.setDate(yest.getDate()-1);P.streak=P.lastDate===yest.toDateString()?(P.streak||0)+1:1;P.lastDate=today;sp()}
+function updateStreak(){const today=new Date().toDateString();if(!P||P.lastDate===today)return;const yest=new Date();yest.setDate(yest.getDate()-1);P.streak=P.lastDate===yest.toDateString()?(P.streak||0)+1:1;P.lastDate=today;P.bestStreak=Math.max(P.bestStreak||0,P.streak)}
+// Ofensiva exibida: zera se o último dia jogado foi antes de ontem
+function streakOf(p){if(!p||!p.lastDate)return 0;const yest=new Date();yest.setDate(yest.getDate()-1);return(p.lastDate===new Date().toDateString()||p.lastDate===yest.toDateString())?(p.streak||0):0}
+function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+const TOTAL_CRE = 180; // 4 operações × 5 coleções × 9 tabuadas
 function renderHome(){
+  document.querySelectorAll('.subj-btn').forEach(b=>b.classList.toggle('active', b.dataset.s===subject));
   const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
   set('homeAv',P.av);set('homeName',P.name);set('homeGems','💎 '+(P.gems||0));
-  set('hudStars',P.stars||0);set('hudStreak',P.streak||0);set('settingsName',P.name);
+  set('hudStars',P.stars||0);set('hudStreak',streakOf(P));set('settingsName',P.name);
   // profile modal
   set('profileModalAv',P.av);set('profileModalName',P.name);
-  set('profileModalStats','⭐'+(P.stars||0)+' · 💎'+(P.gems||0)+' · 🔥'+(P.streak||0));
+  set('profileModalStats','⭐'+(P.stars||0)+' · 💎'+(P.gems||0)+' · 🔥'+streakOf(P));
   set('profileModalCloud', fbUser ? '☁️ '+( fbUser.displayName||fbUser.email) : '📱 Perfil local');
   document.querySelectorAll('.dbn,.dbn-sm').forEach(b=>b.classList.toggle('sel',parseInt(b.dataset.d)===diff));
   const db=document.getElementById('diffBadge');if(db)db.textContent=DLBL[diff]||'Sem timer';
-  updatePremiumUI();updateStoryProgress();renderMissions();renderJourney();
+  updatePremiumUI();updateStoryProgress();renderMissions();renderJourney();renderBossBtn();
+}
+// Tabuadas já passadas (≥1⭐) na operação atual — base do Desafio Misto
+function passedTables(){ const ts=getTS(); return Object.keys(ts).filter(t=>(ts[t]||0)>=1).map(Number).sort((a,b)=>a-b); }
+function renderBossBtn(){
+  const n=passedTables().length, bb=document.getElementById('bossBtn'), sub=document.getElementById('bossSub');
+  if(!bb||!sub) return;
+  bb.classList.toggle('locked', n<2);
+  sub.textContent = n<2 ? '🔒 passe 2 tabuadas para liberar' : 'mistura as tabuadas que você já passou';
 }
 
 // ── JOURNEY PATH ─────────────────────────────────────────────
@@ -1932,12 +2031,12 @@ const JPATH = [
   {t:2,  x:68,  y:90},
   {t:3,  x:252, y:205},
   {t:4,  x:68,  y:320},
-  {type:'mile', x:160, y:410, getLbl:()=>subject==='add'?'Adição básica! ⭐':subject==='div'?'Divisão básica! ⭐':'Primeiros passos! ⭐'},
+  {type:'mile', x:160, y:410, getLbl:()=>subject==='add'?'Adição básica! ⭐':subject==='div'?'Divisão básica! ⭐':subject==='sub'?'Subtração básica! ⭐':'Primeiros passos! ⭐'},
   {t:5,  x:252, y:500},
   {t:6,  x:68,  y:615},
   {t:7,  x:252, y:730},
   {t:8,  x:68,  y:845},
-  {type:'mile', x:160, y:935, getLbl:()=>subject==='add'?'Adição avançada! 🌟':subject==='div'?'Divisão avançada! 🌟':'Quase lá! 🌟'},
+  {type:'mile', x:160, y:935, getLbl:()=>subject==='add'?'Adição avançada! 🌟':subject==='div'?'Divisão avançada! 🌟':subject==='sub'?'Subtração avançada! 🌟':'Quase lá! 🌟'},
   {t:9,  x:252, y:1025},
   {t:10, x:160, y:1155, boss:true},
 ];
@@ -1950,10 +2049,10 @@ function renderJourney(){
   canvas.style.height = JH + 'px';
 
   const ts = getTS();
-  const opPfx = subject==='div'?'÷':subject==='add'?'+':'';
+  const opPfx = subject==='mult'?'':SUBJECTS[subject].op;
 
-  // Find current node (first table with < 3 stars OR not attempted)
-  let curIdx = JPATH.findIndex(n => n.t && (ts[n.t] || 0) < 3);
+  // Nó atual = primeira tabuada ainda sem estrela (1⭐ já libera a próxima)
+  let curIdx = JPATH.findIndex(n => n.t && (ts[n.t] || 0) < 1);
   if(curIdx === -1) curIdx = JPATH.length - 1;
 
   // ── SVG path ─────────────────────────────────────────────
@@ -2028,7 +2127,7 @@ function renderJourney(){
     const div = document.createElement('div');
     div.className = cls;
     div.style.cssText = `left:${n.x}px;top:${n.y}px;`;
-    const opLabel = n.boss ? (subject==='div'?'÷':'×') : (opPfx||'×');
+    const opLabel = SUBJECTS[subject].op;
     div.innerHTML = n.boss
       ? `<div class="jnode-num">👑</div><div class="jnode-lbl">${opLabel}${n.t}</div>`
       : `<div class="jnode-num">${opPfx}${n.t}</div><div class="jnode-lbl">${starsStr}</div>`;
@@ -2039,10 +2138,15 @@ function renderJourney(){
         cls = 'jnode jlocked-premium';
         div.className = cls;
         div.innerHTML = `<div class="jnode-num">🔒</div><div class="jnode-lbl">Premium</div><div class="premium-badge">👑</div>`;
-        div.onclick = () => openModal('mPremium');
+        div.onclick = () => openPremium();
       } else {
-        div.onclick = () => startGame(n.t);
+        div.onclick = () => openSpeed(n.t);
       }
+    } else {
+      div.onclick = () => {
+        playDuck();
+        flash('Complete a fase anterior para desbloquear! 🔒', 'err');
+      };
     }
     canvas.appendChild(div);
   });
@@ -2059,8 +2163,9 @@ function renderJourney(){
   const ch = document.createElement('div');
   ch.className = 'jchar'; ch.id = 'journeyChar';
   ch.textContent = P.av || '🦉';
-  ch.style.left = curNode.x + 'px';
-  ch.style.top  = curNode.y + 'px';
+  const cp = charPos(curNode);
+  ch.style.left = cp.x + 'px';
+  ch.style.top  = cp.y + 'px';
   canvas.appendChild(ch);
 
   // Scroll to character
@@ -2070,15 +2175,19 @@ function renderJourney(){
   }, 150);
 }
 
+// Personagem fica ao lado do nó, sem cobrir o número
+function charPos(n){ return { x: n.x + (n.x < 160 ? 58 : -58), y: n.y }; }
+
 function moveJourneyChar(){
-  const ts = P.tableStars || {};
-  const curIdx = JPATH.findIndex(n => n.t && (ts[n.t] || 0) < 3);
+  const ts = getTS();
+  const curIdx = JPATH.findIndex(n => n.t && (ts[n.t] || 0) < 1);
   if(curIdx === -1) return;
   const ch = document.getElementById('journeyChar');
   if(!ch) return;
   const node = JPATH[curIdx];
-  ch.style.left = node.x + 'px';
-  ch.style.top  = node.y + 'px';
+  const cp = charPos(node);
+  ch.style.left = cp.x + 'px';
+  ch.style.top  = cp.y + 'px';
   const wrap = document.getElementById('journeyWrap');
   if(wrap) setTimeout(() => wrap.scrollTop = Math.max(0, node.y - 220), 500);
 }
@@ -2133,7 +2242,7 @@ function renderCollection(){
     grid.appendChild(d);
   }
 }
-function htab(tab,el){document.querySelectorAll('.htab').forEach(b=>b.classList.remove('active'));el.classList.add('active');const map={missions:'tabMissions',ranking:'tabRanking',collection:'tabCollection',settings:'tabSettings'};document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.getElementById(map[tab]).classList.add('active');if(tab==='collection'){collViewDiff=diff;renderCollection();}if(tab==='ranking')renderChildRanking();if(tab==='settings')renderSettingsAccount();}
+function htab(tab,el){document.querySelectorAll('.htab').forEach(b=>b.classList.remove('active'));el.classList.add('active');const map={missions:'tabMissions',ranking:'tabRanking',collection:'tabCollection',settings:'tabSettings'};document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.getElementById(map[tab]).classList.add('active');if(tab==='collection'){collViewDiff=diff;renderCollection();}if(tab==='ranking')renderRecords();if(tab==='settings')renderSettingsAccount();}
 function setDiff(d,el){diff=d;document.querySelectorAll('.dbn,.dbn-sm').forEach(b=>b.classList.remove('sel'));document.querySelectorAll('[data-d="'+d+'"]').forEach(b=>b.classList.add('sel'));const db=document.getElementById('diffBadge');if(db)db.textContent=DLBL[d];if(P){P.diff=d;sp()}}
 function mkQ(table){
   const seq=[1,2,10,5,3,4,9,6,7,8];
@@ -2147,6 +2256,7 @@ function mkQ(table){
       const b=~~(Math.random()*10)+1;
       if(subject==='mult') qs.push({a:t,op:'×',b,ans:t*b,tip:null});
       else if(subject==='div') qs.push({a:t*b,op:'÷',b:t,ans:b,tip:null});
+      else if(subject==='sub') qs.push({a:t+b,op:'−',b:t,ans:b,tip:null});
       else qs.push({a:t,op:'+',b,ans:t+b,tip:null});
     }
     return qs;
@@ -2157,30 +2267,53 @@ function mkQ(table){
     const tip=i===0?tipMap[table]:null;
     if(subject==='mult') qs.push({a:table,op:'×',b,ans:table*b,tip});
     else if(subject==='div') qs.push({a:table*b,op:'÷',b:table,ans:b,tip});
-    else if(subject==='sub') qs.push({a:table+b,op:'−',b,ans:table,tip});
+    else if(subject==='sub') qs.push({a:table+b,op:'−',b:table,ans:b,tip});
     else qs.push({a:table,op:'+',b,ans:table+b,tip});
   }
   return [...qs.slice(0,3),...qs.slice(3).sort(()=>Math.random()-.5)];
 }
-function mkAns(c){const s=new Set([c]);while(s.size<4){const v=~~(Math.random()*5)+1;const w=Math.random()>.5?c+v:Math.max(1,c-v);if(w!==c)s.add(w)}return Array.from(s).sort(()=>Math.random()-.5)}
+function mkAns(c,q){
+  // Distratores "plausíveis": vizinhos na tabuada e erros típicos de conta
+  let cand;
+  if(q && q.op==='×') cand=[c+q.a,c-q.a,c+q.b,c-q.b,c+1,c-1];
+  else if(q && q.op==='÷') cand=[c+1,c-1,c+2,c-2,q.b];
+  else cand=[c+1,c-1,c+2,c-2,c+10,c-10];
+  if(c>=10){const sw=+String(c).split('').reverse().join('');cand.push(sw);}
+  cand=cand.filter(v=>v>=1&&v!==c).sort(()=>Math.random()-.5);
+  const s=new Set([c]);
+  for(const v of cand){if(s.size>=4)break;s.add(v);}
+  while(s.size<4){const v=~~(Math.random()*5)+1;const w=Math.random()>.5?c+v:Math.max(1,c-v);if(w!==c)s.add(w)}
+  return Array.from(s).sort(()=>Math.random()-.5);
+}
 function startGame(table){
   if(table!=='boss' && PREMIUM_TABLES.includes(table) && !isPremiumUnlocked()){
-    openModal('mPremium'); return;
+    openPremium(); return;
   }
-  clearInterval(tIv);GS={table,questions:mkQ(table),cur:0,ok:0,wrong:0,combo:0,maxCombo:0,hearts:3,diff};
-  initPowerups();updateStreak();document.getElementById('resultBar').className='result-bar hidden';show('sGame');renderQ();
+  clearInterval(tIv);clearTimeout(autoT);GS={table,questions:mkQ(table),cur:0,ok:0,wrong:0,combo:0,maxCombo:0,hearts:3,diff};
+  initPowerups();document.getElementById('resultBar').className='result-bar hidden';document.getElementById('sGame').classList.remove('rb-visible');show('sGame');renderQ();
 }
 function restartLast(){if(GS)startGame(GS.table)}
 function renderQ(){
-  clearInterval(tIv);waitNext=false;document.getElementById('resultBar').className='result-bar hidden';
+  clearInterval(tIv);clearTimeout(autoT);waitNext=false;document.getElementById('resultBar').className='result-bar hidden';document.getElementById('sGame').classList.remove('rb-visible');
   const q=GS.questions[GS.cur];const ans=q.ans!==undefined?q.ans:q.a*q.b;
   document.getElementById('progFill').style.width=(GS.cur/GS.questions.length*100)+'%';
   document.getElementById('heartsDisp').textContent='💖'.repeat(GS.hearts)||'💔';
   document.getElementById('qTip').textContent=q.tip||'';document.getElementById('qText').textContent=`${q.a} ${q.op||'×'} ${q.b}`;
   const cb=document.getElementById('comboBanner');if(GS.combo>=5)cb.textContent=`🔥 Combo ×${GS.combo}! Incrível!`;else if(GS.combo>=3)cb.textContent=`⚡ Combo ×${GS.combo}!`;else cb.textContent='';
-  const vis=document.getElementById('qVis');vis.innerHTML='';const tot=Math.min(ans,72);for(let i=0;i<tot;i++){const d=document.createElement('div');d.className='vdot';d.style.animationDelay=(i*.011)+'s';vis.appendChild(d)}
-  const opts=mkAns(ans);for(let i=0;i<4;i++){const b=document.getElementById('a'+i);b.textContent=opts[i];b.className='ans-btn';b.disabled=false;b.onclick=()=>pick(opts[i],ans,b)}
+  renderVis(q);
+  const opts=mkAns(ans,q);for(let i=0;i<4;i++){const b=document.getElementById('a'+i);b.textContent=opts[i];b.className='ans-btn';b.style.opacity='';b.style.display='';b.disabled=false;b.onclick=()=>pick(opts[i],ans,b)}
   setupTimer();
+}
+// Mostra a ideia da conta (grupos), não só a quantidade do resultado
+function renderVis(q){
+  const vis=document.getElementById('qVis');vis.innerHTML='';
+  let n=0;
+  const grp=(size,clsAt)=>{const g=document.createElement('div');g.className='vgrp';g.style.gridTemplateColumns=`repeat(${Math.min(size,5)},8px)`;for(let i=0;i<size;i++){const d=document.createElement('div');d.className='vdot'+(clsAt?clsAt(i):'');d.style.animationDelay=(n++*.01)+'s';g.appendChild(d)}vis.appendChild(g)};
+  const chunks=(total,clsAt)=>{for(let i=0;i<total;i+=10){const sz=Math.min(10,total-i);grp(sz,clsAt?k=>clsAt(i+k):null)}};
+  if(q.op==='×'){ if(q.a*q.b>100)return; for(let i=0;i<q.b;i++)grp(q.a); }          // b grupos de a
+  else if(q.op==='÷'){ if(q.a>100)return; for(let i=0;i<q.a/q.b;i++)grp(q.b); }    // a separado em grupos de b
+  else if(q.op==='+'){ chunks(q.a); const pl=document.createElement('span');pl.className='vplus';pl.textContent='+';vis.appendChild(pl); chunks(q.b,()=>' b'); }
+  else if(q.op==='−'){ chunks(q.a,i=>i>=q.a-q.b?' x':''); }                       // os últimos b "saem"
 }
 function setupTimer(){
   const ring=document.getElementById('qRing'),nt=document.getElementById('qNoTimer');
@@ -2193,13 +2326,16 @@ function setupTimer(){
   tIv=setInterval(()=>{elapsed+=step;const rem=Math.max(0,(total-elapsed)/1000);updateRing(rem,diff,arc,num,C);if(rem<=1)playTick();if(elapsed>=total){clearInterval(tIv);timeOut()}},step);
 }
 function updateRing(rem,total,arc,num,C){const pct=rem/total;arc.style.strokeDashoffset=C*(1-pct);num.textContent=Math.ceil(rem);arc.className='qr-arc'+(pct>.5?'':pct>.25?' warn':' hot')}
-function timeOut(){const q=GS.questions[GS.cur];const ans=q.a*q.b;GS.combo=0;GS.wrong++;GS.hearts--;playDuck();showRB(false,`Tempo! A resposta era ${ans}`,'Tente mais rápido da próxima vez! ⏱');for(let i=0;i<4;i++){const b=document.getElementById('a'+i);b.disabled=true;if(parseInt(b.textContent)===ans)b.classList.add('correct')}if(GS.hearts<=0){setTimeout(()=>endGame(false),1500);return}}
-function pick(sel,correct,btn){if(waitNext)return;clearInterval(tIv);for(let i=0;i<4;i++)document.getElementById('a'+i).disabled=true;if(sel===correct){btn.classList.add('correct');GS.ok++;GS.combo++;GS.maxCombo=Math.max(GS.maxCombo,GS.combo);P.totalOk=(P.totalOk||0)+1;playSuccess();flash(PRAISES[~~(Math.random()*PRAISES.length)],'ok');showRB(true,'Correto! 🎉',`${sel} é a resposta certa`);if(GS.combo>=3)showComboPop(GS.combo);updateMissionProgress('combo',1);}else{btn.classList.add('wrong');for(let i=0;i<4;i++){const b=document.getElementById('a'+i);if(parseInt(b.textContent)===correct)b.classList.add('correct')}GS.combo=0;GS.wrong++;GS.hearts--;P.totalWrong=(P.totalWrong||0)+1;playDuck();flash('Ops! 💪','err');showRB(false,`A resposta era ${correct}`,`${GS.questions[GS.cur].a} ${GS.questions[GS.cur].op||'×'} ${GS.questions[GS.cur].b} = ${correct}`);if(GS.hearts<=0){setTimeout(()=>endGame(false),1600);return}}}
-function showRB(ok,title,sub){waitNext=true;const bar=document.getElementById('resultBar');bar.className='result-bar '+(ok?'rb-correct':'rb-wrong');document.getElementById('rbIcon').textContent=ok?'✅':'❌';document.getElementById('rbTitle').textContent=title;document.getElementById('rbSub').textContent=sub}
-function nextQ(){if(!waitNext)return;GS.cur++;if(GS.cur>=GS.questions.length){endGame(true);return}if(GS.cur===5){openModal('mBreak');return}renderQ()}
+function timeOut(){const q=GS.questions[GS.cur];const ans=q.ans!==undefined?q.ans:q.a*q.b;GS.combo=0;GS.wrong++;GS.hearts--;playDuck();showRB(false,`Tempo! A resposta era ${ans}`,'Tente mais rápido da próxima vez! ⏱');for(let i=0;i<4;i++){const b=document.getElementById('a'+i);b.disabled=true;if(parseInt(b.textContent)===ans)b.classList.add('correct')}if(GS.hearts<=0){setTimeout(()=>endGame(false),1500);return}}
+function pick(sel,correct,btn){if(waitNext)return;clearInterval(tIv);for(let i=0;i<4;i++)document.getElementById('a'+i).disabled=true;if(sel===correct){btn.classList.add('correct');GS.ok++;GS.combo++;GS.maxCombo=Math.max(GS.maxCombo,GS.combo);P.totalOk=(P.totalOk||0)+1;playSuccess();if(GS.combo>=3)showComboPop(GS.combo);else flash(PRAISES[~~(Math.random()*PRAISES.length)],'ok');showRB(true,'Correto! 🎉',`${sel} é a resposta certa`);updateMissionProgress('combo',GS.combo);autoT=setTimeout(nextQ,GS.combo>=3?1300:1000);}else{btn.classList.add('wrong');for(let i=0;i<4;i++){const b=document.getElementById('a'+i);if(parseInt(b.textContent)===correct)b.classList.add('correct')}GS.combo=0;GS.wrong++;GS.hearts--;P.totalWrong=(P.totalWrong||0)+1;playDuck();showRB(false,`A resposta era ${correct}`,`${GS.questions[GS.cur].a} ${GS.questions[GS.cur].op||'×'} ${GS.questions[GS.cur].b} = ${correct}`);if(GS.hearts<=0){setTimeout(()=>endGame(false),1600);return}}}
+function showRB(ok,title,sub){waitNext=true;const bar=document.getElementById('resultBar');bar.className='result-bar '+(ok?'rb-correct':'rb-wrong');document.getElementById('rbIcon').textContent=ok?'✅':'❌';document.getElementById('rbTitle').textContent=title;document.getElementById('rbSub').textContent=sub;document.getElementById('sGame').classList.add('rb-visible');}
+let autoT=null;
+function nextQ(){clearTimeout(autoT);if(!waitNext||GS.hearts<=0)return;GS.cur++;if(GS.cur>=GS.questions.length){endGame(true);return}if(GS.cur===5){openModal('mBreak');return}renderQ()}
 function endGame(won){
-  clearInterval(tIv);P.totalGames=(P.totalGames||0)+1;const acc=GS.ok/GS.questions.length;
-  const log={table:GS.table,ok:GS.ok,total:GS.questions.length,acc:~~(acc*100),won,combo:GS.maxCombo,diff,date:new Date().toLocaleString('pt-BR')};
+  clearInterval(tIv);clearTimeout(autoT);P.totalGames=(P.totalGames||0)+1;const acc=GS.ok/GS.questions.length;
+  updateStreak();P.bestCombo=Math.max(P.bestCombo||0,GS.maxCombo);if(won)P.wins=(P.wins||0)+1;
+  if(won&&acc===1&&GS.wrong===0) P.perfectGames=(P.perfectGames||0)+1;
+  const log={table:GS.table,subject,ok:GS.ok,total:GS.questions.length,acc:~~(acc*100),won,combo:GS.maxCombo,diff,ts:Date.now(),date:new Date().toLocaleString('pt-BR')};
   P.logs=P.logs||[];P.logs.unshift(log);if(P.logs.length>20)P.logs.pop();
   updateMissionProgress('games',1);
   if(won&&acc===1&&GS.wrong===0) updateMissionProgress('perfect',1);
@@ -2223,30 +2359,35 @@ function endGame(won){
     const sr=document.getElementById('winStars');sr.innerHTML='';for(let i=0;i<3;i++){const s=document.createElement('span');s.className='star-item'+(i>=stars?' empty':'');s.textContent='⭐';sr.appendChild(s)}
     document.getElementById('winRewards').innerHTML=`<div class="rew-chip">💎 +${gems}</div>${gained>0?`<div class="rew-chip">⭐ +${gained}</div>`:''} ${GS.maxCombo>=3?`<div class="rew-chip">🔥 Combo ×${GS.maxCombo}</div>`:''} ${cr?`<div class="rew-chip" style="border-color:${cr.col};">${cr.e} ${cr.n} resgatada!</div>`:''}`;
     confetti();playWin(stars);if(stars===3) bigWinCelebration();openModal('mWin');setTimeout(moveJourneyChar,600);
-    if(t===5 && stars===3 && !isPremiumUnlocked()) setTimeout(()=>{ closeModal('mWin'); openModal('mPremiumUpsell'); }, 2200);
-    if(!fbUser && P.totalGames>=3){
+    // Avisos extras só aparecem depois que a criança fecha a celebração
+    afterWin=null;
+    if(t===5 && prev<1 && nS>=1 && !isPremiumUnlocked()) afterWin='mPremiumUpsell';
+    else if(!fbUser && P.totalGames>=3){
       const lastPrompt = localStorage.getItem('mm_login_prompt');
       if(!lastPrompt || Date.now()-parseInt(lastPrompt) > 24*60*60*1000){
         localStorage.setItem('mm_login_prompt', Date.now());
         const lp=document.getElementById('loginPromptGems');const ls=document.getElementById('loginPromptStars');
         if(lp)lp.textContent=(P.gems||0)+' 💎';if(ls)ls.textContent=(P.stars||0)+' ⭐';
-        setTimeout(()=>{ closeModal('mWin'); openModal('mLoginPrompt'); }, 2500);
+        afterWin='mLoginPrompt';
       }
     }
+    if(!afterWin && stars>=2 && shouldAskReview()) afterWin='mReview';
   }else{const gems=GS.ok;P.gems=(P.gems||0)+gems;sp();document.getElementById('loseGems').textContent=gems+' 💎';openModal('mLose')}
 }
+let afterWin=null;
+function closeWin(){closeModal('mWin');goHome();if(afterWin){const m=afterWin;afterWin=null;setTimeout(()=>openModal(m),400);}}
 function showParentPin(){document.getElementById('pinInput').value='';document.getElementById('pinErr').textContent='';show('sParentPin')}
-function checkPin(){const p=document.getElementById('pinInput').value;if(p===P.pin||p==='1234'){renderDash();show('sDash')}else{document.getElementById('pinErr').textContent='PIN incorreto!';playDuck()}}
+function checkPin(){const p=document.getElementById('pinInput').value;if(p===P.pin){renderDash();show('sDash')}else{document.getElementById('pinErr').textContent='PIN incorreto!';playDuck()}}
 function renderDash(){
   document.getElementById('dashName').textContent=P.av+' '+P.name;document.getElementById('dGames').textContent=P.totalGames||0;
   const tot=(P.totalOk||0)+(P.totalWrong||0);document.getElementById('dAcc').textContent=tot?~~((P.totalOk||0)/tot*100)+'%':'—';
-  document.getElementById('dStrk').textContent=(P.streak||0)+'🔥';const totalCre=['mult','div','add'].reduce((tot,sb)=>{
+  document.getElementById('dStrk').textContent=streakOf(P)+'🔥';const totalCre=['mult','div','add','sub'].reduce((tot,sb)=>{
     const cm=((P.subjects||{})[sb]||{}).creaturesMap||{};
     return tot+[0,5,4,3,2].reduce((a,d)=>a+(cm[d]||[]).length,0);
   },0);
-  document.getElementById('dCre').textContent=totalCre+'/135';
+  document.getElementById('dCre').textContent=totalCre+'/'+TOTAL_CRE;
   const tp=document.getElementById('tableProgArea');tp.innerHTML='';
-  ['mult','div','add'].forEach(sb=>{
+  ['mult','div','add','sub'].forEach(sb=>{
     const sc=SUBJECTS[sb];
     const sbData=(P.subjects||{})[sb]||{};
     const sbTS=sbData.tableStars||{};
@@ -2261,15 +2402,15 @@ function renderDash(){
       tp.appendChild(r);
     }
   });
-  const la=document.getElementById('logArea');la.innerHTML='';const logs=(P.logs||[]).slice(0,10);if(!logs.length){la.innerHTML='<div style="text-align:center;color:var(--gray-dk);padding:1rem;">Nenhuma partida ainda!</div>';}else{logs.forEach(l=>{const tl=l.table==='boss'?'👑 Misto':'×'+l.table;const d=document.createElement('div');d.className='log-item';d.innerHTML=`<div class="li-icon">${l.won?'✅':'❌'}</div><div class="li-info">${tl} · ${l.acc}% · ⏱${l.diff||0}s<br><span style="font-size:.7rem;color:var(--gray-dk);">${l.date}</span></div><div class="li-score">${l.ok}/${l.total}</div>`;la.appendChild(d)});}
+  const la=document.getElementById('logArea');la.innerHTML='';const logs=(P.logs||[]).slice(0,10);if(!logs.length){la.innerHTML='<div style="text-align:center;color:var(--gray-dk);padding:1rem;">Nenhuma partida ainda!</div>';}else{logs.forEach(l=>{const tl=l.table==='boss'?'🔀 Misto':(SUBJECTS[l.subject||'mult']||SUBJECTS.mult).op+l.table;const d=document.createElement('div');d.className='log-item';d.innerHTML=`<div class="li-icon">${l.won?'✅':'❌'}</div><div class="li-info">${tl} · ${l.acc}% · ⏱${l.diff||0}s<br><span style="font-size:.7rem;color:var(--gray-dk);">${l.date}</span></div><div class="li-score">${l.ok}/${l.total}</div>`;la.appendChild(d)});}
   renderLeaderboard();
   renderWeeklyChart();
 }
 function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active')}
-function goHome(){clearInterval(tIv);renderHome();show('sHome');document.querySelectorAll('.htab').forEach((t,i)=>t.classList.toggle('active',i===0));document.querySelectorAll('.tab-panel').forEach((p,i)=>p.classList.toggle('active',i===0))}
+function goHome(){clearInterval(tIv);clearTimeout(autoT);renderHome();show('sHome');document.querySelectorAll('.htab').forEach((t,i)=>t.classList.toggle('active',i===0));document.querySelectorAll('.tab-panel').forEach((p,i)=>p.classList.toggle('active',i===0))}
 function openModal(id){document.getElementById(id).classList.add('open')}
 function closeModal(id){document.getElementById(id).classList.remove('open')}
-function flash(txt,type){const ov=document.getElementById('fbFlash'),t=document.getElementById('fbTxt');t.textContent=txt;t.className='fb-txt fb-'+type;ov.classList.add('show');setTimeout(()=>ov.classList.remove('show'),900)}
+function flash(txt,type){const ov=document.getElementById('fbFlash'),t=document.getElementById('fbTxt');const long=txt.length>14;t.textContent=txt;t.className='fb-txt fb-'+type+(long?' fb-long':'');ov.style.animationDuration=long?'2.2s':'';ov.classList.remove('show');void ov.offsetWidth;ov.classList.add('show');clearTimeout(flash._t);flash._t=setTimeout(()=>ov.classList.remove('show'),long?2200:900)}
 function confetti(){const c=['#58CC02','#1CB0F6','#FF4B4B','#FFC800','#CE82FF'];for(let i=0;i<45;i++){const d=document.createElement('div');d.className='cft';d.style.left=Math.random()*100+'%';d.style.top='-10px';d.style.background=c[~~(Math.random()*c.length)];d.style.animationDelay=(Math.random()*.6)+'s';d.style.animationDuration=(1.5+Math.random()*1.5)+'s';d.style.borderRadius=Math.random()>.5?'50%':'2px';document.body.appendChild(d);setTimeout(()=>d.remove(),3e3)}}
 // ── OFFLINE DETECTION ─────────────────────────────────────
 function updateOnlineStatus(){
@@ -2332,11 +2473,14 @@ function renderWeeklyChart(){
   const days = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
   const now = new Date();
   const weekData = Array(7).fill(0);
+  const today0 = new Date(now.getFullYear(), now.getMonth(), now.getDate()).getTime();
   (P.logs||[]).forEach(l=>{
     try{
-      const d = new Date(l.date);
-      const diff = Math.floor((now - d)/(1000*60*60*24));
-      if(diff < 7){
+      const t = logTime(l);
+      if(isNaN(t)) return;
+      // dias de calendário atrás (0 = hoje)
+      const diff = Math.ceil((today0 - t)/(1000*60*60*24));
+      if(diff >= 0 && diff < 7){
         const dayIdx = (now.getDay() - diff + 7) % 7;
         weekData[dayIdx] += (l.ok||0);
       }
@@ -2374,7 +2518,7 @@ function updateMissionProgress(key, val){
   const ms = getMissions();
   ms.forEach(m=>{
     if(m.done) return;
-    if(m.key === key){ m.cur = Math.min(m.max, m.cur + val); if(m.cur >= m.max){ m.done = true; if(P){ P.gems = (P.gems||0) + m.rew; sp(); flash('Missão concluída! +'+m.rew+'💎','ok'); } } }
+    if(m.key === key){ m.cur = Math.min(m.max, key==='combo' ? Math.max(m.cur, val) : m.cur + val); if(m.cur >= m.max){ m.done = true; if(P){ P.gems = (P.gems||0) + m.rew; sp(); flash('Missão concluída! +'+m.rew+'💎','ok'); } } }
   });
   saveMissions(ms);
   renderMissions();
@@ -2417,7 +2561,7 @@ function initPowerups(){
 function usePowerup(i){
   const costs = POWERUP_COSTS;
   if(!P || (P.gems||0) < costs[i]){ flash('Gemas insuficientes!','err'); return; }
-  if(puUsed[i]) return;
+  if(puUsed[i] || waitNext) return;
   P.gems -= costs[i]; sp();
   document.getElementById('homeGems').textContent = '💎 '+(P.gems||0);
   puUsed[i] = true;
@@ -2461,6 +2605,7 @@ function renderSettingsAccount(){
         </div>
       </div>
       <button class="btn btn-outline" style="font-size:.85rem;padding:.65rem;margin-bottom:.4rem;" onclick="logout()">🚪 Sair da conta</button>
+      <button class="btn-danger-outline" onclick="parentGate(()=>openModal('mDeleteAccount'))">🗑️ Excluir conta e dados da nuvem</button>
     `;
   } else {
     area.innerHTML = `
@@ -2476,59 +2621,155 @@ function renderSettingsAccount(){
   }
 }
 
-function renderChildRanking(){
-  const podium = document.getElementById('rankPodium');
-  const list   = document.getElementById('rankList');
-  if(!podium||!list) return;
-  const data = gd();
-  const oneWeekAgo = Date.now() - 7*24*60*60*1000;
-  const twoWeeksAgo = Date.now() - 14*24*60*60*1000;
-
-  const calcPts = (logs, from, to) =>
-    logs.filter(l=>{ try{ const d=new Date(l.date).getTime(); return d>from&&d<=to; }catch(e){return false;} })
-        .reduce((s,l)=>s+(l.ok||0),0);
-
-  const rankings = data.profiles.map(p=>{
-    const logs = p.logs||[];
-    const pts = calcPts(logs, oneWeekAgo, Date.now());
-    const prevPts = calcPts(logs, twoWeeksAgo, oneWeekAgo);
-    return { name:p.name, av:p.av, pts, prevPts, games:(p.totalGames||0), isMe:p.name===P.name };
-  }).sort((a,b)=>b.pts-a.pts);
-
-  // calculate previous rank
-  const prevRankings = [...rankings].sort((a,b)=>b.prevPts-a.prevPts);
-
-  if(!rankings.length){
-    podium.innerHTML='';
-    list.innerHTML='<div style="text-align:center;color:var(--gray-dk);padding:2rem;">Jogue mais para aparecer aqui!</div>';
-    return;
-  }
-
-  podium.innerHTML = `<div class="rank-title">🏆 Placar semanal</div>`;
-
-  const medals = ['🥇','🥈','🥉'];
-  const rowCls = ['r1','r2','r3'];
-
-  list.innerHTML = rankings.map((r,i)=>{
-    const prevPos = prevRankings.findIndex(x=>x.name===r.name);
-    const moved = prevPos - i; // positive = moved up
-    const arrow = moved > 0 ? `<span class="rank-arrow up">▲</span>` :
-                  moved < 0 ? `<span class="rank-arrow down">▼</span>` :
-                  `<span class="rank-arrow same">—</span>`;
-    const cls = i<3 ? rowCls[i] : '';
-    const meClass = r.isMe ? ' me' : '';
-    const medal = i<3 ? medals[i] : `#${i+1}`;
-    return `<div class="rank-row ${cls}${meClass}">
-      <div class="rank-pos">${medal}</div>
-      <div class="rank-av">${r.av}</div>
-      <div class="rank-info">
-        <div class="rank-name">${r.name}${r.isMe?' (você)':''}</div>
-        <div class="rank-sub">${r.games} partidas totais</div>
-      </div>
-      <div class="rank-pts">${r.pts}✅</div>
-      ${arrow}
+function renderRecords(){
+  const area = document.getElementById('recWrap');
+  if(!area||!P) return;
+  const week = 7*24*60*60*1000, now = Date.now();
+  const ptsIn = (logs,from,to)=>logs.filter(l=>{const d=logTime(l);return d>from&&d<=to;}).reduce((s,l)=>s+(l.ok||0),0);
+  const logs = P.logs||[];
+  const thisW = ptsIn(logs, now-week, now), lastW = ptsIn(logs, now-2*week, now-week);
+  const bestCombo = Math.max(P.bestCombo||0, ...logs.map(l=>l.combo||0), 0);
+  const perfect = Math.max(P.perfectGames||0, logs.filter(l=>l.won&&l.acc===100).length);
+  const bestStreak = Math.max(P.bestStreak||0, streakOf(P));
+  let mastered = 0, cre = 0;
+  ['mult','div','add','sub'].forEach(sb=>{
+    const d=(P.subjects||{})[sb]||{};
+    mastered += Object.values(d.tableStars||{}).filter(v=>v>=3).length;
+    cre += [0,5,4,3,2].reduce((a,k)=>a+((d.creaturesMap||{})[k]||[]).length,0);
+  });
+  const diffTxt = thisW>lastW ? `▲ ${thisW-lastW} a mais que na semana passada!` : lastW ? `Semana passada: ${lastW}. Bora superar? 💪` : 'Continue jogando para bater recordes!';
+  const card = (ic,val,lbl)=>`<div class="rec-card"><div class="rec-ic">${ic}</div><div class="rec-val">${val}</div><div class="rec-lbl">${lbl}</div></div>`;
+  let html = `<div class="rec-week"><b>✅ ${thisW}</b><div>acertos esta semana<br><span style="font-size:.8rem;">${diffTxt}</span></div></div>
+    <div class="rec-grid">
+      ${card('🔥',bestCombo,'Maior combo')}
+      ${card('🏆',perfect,'Partidas perfeitas')}
+      ${card('📅',bestStreak,'Melhor ofensiva')}
+      ${card('⭐',mastered+'/36','Tabuadas com 3⭐')}
+      ${card('🐉',cre+'/'+TOTAL_CRE,'Criaturas')}
+      ${card('🎮',P.totalGames||0,'Partidas')}
     </div>`;
-  }).join('');
+  // Placar da família só faz sentido com mais de um perfil
+  const data = gd();
+  if(data.profiles.length > 1){
+    const rk = data.profiles.map((p,i)=>({name:p.name, av:p.av, pts:ptsIn(p.logs||[], now-week, now), isMe:i===Pi}))
+      .sort((a,b)=>b.pts-a.pts);
+    const medals = ['🥇','🥈','🥉'], rowCls = ['r1','r2','r3'];
+    html += `<div class="sub-title">👨‍👩‍👧 Placar da família (semana)</div><div style="display:flex;flex-direction:column;gap:.35rem;">` +
+      rk.map((r,i)=>`<div class="rank-row ${i<3?rowCls[i]:''}${r.isMe?' me':''}">
+        <div class="rank-pos">${i<3?medals[i]:'#'+(i+1)}</div><div class="rank-av">${esc(r.av)}</div>
+        <div class="rank-info"><div class="rank-name">${esc(r.name)}${r.isMe?' (você)':''}</div></div>
+        <div class="rank-pts">${r.pts}✅</div></div>`).join('') + `</div>`;
+  }
+  area.innerHTML = html;
+}
+
+// ── AVALIAÇÃO NA LOJA ─────────────────────────────────────────
+// Pede depois da 3ª vitória com 2⭐+; se "Agora não", tenta de novo 5 vitórias depois
+function reviewState(){ try{ return JSON.parse(localStorage.getItem('mm_review')||'{}'); }catch(e){ return {}; } }
+function shouldAskReview(){
+  const st = reviewState();
+  const isNative = window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform();
+  return isNative && !st.done && (P.wins||0) >= (st.next||3);
+}
+function reviewLater(){ const st=reviewState(); st.next=(P.wins||0)+5; localStorage.setItem('mm_review',JSON.stringify(st)); }
+async function requestStoreReview(){
+  localStorage.setItem('mm_review', JSON.stringify({done:true}));
+  try {
+    const R = window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Review;
+    if(R) await R.requestReview();
+  } catch(e){ console.warn('review error:', e); }
+}
+
+// ── EXCLUIR CONTA (Google Play exige para apps que criam conta) ─
+async function deleteAccount(){
+  if(!fbReady || !fbUser){ closeModal('mDeleteAccount'); return; }
+  showLoading('Excluindo conta...');
+  try {
+    const ref = fbDb.collection('users').doc(fbUser.uid).collection('profiles');
+    const snap = await ref.get();
+    await Promise.all(snap.docs.map(d=>d.ref.delete()));
+    await fbUser.delete();
+    // perfis locais continuam, mas sem vínculo com a nuvem
+    const data = gd(); data.profiles.forEach(p=>{ delete p._cloudId; }); sd(data);
+    hideLoading(); closeModal('mDeleteAccount');
+    flash('Conta excluída.','ok');
+    P = null; fbUser = null; updateAuthUI(); renderLogin(); show('sLogin');
+  } catch(e) {
+    hideLoading(); closeModal('mDeleteAccount');
+    if(e && e.code === 'auth/requires-recent-login') flash('Por segurança, saia e entre de novo na conta, depois tente excluir.','err');
+    else flash('Não foi possível excluir agora. Tente de novo.','err');
+  }
+}
+
+// ── ÁREA DE ADULTOS (compras, conta, PIN) ─────────────────────
+let gateOkUntil = 0, gateCb = null;
+function parentGate(cb){
+  if(Date.now() < gateOkUntil){ cb(); return; }
+  gateCb = cb;
+  const i = document.getElementById('gateInput'); i.value = '';
+  document.getElementById('gateErr').textContent = '';
+  openModal('mGate');
+  setTimeout(()=>i.focus(), 300);
+}
+function checkGate(){
+  const y = parseInt(document.getElementById('gateInput').value, 10);
+  const now = new Date().getFullYear();
+  if(y >= now-100 && y <= now-18){
+    gateOkUntil = Date.now() + 5*60*1000; // não pergunta de novo por 5 min
+    closeModal('mGate');
+    const cb = gateCb; gateCb = null;
+    if(cb) cb();
+  } else {
+    document.getElementById('gateErr').textContent = 'Peça ajuda a um adulto 🙂';
+    document.getElementById('gateInput').value = '';
+  }
+}
+function openPremium(){ parentGate(()=>openModal('mPremium')); }
+function forgotPin(){
+  parentGate(()=>{
+    document.getElementById('newPinInput').value = '';
+    document.getElementById('newPinErr').textContent = '';
+    openModal('mNewPin');
+  });
+}
+function saveNewPin(){
+  const v = document.getElementById('newPinInput').value.trim();
+  if(!/^\d{4}$/.test(v)){ document.getElementById('newPinErr').textContent = 'Use exatamente 4 números.'; return; }
+  P.pin = v; sp();
+  closeModal('mNewPin');
+  flash('PIN atualizado! 🔑','ok');
+  renderDash(); show('sDash');
+}
+
+// ── VELOCIDADE (escolhida ao tocar numa tabuada) ──────────────
+const SPD_NAMES = {0:'Sem tempo',5:'5 segundos',4:'4 segundos',3:'3 segundos',2:'2 segundos'};
+function openSpeed(table){
+  if(table!=='boss' && PREMIUM_TABLES.includes(table) && !isPremiumUnlocked()){ openPremium(); return; }
+  const passed = passedTables();
+  if(table==='boss' && passed.length<2){ playDuck(); flash('Passe 2 tabuadas para liberar o Desafio Misto! 🔒','err'); return; }
+  const op = SUBJECTS[subject].op;
+  document.getElementById('spdSub').textContent = table==='boss'
+    ? `10 perguntas misturando: ${passed.map(t=>op+t).join('  ')}. Escolha a velocidade:`
+    : 'Escolha a velocidade. Mais rápido = criaturas mais raras!';
+  const creSet = subject==='sub' ? CREATURES_SUB : CREATURES_ALL;
+  const cm = getCM();
+  document.getElementById('spdTitle').textContent = table==='boss' ? '🔀 Desafio Misto' : `Tabuada do ${table} (${SUBJECTS[subject].op})`;
+  const list = document.getElementById('spdList');
+  list.innerHTML = '';
+  [0,5,4,3,2].forEach(d=>{
+    const set = creSet[d];
+    const cr = table!=='boss' ? set.c[table] : null;
+    const has = cr && (cm[d]||[]).includes(table);
+    const b = document.createElement('button');
+    b.className = 'spd-opt' + (d===diff ? ' sel' : '');
+    if(d===diff) b.style.borderColor = set.color;
+    b.innerHTML = `<div class="spd-ic">${set.icon}</div>
+      <div class="spd-txt"><div class="spd-name">${SPD_NAMES[d]}</div><div class="spd-sub">${set.name}${cr ? (has ? ' · resgatada ✓' : ' · tire 3⭐ para resgatar') : ''}</div></div>
+      ${cr ? `<div class="spd-cre${has?'':' lk'}">${cr.e}</div>` : ''}`;
+    b.onclick = ()=>{ setDiff(d); closeModal('mSpeed'); startGame(table); };
+    list.appendChild(b);
+  });
+  openModal('mSpeed');
 }
 
 // ── BIG COMBO POPUP ───────────────────────────────────────────
@@ -2553,7 +2794,7 @@ function updateStoryProgress(){
     return tot + [0,5,4,3,2].reduce((a,d)=>a+(cm[d]||[]).length,0);
   }, 0);
   const el = document.getElementById('storyProgress');
-  if(el) el.textContent = `${totalCre}/135 criaturas resgatadas · Toque para saber mais`;
+  if(el) el.textContent = `${totalCre}/${TOTAL_CRE}`;
 }
 
 initFirebase();
