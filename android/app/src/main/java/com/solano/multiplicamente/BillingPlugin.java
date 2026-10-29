@@ -77,6 +77,37 @@ public class BillingPlugin extends Plugin implements PurchasesUpdatedListener {
         );
     }
 
+    // Preço formatado do produto como está cadastrado na Play Console (ex.: "R$ 9,99")
+    @PluginMethod
+    public void getPrice(PluginCall call) {
+        if (!billingClient.isReady()) {
+            call.reject("BillingClient not ready");
+            return;
+        }
+        List<QueryProductDetailsParams.Product> products = new ArrayList<>();
+        products.add(
+                QueryProductDetailsParams.Product.newBuilder()
+                        .setProductId(PRODUCT_ID)
+                        .setProductType(BillingClient.ProductType.INAPP)
+                        .build()
+        );
+        billingClient.queryProductDetailsAsync(
+                QueryProductDetailsParams.newBuilder().setProductList(products).build(),
+                (billingResult, queryResult) -> {
+                    List<ProductDetails> list = queryResult.getProductDetailsList();
+                    if (billingResult.getResponseCode() != BillingClient.BillingResponseCode.OK
+                            || list.isEmpty()
+                            || list.get(0).getOneTimePurchaseOfferDetails() == null) {
+                        call.reject("Price not available");
+                        return;
+                    }
+                    JSObject ret = new JSObject();
+                    ret.put("price", list.get(0).getOneTimePurchaseOfferDetails().getFormattedPrice());
+                    call.resolve(ret);
+                }
+        );
+    }
+
     @PluginMethod
     public void purchasePremium(PluginCall call) {
         if (!billingClient.isReady()) {

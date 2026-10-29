@@ -1187,6 +1187,28 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
   </div>
 </div>
 
+<!-- AVALIAÇÃO: pedida a um adulto depois de uma boa vitória -->
+<div class="modal-ov" id="mReview">
+  <div class="modal-sheet">
+    <span class="break-emoji">🦉</span>
+    <div class="sheet-title">Está gostando do jogo?</div>
+    <div class="sheet-sub">Peça para um adulto dar uma nota na loja. Isso ajuda outras crianças a encontrar o MultiplicaMente!</div>
+    <button class="btn btn-green" onclick="parentGate(()=>{closeModal('mReview');requestStoreReview();})">⭐ Chamar um adulto</button>
+    <button class="btn btn-outline" style="margin-top:.5rem;" onclick="closeModal('mReview');reviewLater()">Agora não</button>
+  </div>
+</div>
+
+<!-- EXCLUIR CONTA -->
+<div class="modal-ov" id="mDeleteAccount">
+  <div class="modal-sheet">
+    <span class="break-emoji">⚠️</span>
+    <div class="sheet-title">Excluir conta?</div>
+    <div class="sheet-sub">A conta e todos os perfis salvos na nuvem serão apagados para sempre. O progresso guardado neste celular continua aqui.</div>
+    <button class="btn btn-red" onclick="deleteAccount()" style="margin-bottom:.4rem;">🗑️ Sim, excluir minha conta</button>
+    <button class="btn btn-outline" onclick="closeModal('mDeleteAccount')">Cancelar</button>
+  </div>
+</div>
+
 <!-- VELOCIDADE: escolhida ao tocar numa tabuada -->
 <div class="modal-ov" id="mSpeed">
   <div class="modal-sheet">
@@ -1224,7 +1246,8 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 </div>
 
 <script>
-const PRECO_PREMIUM = "R$ 9,90";
+// Valor de reserva; o preço real vem do Google Play em initBilling()
+let PRECO_PREMIUM = "R$ 9,99";
 
 function applyPremiumPrices() {
   document.querySelectorAll('.premium-price-val').forEach(el => {
@@ -1268,7 +1291,8 @@ function loadFirebaseScripts(callback){
 }
 
 function initFirebase(){
-  showLoading('Conectando...');
+  // Sem internet: mostra os perfis na hora; o Firebase tenta carregar em segundo plano
+  if(!navigator.onLine) renderLogin(); else showLoading('Conectando...');
   // Timeout de segurança — se Firebase não carregar em 8s, mostra login mesmo assim
   const safetyTimeout = setTimeout(()=>{
     console.warn('Firebase timeout — carregando sem conexão');
@@ -1578,6 +1602,10 @@ async function initBilling(){
     billingReady = true;
     console.log('Billing initialized ✅');
     await checkExistingPurchase();
+    try {
+      const r = await Billing.getPrice();
+      if(r && r.price){ PRECO_PREMIUM = r.price; applyPremiumPrices(); updatePremiumUI(); }
+    } catch(e){ console.warn('getPrice error:', e); }
   } catch(e){
     console.warn('Billing init error:', e);
   }
@@ -2305,7 +2333,7 @@ let autoT=null;
 function nextQ(){clearTimeout(autoT);if(!waitNext||GS.hearts<=0)return;GS.cur++;if(GS.cur>=GS.questions.length){endGame(true);return}if(GS.cur===5){openModal('mBreak');return}renderQ()}
 function endGame(won){
   clearInterval(tIv);clearTimeout(autoT);P.totalGames=(P.totalGames||0)+1;const acc=GS.ok/GS.questions.length;
-  updateStreak();P.bestCombo=Math.max(P.bestCombo||0,GS.maxCombo);
+  updateStreak();P.bestCombo=Math.max(P.bestCombo||0,GS.maxCombo);if(won)P.wins=(P.wins||0)+1;
   if(won&&acc===1&&GS.wrong===0) P.perfectGames=(P.perfectGames||0)+1;
   const log={table:GS.table,subject,ok:GS.ok,total:GS.questions.length,acc:~~(acc*100),won,combo:GS.maxCombo,diff,ts:Date.now(),date:new Date().toLocaleString('pt-BR')};
   P.logs=P.logs||[];P.logs.unshift(log);if(P.logs.length>20)P.logs.pop();
@@ -2343,6 +2371,7 @@ function endGame(won){
         afterWin='mLoginPrompt';
       }
     }
+    if(!afterWin && stars>=2 && shouldAskReview()) afterWin='mReview';
   }else{const gems=GS.ok;P.gems=(P.gems||0)+gems;sp();document.getElementById('loseGems').textContent=gems+' 💎';openModal('mLose')}
 }
 let afterWin=null;
@@ -2576,6 +2605,7 @@ function renderSettingsAccount(){
         </div>
       </div>
       <button class="btn btn-outline" style="font-size:.85rem;padding:.65rem;margin-bottom:.4rem;" onclick="logout()">🚪 Sair da conta</button>
+      <button class="btn-danger-outline" onclick="parentGate(()=>openModal('mDeleteAccount'))">🗑️ Excluir conta e dados da nuvem</button>
     `;
   } else {
     area.innerHTML = `
@@ -2631,6 +2661,44 @@ function renderRecords(){
         <div class="rank-pts">${r.pts}✅</div></div>`).join('') + `</div>`;
   }
   area.innerHTML = html;
+}
+
+// ── AVALIAÇÃO NA LOJA ─────────────────────────────────────────
+// Pede depois da 3ª vitória com 2⭐+; se "Agora não", tenta de novo 5 vitórias depois
+function reviewState(){ try{ return JSON.parse(localStorage.getItem('mm_review')||'{}'); }catch(e){ return {}; } }
+function shouldAskReview(){
+  const st = reviewState();
+  const isNative = window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform();
+  return isNative && !st.done && (P.wins||0) >= (st.next||3);
+}
+function reviewLater(){ const st=reviewState(); st.next=(P.wins||0)+5; localStorage.setItem('mm_review',JSON.stringify(st)); }
+async function requestStoreReview(){
+  localStorage.setItem('mm_review', JSON.stringify({done:true}));
+  try {
+    const R = window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Review;
+    if(R) await R.requestReview();
+  } catch(e){ console.warn('review error:', e); }
+}
+
+// ── EXCLUIR CONTA (Google Play exige para apps que criam conta) ─
+async function deleteAccount(){
+  if(!fbReady || !fbUser){ closeModal('mDeleteAccount'); return; }
+  showLoading('Excluindo conta...');
+  try {
+    const ref = fbDb.collection('users').doc(fbUser.uid).collection('profiles');
+    const snap = await ref.get();
+    await Promise.all(snap.docs.map(d=>d.ref.delete()));
+    await fbUser.delete();
+    // perfis locais continuam, mas sem vínculo com a nuvem
+    const data = gd(); data.profiles.forEach(p=>{ delete p._cloudId; }); sd(data);
+    hideLoading(); closeModal('mDeleteAccount');
+    flash('Conta excluída.','ok');
+    P = null; fbUser = null; updateAuthUI(); renderLogin(); show('sLogin');
+  } catch(e) {
+    hideLoading(); closeModal('mDeleteAccount');
+    if(e && e.code === 'auth/requires-recent-login') flash('Por segurança, saia e entre de novo na conta, depois tente excluir.','err');
+    else flash('Não foi possível excluir agora. Tente de novo.','err');
+  }
 }
 
 // ── ÁREA DE ADULTOS (compras, conta, PIN) ─────────────────────

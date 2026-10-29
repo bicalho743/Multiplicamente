@@ -9,6 +9,7 @@ public class MainActivity extends BridgeActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         registerPlugin(BillingPlugin.class);
+        registerPlugin(ReviewPlugin.class);
         registerPlugin(GoogleAuth.class);
         super.onCreate(savedInstanceState);
         // Fonte do sistema muito grande quebra o layout do jogo: limita o zoom de texto a 115%
