@@ -607,10 +607,10 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 .pu-icon{font-size:1.1rem;}
 
 /* ── BIG COMBO POPUP ─────────────────────────────────────── */
-.combo-pop{position:fixed;top:43%;left:50%;transform:translateX(-50%);z-index:500;pointer-events:none;text-align:center;animation:comboPop .55s ease-out forwards;}
-@keyframes comboPop{0%{opacity:0;transform:translateX(-50%) scale(.3)}55%{transform:translateX(-50%) scale(1.25)}100%{opacity:1;transform:translateX(-50%) scale(1)}}
+.combo-pop{position:absolute;top:44%;left:50%;transform:translate(-50%,-50%);z-index:500;pointer-events:none;display:flex;align-items:center;gap:.5rem;white-space:nowrap;animation:comboPop .55s ease-out forwards;}
+@keyframes comboPop{0%{opacity:0;transform:translate(-50%,-50%) scale(.3)}55%{transform:translate(-50%,-50%) scale(1.25)}100%{opacity:1;transform:translate(-50%,-50%) scale(1)}}
 .combo-pop-num{font-size:3.8rem;font-weight:900;color:var(--yellow);text-shadow:0 4px 0 var(--yellow-sh),-2px -2px 0 #000,2px 2px 0 #000;}
-.combo-pop-lbl{display:inline-block;margin-top:.2rem;font-size:.95rem;font-weight:900;color:#fff;background:rgba(40,40,40,.85);padding:.2rem .8rem;border-radius:100px;}
+.combo-pop-lbl{display:inline-block;font-size:.95rem;font-weight:900;color:#fff;background:rgba(40,40,40,.85);padding:.2rem .8rem;border-radius:100px;}
 
 /* ── CREATURE: silhouette ────────────────────────────────── */
 .cre-silh{font-size:1.9rem;filter:brightness(0);opacity:.2;}
@@ -2327,7 +2327,7 @@ function setupTimer(){
 }
 function updateRing(rem,total,arc,num,C){const pct=rem/total;arc.style.strokeDashoffset=C*(1-pct);num.textContent=Math.ceil(rem);arc.className='qr-arc'+(pct>.5?'':pct>.25?' warn':' hot')}
 function timeOut(){const q=GS.questions[GS.cur];const ans=q.ans!==undefined?q.ans:q.a*q.b;GS.combo=0;GS.wrong++;GS.hearts--;playDuck();showRB(false,`Tempo! A resposta era ${ans}`,'Tente mais rápido da próxima vez! ⏱');for(let i=0;i<4;i++){const b=document.getElementById('a'+i);b.disabled=true;if(parseInt(b.textContent)===ans)b.classList.add('correct')}if(GS.hearts<=0){setTimeout(()=>endGame(false),1500);return}}
-function pick(sel,correct,btn){if(waitNext)return;clearInterval(tIv);for(let i=0;i<4;i++)document.getElementById('a'+i).disabled=true;if(sel===correct){btn.classList.add('correct');GS.ok++;GS.combo++;GS.maxCombo=Math.max(GS.maxCombo,GS.combo);P.totalOk=(P.totalOk||0)+1;playSuccess();if(GS.combo>=3)showComboPop(GS.combo);else flash(PRAISES[~~(Math.random()*PRAISES.length)],'ok');showRB(true,'Correto! 🎉',`${sel} é a resposta certa`);updateMissionProgress('combo',GS.combo);autoT=setTimeout(nextQ,GS.combo>=3?1300:1000);}else{btn.classList.add('wrong');for(let i=0;i<4;i++){const b=document.getElementById('a'+i);if(parseInt(b.textContent)===correct)b.classList.add('correct')}GS.combo=0;GS.wrong++;GS.hearts--;P.totalWrong=(P.totalWrong||0)+1;playDuck();showRB(false,`A resposta era ${correct}`,`${GS.questions[GS.cur].a} ${GS.questions[GS.cur].op||'×'} ${GS.questions[GS.cur].b} = ${correct}`);if(GS.hearts<=0){setTimeout(()=>endGame(false),1600);return}}}
+function pick(sel,correct,btn){if(waitNext)return;clearInterval(tIv);for(let i=0;i<4;i++)document.getElementById('a'+i).disabled=true;if(sel===correct){btn.classList.add('correct');GS.ok++;GS.combo++;GS.maxCombo=Math.max(GS.maxCombo,GS.combo);P.totalOk=(P.totalOk||0)+1;playSuccess();showRB(true,'Correto! 🎉',`${sel} é a resposta certa`);if(GS.combo>=3)showComboPop(GS.combo);else flash(PRAISES[~~(Math.random()*PRAISES.length)],'ok');updateMissionProgress('combo',GS.combo);autoT=setTimeout(nextQ,GS.combo>=3?1300:1000);}else{btn.classList.add('wrong');for(let i=0;i<4;i++){const b=document.getElementById('a'+i);if(parseInt(b.textContent)===correct)b.classList.add('correct')}GS.combo=0;GS.wrong++;GS.hearts--;P.totalWrong=(P.totalWrong||0)+1;playDuck();showRB(false,`A resposta era ${correct}`,`${GS.questions[GS.cur].a} ${GS.questions[GS.cur].op||'×'} ${GS.questions[GS.cur].b} = ${correct}`);if(GS.hearts<=0){setTimeout(()=>endGame(false),1600);return}}}
 function showRB(ok,title,sub){waitNext=true;const bar=document.getElementById('resultBar');bar.className='result-bar '+(ok?'rb-correct':'rb-wrong');document.getElementById('rbIcon').textContent=ok?'✅':'❌';document.getElementById('rbTitle').textContent=title;document.getElementById('rbSub').textContent=sub;document.getElementById('sGame').classList.add('rb-visible');}
 let autoT=null;
 function nextQ(){clearTimeout(autoT);if(!waitNext||GS.hearts<=0)return;GS.cur++;if(GS.cur>=GS.questions.length){endGame(true);return}if(GS.cur===5){openModal('mBreak');return}renderQ()}
@@ -2518,7 +2518,7 @@ function updateMissionProgress(key, val){
   const ms = getMissions();
   ms.forEach(m=>{
     if(m.done) return;
-    if(m.key === key){ m.cur = Math.min(m.max, key==='combo' ? Math.max(m.cur, val) : m.cur + val); if(m.cur >= m.max){ m.done = true; if(P){ P.gems = (P.gems||0) + m.rew; sp(); flash('Missão concluída! +'+m.rew+'💎','ok'); } } }
+    if(m.key === key){ m.cur = Math.min(m.max, key==='combo' ? Math.max(m.cur, val) : m.cur + val); if(m.cur >= m.max){ m.done = true; if(P){ P.gems = (P.gems||0) + m.rew; sp(); const msg='Missão concluída! +'+m.rew+'💎'; if(document.querySelector('.combo-pop')) setTimeout(()=>flash(msg,'ok'),1250); else flash(msg,'ok'); } } }
   });
   saveMissions(ms);
   renderMissions();
@@ -2783,7 +2783,15 @@ function showComboPop(n){
   const div = document.createElement('div');
   div.className = 'combo-pop';
   div.innerHTML = `<div class="combo-pop-num">×${n}</div><div class="combo-pop-lbl">${msgs[lbl]}</div>`;
-  document.body.appendChild(div);
+  // Dentro do cartão do app (acompanha a ampliação no tablet), no meio do espaço entre a pergunta e as respostas
+  const app = document.getElementById('app');
+  app.appendChild(div);
+  try {
+    const z = parseFloat(app.style.zoom) || 1, ar = app.getBoundingClientRect();
+    const qb = document.querySelector('#sGame .q-card').getBoundingClientRect().bottom;
+    const at = document.getElementById('a0').getBoundingClientRect().top;
+    if(at > qb) div.style.top = (((qb + at) / 2 - ar.top) / z) + 'px';
+  } catch(e) {}
   setTimeout(()=>div.remove(), 1200);
 }
 
@@ -2796,6 +2804,16 @@ function updateStoryProgress(){
   const el = document.getElementById('storyProgress');
   if(el) el.textContent = `${totalCre}/${TOTAL_CRE}`;
 }
+
+// Tablet: o cartão do app tem 440×820; amplia proporcionalmente para preencher a tela
+function fitApp(){
+  const a=document.getElementById('app'); if(!a) return;
+  if(innerWidth<600){ a.style.zoom=''; return; }
+  const z=Math.min(innerWidth*0.94/440, innerHeight*0.95/820, 2);
+  a.style.zoom = z>1.05 ? z.toFixed(3) : '';
+}
+window.addEventListener('resize', fitApp);
+fitApp();
 
 initFirebase();
 window.addEventListener('load', ()=>{ setTimeout(initBilling, 1500); });
