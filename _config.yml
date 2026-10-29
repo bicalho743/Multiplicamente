@@ -1,0 +1,11 @@
+# GitHub Pages: publica só a página do app, a política de privacidade e marketing/.
+# O jogo (www/) e os arquivos do projeto Android não ficam públicos no site.
+exclude:
+  - www
+  - android
+  - node_modules
+  - package.json
+  - package-lock.json
+  - capacitor.config.json
+  - README.md
+  - .idea
