@@ -607,10 +607,10 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 .pu-icon{font-size:1.1rem;}
 
 /* ── BIG COMBO POPUP ─────────────────────────────────────── */
-.combo-pop{position:fixed;top:28%;left:50%;transform:translateX(-50%);z-index:500;pointer-events:none;text-align:center;animation:comboPop .55s ease-out forwards;}
-@keyframes comboPop{0%{opacity:0;transform:translateX(-50%) scale(.3)}55%{transform:translateX(-50%) scale(1.25)}100%{opacity:1;transform:translateX(-50%) scale(1)}}
+.combo-pop{position:absolute;top:44%;left:50%;transform:translate(-50%,-50%);z-index:500;pointer-events:none;display:flex;align-items:center;gap:.5rem;white-space:nowrap;animation:comboPop .55s ease-out forwards;}
+@keyframes comboPop{0%{opacity:0;transform:translate(-50%,-50%) scale(.3)}55%{transform:translate(-50%,-50%) scale(1.25)}100%{opacity:1;transform:translate(-50%,-50%) scale(1)}}
 .combo-pop-num{font-size:3.8rem;font-weight:900;color:var(--yellow);text-shadow:0 4px 0 var(--yellow-sh),-2px -2px 0 #000,2px 2px 0 #000;}
-.combo-pop-lbl{font-size:.95rem;font-weight:900;color:#fff;text-shadow:0 2px 0 #000;}
+.combo-pop-lbl{display:inline-block;font-size:.95rem;font-weight:900;color:#fff;background:rgba(40,40,40,.85);padding:.2rem .8rem;border-radius:100px;}
 
 /* ── CREATURE: silhouette ────────────────────────────────── */
 .cre-silh{font-size:1.9rem;filter:brightness(0);opacity:.2;}
@@ -678,6 +678,21 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 .btn-danger-outline{background:none;color:var(--red);border:2px solid var(--red);border-radius:var(--r);font-family:'Nunito',sans-serif;font-weight:800;font-size:.88rem;padding:.7rem;width:100%;cursor:pointer;margin-top:.4rem;transition:all .15s;}
 .btn-danger-outline:active{background:var(--red-bg);}
 @keyframes fadeOut{0%{opacity:1}100%{opacity:0}}
+
+/* ── TELA DE COMPRA PERSONALIZADA ────────────────────────── */
+.prem-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem;margin-bottom:.8rem;}
+.prem-stats:empty{display:none;}
+.prem-stat{background:var(--green-bg);border:2px solid var(--green);border-radius:var(--r);padding:.5rem .3rem;text-align:center;}
+.prem-stat b{display:block;font-size:1.35rem;font-weight:900;color:var(--green-sh);line-height:1.15;}
+.prem-stat span{font-size:.72rem;font-weight:800;color:var(--gray-dk);line-height:1.15;display:block;}
+.prem-box{background:var(--yellow-bg);border:2px solid var(--yellow);border-radius:var(--r);padding:.8rem;margin-bottom:.9rem;}
+.prem-box-t{font-weight:900;color:var(--yellow-sh);font-size:.95rem;margin-bottom:.35rem;}
+.prem-box ul{list-style:none;display:grid;gap:.25rem;font-size:.85rem;font-weight:700;color:var(--dark);}
+.prem-cre-row{display:flex;justify-content:center;gap:.7rem;margin:.6rem 0 .3rem;font-size:1.8rem;}
+.prem-cre-row.big{font-size:2.4rem;margin:.2rem 0 1rem;}
+.prem-cre-row span{filter:brightness(0);opacity:.28;}
+.prem-price{text-align:center;font-weight:900;font-size:1.35rem;color:var(--green-sh);}
+.prem-price small{font-size:.8rem;color:var(--gray-dk);font-weight:800;}
 
 /* ── FLASH LONGO ─────────────────────────────────────────── */
 .fb-txt.fb-long{font-size:1.15rem;max-width:85%;text-align:center;border-radius:18px;line-height:1.3;}
@@ -938,7 +953,7 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
       </div>
       <div class="settings-card">
         <h3>👑 Premium</h3>
-        <div style="font-size:.85rem;font-weight:700;color:var(--gray-dk);margin-bottom:.7rem;" id="premiumStatus">Versão gratuita · Tabuadas 2–5</div>
+        <div style="font-size:.85rem;font-weight:700;color:var(--gray-dk);margin-bottom:.7rem;" id="premiumStatus">Versão gratuita · Tabuadas 2–6</div>
         <button class="btn btn-green" onclick="openPremium()" id="premiumBtn">🔓 Desbloquear Premium · <span class="premium-price-val">R$ 9,90</span></button>
       </div>
       <div class="settings-card">
@@ -1100,14 +1115,21 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 <div class="modal-ov" id="mPremium">
   <div class="modal-sheet">
     <span class="break-emoji">👑</span>
-    <div class="sheet-title">Conteúdo Premium</div>
-    <div class="sheet-sub">As tabuadas 6 a 10 fazem parte da versão completa!</div>
-    <div style="background:var(--yellow-bg);border:2px solid var(--yellow);border-radius:var(--r);padding:.8rem;margin-bottom:1rem;text-align:center;">
-      <div style="font-weight:900;font-size:1.1rem;color:var(--yellow-sh);">✨ MultiplicaMente Premium</div>
-      <div style="font-size:.85rem;font-weight:700;color:var(--yellow-sh);margin-top:.3rem;">Tabuadas 6 a 10 em ×, ÷, + e − · 180 criaturas</div>
-      <div style="font-size:1.4rem;font-weight:900;color:var(--green-sh);margin-top:.5rem;"><span class="premium-price-val">R$ 9,90</span> · pagamento único</div>
+    <div class="sheet-title" id="premTitle">MultiplicaMente Premium</div>
+    <div class="sheet-sub" id="premSub" style="margin-bottom:.7rem;">As tabuadas 7 a 10 fazem parte da versão completa!</div>
+    <div class="prem-stats" id="premStats"></div>
+    <div class="prem-box">
+      <div class="prem-box-t">Com o Premium, <span id="premName">seu filho</span> ganha:</div>
+      <ul>
+        <li>✅ Tabuadas 7, 8, 9 e 10, as mais difíceis</li>
+        <li>✅ Nas 4 operações: ×, ÷, + e −</li>
+        <li>✅ <span id="premCre">Todas as 180 criaturas</span></li>
+        <li>✅ Sem assinatura e sem anúncios</li>
+      </ul>
+      <div class="prem-cre-row" id="premCreRow"></div>
+      <div class="prem-price"><span class="premium-price-val">R$ 9,99</span> <small>pagamento único</small></div>
     </div>
-    <button class="btn btn-green" onclick="unlockPremium()">🔓 Desbloquear agora · <span class="premium-price-val">R$ 9,90</span></button>
+    <button class="btn btn-green" onclick="unlockPremium()">🔓 Desbloquear agora · <span class="premium-price-val">R$ 9,99</span></button>
     <button class="btn btn-outline" onclick="closeModal('mPremium')" style="margin-top:.5rem;">Agora não</button>
   </div>
 </div>
@@ -1124,13 +1146,14 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 <div class="fb-flash" id="fbFlash"><div class="fb-txt" id="fbTxt"></div></div>
 
 <!-- PREMIUM: modal principal -->
-<!-- PREMIUM UPSELL após tabuada 5 -->
+<!-- PREMIUM UPSELL após a última tabuada grátis -->
 <div class="modal-ov" id="mPremiumUpsell">
   <div class="modal-sheet">
     <span class="break-emoji">🎉</span>
     <div class="sheet-title">Você completou as tabuadas grátis!</div>
-    <div class="sheet-sub">Novas criaturas estão esperando nas tabuadas 6 a 10! Mostre esta tela para um adulto.</div>
-    <button class="btn btn-green" onclick="parentGate(()=>{closeModal('mPremiumUpsell');openModal('mPremium');})">👨‍👩‍👧 Chamar um adulto</button>
+    <div class="sheet-sub">Novas criaturas estão esperando nas tabuadas 7 a 10! Mostre esta tela para um adulto.</div>
+    <div class="prem-cre-row big" id="upsellCre"></div>
+    <button class="btn btn-green" onclick="parentGate(()=>{closeModal('mPremiumUpsell');showPremium();})">👨‍👩‍👧 Chamar um adulto</button>
     <button class="btn btn-outline" style="margin-top:.5rem;" onclick="closeModal('mPremiumUpsell')">Depois</button>
   </div>
 </div>
@@ -1142,7 +1165,7 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
     <div class="sheet-title">MultiplicaMente Premium</div>
     <div style="background:linear-gradient(135deg,#fff9cc,#fff3aa);border:2px solid var(--yellow);border-radius:var(--r);padding:.9rem;margin-bottom:1rem;">
       <div style="font-size:.85rem;font-weight:700;color:var(--dark);line-height:1.9;">
-        ✅ Tabuadas 6, 7, 8, 9 e 10<br>
+        ✅ Tabuadas 7, 8, 9 e 10<br>
         ✅ Em todas as operações: ×, ÷, + e −<br>
         ✅ 180 criaturas colecionáveis<br>
         ✅ Progresso salvo na nuvem<br>
@@ -1586,8 +1609,8 @@ function toggleDark(on){
 })();
 
 // ── PREMIUM ───────────────────────────────────────────────────
-const FREE_TABLES = [2,3,4,5];
-const PREMIUM_TABLES = [6,7,8,9,10];
+const FREE_TABLES = [2,3,4,5,6];   // a do 6 é amostra grátis de uma tabuada "difícil"
+const PREMIUM_TABLES = [7,8,9,10];
 // ── GOOGLE PLAY BILLING ───────────────────────────────────────
 let billingReady = false;
 
@@ -1733,7 +1756,7 @@ function updatePremiumUI(){
     if(btn){ btn.textContent='👑 Premium ativo!'; btn.disabled=true; btn.style.opacity='.6'; }
     if(hb)  hb.style.display = 'none';
   } else {
-    if(st)  st.textContent  = 'Versão gratuita · Tabuadas 2–5';
+    if(st)  st.textContent  = 'Versão gratuita · Tabuadas 2–6';
     if(btn){ btn.textContent='🔓 Desbloquear Premium · ' + PRECO_PREMIUM; btn.disabled=false; btn.style.opacity='1'; }
     if(hb)  hb.style.display = 'flex';
   }
@@ -2327,7 +2350,7 @@ function setupTimer(){
 }
 function updateRing(rem,total,arc,num,C){const pct=rem/total;arc.style.strokeDashoffset=C*(1-pct);num.textContent=Math.ceil(rem);arc.className='qr-arc'+(pct>.5?'':pct>.25?' warn':' hot')}
 function timeOut(){const q=GS.questions[GS.cur];const ans=q.ans!==undefined?q.ans:q.a*q.b;GS.combo=0;GS.wrong++;GS.hearts--;playDuck();showRB(false,`Tempo! A resposta era ${ans}`,'Tente mais rápido da próxima vez! ⏱');for(let i=0;i<4;i++){const b=document.getElementById('a'+i);b.disabled=true;if(parseInt(b.textContent)===ans)b.classList.add('correct')}if(GS.hearts<=0){setTimeout(()=>endGame(false),1500);return}}
-function pick(sel,correct,btn){if(waitNext)return;clearInterval(tIv);for(let i=0;i<4;i++)document.getElementById('a'+i).disabled=true;if(sel===correct){btn.classList.add('correct');GS.ok++;GS.combo++;GS.maxCombo=Math.max(GS.maxCombo,GS.combo);P.totalOk=(P.totalOk||0)+1;playSuccess();if(GS.combo>=3)showComboPop(GS.combo);else flash(PRAISES[~~(Math.random()*PRAISES.length)],'ok');showRB(true,'Correto! 🎉',`${sel} é a resposta certa`);updateMissionProgress('combo',GS.combo);autoT=setTimeout(nextQ,GS.combo>=3?1300:1000);}else{btn.classList.add('wrong');for(let i=0;i<4;i++){const b=document.getElementById('a'+i);if(parseInt(b.textContent)===correct)b.classList.add('correct')}GS.combo=0;GS.wrong++;GS.hearts--;P.totalWrong=(P.totalWrong||0)+1;playDuck();showRB(false,`A resposta era ${correct}`,`${GS.questions[GS.cur].a} ${GS.questions[GS.cur].op||'×'} ${GS.questions[GS.cur].b} = ${correct}`);if(GS.hearts<=0){setTimeout(()=>endGame(false),1600);return}}}
+function pick(sel,correct,btn){if(waitNext)return;clearInterval(tIv);for(let i=0;i<4;i++)document.getElementById('a'+i).disabled=true;if(sel===correct){btn.classList.add('correct');GS.ok++;GS.combo++;GS.maxCombo=Math.max(GS.maxCombo,GS.combo);P.totalOk=(P.totalOk||0)+1;playSuccess();showRB(true,'Correto! 🎉',`${sel} é a resposta certa`);if(GS.combo>=3)showComboPop(GS.combo);else flash(PRAISES[~~(Math.random()*PRAISES.length)],'ok');updateMissionProgress('combo',GS.combo);autoT=setTimeout(nextQ,GS.combo>=3?1300:1000);}else{btn.classList.add('wrong');for(let i=0;i<4;i++){const b=document.getElementById('a'+i);if(parseInt(b.textContent)===correct)b.classList.add('correct')}GS.combo=0;GS.wrong++;GS.hearts--;P.totalWrong=(P.totalWrong||0)+1;playDuck();showRB(false,`A resposta era ${correct}`,`${GS.questions[GS.cur].a} ${GS.questions[GS.cur].op||'×'} ${GS.questions[GS.cur].b} = ${correct}`);if(GS.hearts<=0){setTimeout(()=>endGame(false),1600);return}}}
 function showRB(ok,title,sub){waitNext=true;const bar=document.getElementById('resultBar');bar.className='result-bar '+(ok?'rb-correct':'rb-wrong');document.getElementById('rbIcon').textContent=ok?'✅':'❌';document.getElementById('rbTitle').textContent=title;document.getElementById('rbSub').textContent=sub;document.getElementById('sGame').classList.add('rb-visible');}
 let autoT=null;
 function nextQ(){clearTimeout(autoT);if(!waitNext||GS.hearts<=0)return;GS.cur++;if(GS.cur>=GS.questions.length){endGame(true);return}if(GS.cur===5){openModal('mBreak');return}renderQ()}
@@ -2361,7 +2384,7 @@ function endGame(won){
     confetti();playWin(stars);if(stars===3) bigWinCelebration();openModal('mWin');setTimeout(moveJourneyChar,600);
     // Avisos extras só aparecem depois que a criança fecha a celebração
     afterWin=null;
-    if(t===5 && prev<1 && nS>=1 && !isPremiumUnlocked()) afterWin='mPremiumUpsell';
+    if(t===FREE_TABLES[FREE_TABLES.length-1] && prev<1 && nS>=1 && !isPremiumUnlocked()){ afterWin='mPremiumUpsell'; renderLockedCreatures('upsellCre'); }
     else if(!fbUser && P.totalGames>=3){
       const lastPrompt = localStorage.getItem('mm_login_prompt');
       if(!lastPrompt || Date.now()-parseInt(lastPrompt) > 24*60*60*1000){
@@ -2518,7 +2541,7 @@ function updateMissionProgress(key, val){
   const ms = getMissions();
   ms.forEach(m=>{
     if(m.done) return;
-    if(m.key === key){ m.cur = Math.min(m.max, key==='combo' ? Math.max(m.cur, val) : m.cur + val); if(m.cur >= m.max){ m.done = true; if(P){ P.gems = (P.gems||0) + m.rew; sp(); flash('Missão concluída! +'+m.rew+'💎','ok'); } } }
+    if(m.key === key){ m.cur = Math.min(m.max, key==='combo' ? Math.max(m.cur, val) : m.cur + val); if(m.cur >= m.max){ m.done = true; if(P){ P.gems = (P.gems||0) + m.rew; sp(); const msg='Missão concluída! +'+m.rew+'💎'; if(document.querySelector('.combo-pop')) setTimeout(()=>flash(msg,'ok'),1250); else flash(msg,'ok'); } } }
   });
   saveMissions(ms);
   renderMissions();
@@ -2724,7 +2747,35 @@ function checkGate(){
     document.getElementById('gateInput').value = '';
   }
 }
-function openPremium(){ parentGate(()=>openModal('mPremium')); }
+function openPremium(){ parentGate(showPremium); }
+function showPremium(){ renderPremiumModal(); openModal('mPremium'); }
+// Silhuetas das criaturas que esperam nas tabuadas Premium (operação atual, coleção sem tempo)
+function renderLockedCreatures(id){
+  const el=document.getElementById(id); if(!el) return;
+  const set=(subject==='sub'?CREATURES_SUB:CREATURES_ALL)[0];
+  el.innerHTML=PREMIUM_TABLES.map(t=>`<span title="Tabuada do ${t}">${set.c[t].e}</span>`).join('');
+}
+// Tela de compra para o adulto, com o progresso real da criança
+function renderPremiumModal(){
+  renderLockedCreatures('premCreRow');
+  const title=document.getElementById('premTitle'), sub=document.getElementById('premSub'), stats=document.getElementById('premStats');
+  if(!P){ title.textContent='MultiplicaMente Premium'; sub.textContent='As tabuadas 7 a 10 fazem parte da versão completa!'; stats.innerHTML=''; document.getElementById('premName').textContent='seu filho'; return; }
+  let passed=0, cre=0;
+  ['mult','div','add','sub'].forEach(sb=>{
+    const d=(P.subjects||{})[sb]||{};
+    passed += Object.values(d.tableStars||{}).filter(v=>v>=1).length;
+    cre += [0,5,4,3,2].reduce((a,k)=>a+((d.creaturesMap||{})[k]||[]).length,0);
+  });
+  const name=esc(P.name), st=streakOf(P);
+  title.textContent=`${P.av} ${P.name} está indo muito bem!`;
+  sub.textContent= passed ? `Veja o que ${P.name} já conquistou:` : `${P.name} está começando a aventura da tabuada.`;
+  const card=(v,l)=>`<div class="prem-stat"><b>${v}</b><span>${l}</span></div>`;
+  stats.innerHTML = passed ? card(passed, passed===1?'tabuada passada':'tabuadas passadas')
+    + card(cre, cre===1?'criatura resgatada':'criaturas resgatadas')
+    + (st ? card(st+'🔥', st===1?'dia seguido':'dias seguidos') : card((P.stars||0)+'⭐','estrelas')) : '';
+  document.getElementById('premName').innerHTML=name;
+  document.getElementById('premCre').textContent = cre ? `Mais ${TOTAL_CRE-cre} criaturas para resgatar` : `Todas as ${TOTAL_CRE} criaturas`;
+}
 function forgotPin(){
   parentGate(()=>{
     document.getElementById('newPinInput').value = '';
@@ -2783,7 +2834,15 @@ function showComboPop(n){
   const div = document.createElement('div');
   div.className = 'combo-pop';
   div.innerHTML = `<div class="combo-pop-num">×${n}</div><div class="combo-pop-lbl">${msgs[lbl]}</div>`;
-  document.body.appendChild(div);
+  // Dentro do cartão do app (acompanha a ampliação no tablet), no meio do espaço entre a pergunta e as respostas
+  const app = document.getElementById('app');
+  app.appendChild(div);
+  try {
+    const z = parseFloat(app.style.zoom) || 1, ar = app.getBoundingClientRect();
+    const qb = document.querySelector('#sGame .q-card').getBoundingClientRect().bottom;
+    const at = document.getElementById('a0').getBoundingClientRect().top;
+    if(at > qb) div.style.top = (((qb + at) / 2 - ar.top) / z) + 'px';
+  } catch(e) {}
   setTimeout(()=>div.remove(), 1200);
 }
 
@@ -2796,6 +2855,16 @@ function updateStoryProgress(){
   const el = document.getElementById('storyProgress');
   if(el) el.textContent = `${totalCre}/${TOTAL_CRE}`;
 }
+
+// Tablet: o cartão do app tem 440×820; amplia proporcionalmente para preencher a tela
+function fitApp(){
+  const a=document.getElementById('app'); if(!a) return;
+  if(innerWidth<600){ a.style.zoom=''; return; }
+  const z=Math.min(innerWidth*0.94/440, innerHeight*0.95/820, 2);
+  a.style.zoom = z>1.05 ? z.toFixed(3) : '';
+}
+window.addEventListener('resize', fitApp);
+fitApp();
 
 initFirebase();
 window.addEventListener('load', ()=>{ setTimeout(initBilling, 1500); });
