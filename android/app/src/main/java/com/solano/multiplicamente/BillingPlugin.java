@@ -60,6 +60,11 @@ public class BillingPlugin extends Plugin implements PurchasesUpdatedListener {
                         .setProductType(BillingClient.ProductType.INAPP)
                         .build(),
                 (billingResult, purchases) -> {
+                    // Sem resposta válida do Google Play: o app mantém o último estado conhecido
+                    if (billingResult.getResponseCode() != BillingClient.BillingResponseCode.OK) {
+                        call.reject("Query failed: " + billingResult.getDebugMessage());
+                        return;
+                    }
                     boolean hasPremium = false;
                     for (Purchase p : purchases) {
                         if (p.getProducts().contains(PRODUCT_ID) &&
@@ -158,6 +163,14 @@ public class BillingPlugin extends Plugin implements PurchasesUpdatedListener {
                     BillingResult billingResult2 = billingClient.launchBillingFlow(activity, flowParams);
                     Log.d(TAG, "launchBillingFlow result: " + billingResult2.getResponseCode() + " " + billingResult2.getDebugMessage());
                     // Se a janela de compra não abriu, avisa o app em vez de deixá-lo esperando
+                    if (billingResult2.getResponseCode() == BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED && pendingPurchaseCall != null) {
+                        JSObject ret = new JSObject();
+                        ret.put("success", true);
+                        ret.put("restored", true);
+                        pendingPurchaseCall.resolve(ret);
+                        pendingPurchaseCall = null;
+                        return;
+                    }
                     if (billingResult2.getResponseCode() != BillingClient.BillingResponseCode.OK && pendingPurchaseCall != null) {
                         pendingPurchaseCall.reject("Purchase failed: " + billingResult2.getDebugMessage());
                         pendingPurchaseCall = null;
@@ -195,6 +208,16 @@ public class BillingPlugin extends Plugin implements PurchasesUpdatedListener {
                     return;
                 }
             }
+            // Pagamento pendente (ex.: boleto): o Premium entra quando o Google Play confirmar
+            JSObject ret = new JSObject();
+            ret.put("success", false);
+            ret.put("pending", true);
+            pendingPurchaseCall.resolve(ret);
+        } else if (result.getResponseCode() == BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED) {
+            JSObject ret = new JSObject();
+            ret.put("success", true);
+            ret.put("restored", true);
+            pendingPurchaseCall.resolve(ret);
         } else if (result.getResponseCode() == BillingClient.BillingResponseCode.USER_CANCELED) {
             pendingPurchaseCall.reject("USER_CANCELED");
         } else {

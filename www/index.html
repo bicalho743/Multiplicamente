@@ -607,10 +607,10 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 .pu-icon{font-size:1.1rem;}
 
 /* ── BIG COMBO POPUP ─────────────────────────────────────── */
-.combo-pop{position:fixed;top:28%;left:50%;transform:translateX(-50%);z-index:500;pointer-events:none;text-align:center;animation:comboPop .55s ease-out forwards;}
-@keyframes comboPop{0%{opacity:0;transform:translateX(-50%) scale(.3)}55%{transform:translateX(-50%) scale(1.25)}100%{opacity:1;transform:translateX(-50%) scale(1)}}
+.combo-pop{position:absolute;top:44%;left:50%;transform:translate(-50%,-50%);z-index:500;pointer-events:none;display:flex;align-items:center;gap:.5rem;white-space:nowrap;animation:comboPop .55s ease-out forwards;}
+@keyframes comboPop{0%{opacity:0;transform:translate(-50%,-50%) scale(.3)}55%{transform:translate(-50%,-50%) scale(1.25)}100%{opacity:1;transform:translate(-50%,-50%) scale(1)}}
 .combo-pop-num{font-size:3.8rem;font-weight:900;color:var(--yellow);text-shadow:0 4px 0 var(--yellow-sh),-2px -2px 0 #000,2px 2px 0 #000;}
-.combo-pop-lbl{font-size:.95rem;font-weight:900;color:#fff;text-shadow:0 2px 0 #000;}
+.combo-pop-lbl{display:inline-block;font-size:.95rem;font-weight:900;color:#fff;background:rgba(40,40,40,.85);padding:.2rem .8rem;border-radius:100px;}
 
 /* ── CREATURE: silhouette ────────────────────────────────── */
 .cre-silh{font-size:1.9rem;filter:brightness(0);opacity:.2;}
@@ -679,6 +679,24 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 .btn-danger-outline:active{background:var(--red-bg);}
 @keyframes fadeOut{0%{opacity:1}100%{opacity:0}}
 
+/* link discreto (restaurar compra) */
+.link-btn{display:block;width:100%;margin-top:.6rem;background:none;border:none;font-family:'Nunito',sans-serif;font-weight:800;font-size:.85rem;color:var(--blue-dk);text-decoration:underline;cursor:pointer;padding:.4rem;}
+
+/* ── TELA DE COMPRA PERSONALIZADA ────────────────────────── */
+.prem-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem;margin-bottom:.8rem;}
+.prem-stats:empty{display:none;}
+.prem-stat{background:var(--green-bg);border:2px solid var(--green);border-radius:var(--r);padding:.5rem .3rem;text-align:center;}
+.prem-stat b{display:block;font-size:1.35rem;font-weight:900;color:var(--green-sh);line-height:1.15;}
+.prem-stat span{font-size:.72rem;font-weight:800;color:var(--gray-dk);line-height:1.15;display:block;}
+.prem-box{background:var(--yellow-bg);border:2px solid var(--yellow);border-radius:var(--r);padding:.8rem;margin-bottom:.9rem;}
+.prem-box-t{font-weight:900;color:var(--yellow-sh);font-size:.95rem;margin-bottom:.35rem;}
+.prem-box ul{list-style:none;display:grid;gap:.25rem;font-size:.85rem;font-weight:700;color:var(--dark);}
+.prem-cre-row{display:flex;justify-content:center;gap:.7rem;margin:.6rem 0 .3rem;font-size:1.8rem;}
+.prem-cre-row.big{font-size:2.4rem;margin:.2rem 0 1rem;}
+.prem-cre-row span{filter:brightness(0);opacity:.28;}
+.prem-price{text-align:center;font-weight:900;font-size:1.35rem;color:var(--green-sh);}
+.prem-price small{font-size:.8rem;color:var(--gray-dk);font-weight:800;}
+
 /* ── FLASH LONGO ─────────────────────────────────────────── */
 .fb-txt.fb-long{font-size:1.15rem;max-width:85%;text-align:center;border-radius:18px;line-height:1.3;}
 
@@ -737,7 +755,7 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
     </div>
     <button class="btn btn-outline" onclick="closeModal('mProfile');showParentPin()" style="margin-bottom:.35rem;padding:.7rem;font-size:.88rem;">📊 Relatório dos pais</button>
     <button class="btn btn-outline" onclick="closeModal('mProfile');htab('settings',document.querySelector('.htab:last-child'))" style="margin-bottom:.35rem;padding:.7rem;font-size:.88rem;">⚙️ Configurações</button>
-    <button class="btn btn-red" onclick="closeModal('mProfile');logout()" style="padding:.7rem;font-size:.88rem;">🚪 Sair do perfil</button>
+    <button class="btn btn-blue" onclick="closeModal('mProfile');switchPlayer()" style="padding:.7rem;font-size:.88rem;">🔄 Trocar de jogador</button>
     <button class="btn-danger-outline" onclick="closeModal('mProfile');confirmDeleteProfile()">🗑️ Apagar este perfil</button>
   </div>
 </div>
@@ -938,8 +956,10 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
       </div>
       <div class="settings-card">
         <h3>👑 Premium</h3>
-        <div style="font-size:.85rem;font-weight:700;color:var(--gray-dk);margin-bottom:.7rem;" id="premiumStatus">Versão gratuita · Tabuadas 2–5</div>
-        <button class="btn btn-green" onclick="openPremium()" id="premiumBtn">🔓 Desbloquear Premium · <span class="premium-price-val">R$ 9,90</span></button>
+        <div style="font-size:.85rem;font-weight:700;color:var(--gray-dk);margin-bottom:.7rem;" id="premiumStatus">Versão gratuita · Tabuadas 2–6</div>
+        <button class="btn btn-green" onclick="openPremium()" id="premiumBtn">🔓 Desbloquear Premium · <span class="premium-price-val">R$ 9,99</span></button>
+        <button class="link-btn" id="restoreBtn" onclick="parentGate(restorePurchase)">Já comprei · Restaurar compra</button>
+        <div style="font-size:.72rem;font-weight:700;color:var(--gray-dk);margin-top:.4rem;text-align:center;">O Premium vale para todos os perfis deste aparelho.</div>
       </div>
       <div class="settings-card">
         <h3>☁️ Conta e sincronização</h3>
@@ -1100,15 +1120,23 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 <div class="modal-ov" id="mPremium">
   <div class="modal-sheet">
     <span class="break-emoji">👑</span>
-    <div class="sheet-title">Conteúdo Premium</div>
-    <div class="sheet-sub">As tabuadas 6 a 10 fazem parte da versão completa!</div>
-    <div style="background:var(--yellow-bg);border:2px solid var(--yellow);border-radius:var(--r);padding:.8rem;margin-bottom:1rem;text-align:center;">
-      <div style="font-weight:900;font-size:1.1rem;color:var(--yellow-sh);">✨ MultiplicaMente Premium</div>
-      <div style="font-size:.85rem;font-weight:700;color:var(--yellow-sh);margin-top:.3rem;">Tabuadas 6 a 10 em ×, ÷, + e − · 180 criaturas</div>
-      <div style="font-size:1.4rem;font-weight:900;color:var(--green-sh);margin-top:.5rem;"><span class="premium-price-val">R$ 9,90</span> · pagamento único</div>
+    <div class="sheet-title" id="premTitle">MultiplicaMente Premium</div>
+    <div class="sheet-sub" id="premSub" style="margin-bottom:.7rem;">As tabuadas 7 a 10 fazem parte da versão completa!</div>
+    <div class="prem-stats" id="premStats"></div>
+    <div class="prem-box">
+      <div class="prem-box-t">Com o Premium, <span id="premName">seu filho</span> ganha:</div>
+      <ul>
+        <li>✅ Tabuadas 7, 8, 9 e 10, as mais difíceis</li>
+        <li>✅ Nas 4 operações: ×, ÷, + e −</li>
+        <li>✅ <span id="premCre">Todas as 180 criaturas</span></li>
+        <li>✅ Sem assinatura e sem anúncios</li>
+      </ul>
+      <div class="prem-cre-row" id="premCreRow"></div>
+      <div class="prem-price"><span class="premium-price-val">R$ 9,99</span> <small>pagamento único</small></div>
     </div>
-    <button class="btn btn-green" onclick="unlockPremium()">🔓 Desbloquear agora · <span class="premium-price-val">R$ 9,90</span></button>
+    <button class="btn btn-green" onclick="unlockPremium()">🔓 Desbloquear agora · <span class="premium-price-val">R$ 9,99</span></button>
     <button class="btn btn-outline" onclick="closeModal('mPremium')" style="margin-top:.5rem;">Agora não</button>
+    <button class="link-btn" onclick="restorePurchase()">Já comprei · Restaurar compra</button>
   </div>
 </div>
 <div class="modal-ov" id="mLose">
@@ -1124,13 +1152,14 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 <div class="fb-flash" id="fbFlash"><div class="fb-txt" id="fbTxt"></div></div>
 
 <!-- PREMIUM: modal principal -->
-<!-- PREMIUM UPSELL após tabuada 5 -->
+<!-- PREMIUM UPSELL após a última tabuada grátis -->
 <div class="modal-ov" id="mPremiumUpsell">
   <div class="modal-sheet">
     <span class="break-emoji">🎉</span>
     <div class="sheet-title">Você completou as tabuadas grátis!</div>
-    <div class="sheet-sub">Novas criaturas estão esperando nas tabuadas 6 a 10! Mostre esta tela para um adulto.</div>
-    <button class="btn btn-green" onclick="parentGate(()=>{closeModal('mPremiumUpsell');openModal('mPremium');})">👨‍👩‍👧 Chamar um adulto</button>
+    <div class="sheet-sub">Novas criaturas estão esperando nas tabuadas 7 a 10! Mostre esta tela para um adulto.</div>
+    <div class="prem-cre-row big" id="upsellCre"></div>
+    <button class="btn btn-green" onclick="parentGate(()=>{closeModal('mPremiumUpsell');showPremium();})">👨‍👩‍👧 Chamar um adulto</button>
     <button class="btn btn-outline" style="margin-top:.5rem;" onclick="closeModal('mPremiumUpsell')">Depois</button>
   </div>
 </div>
@@ -1142,15 +1171,15 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
     <div class="sheet-title">MultiplicaMente Premium</div>
     <div style="background:linear-gradient(135deg,#fff9cc,#fff3aa);border:2px solid var(--yellow);border-radius:var(--r);padding:.9rem;margin-bottom:1rem;">
       <div style="font-size:.85rem;font-weight:700;color:var(--dark);line-height:1.9;">
-        ✅ Tabuadas 6, 7, 8, 9 e 10<br>
+        ✅ Tabuadas 7, 8, 9 e 10<br>
         ✅ Em todas as operações: ×, ÷, + e −<br>
         ✅ 180 criaturas colecionáveis<br>
-        ✅ Progresso salvo na nuvem<br>
+        ✅ Vale para todos os perfis do aparelho<br>
         ✅ Pagamento único — sem assinatura
       </div>
-      <div style="font-weight:900;font-size:1.5rem;color:var(--green-sh);text-align:center;margin-top:.6rem;" class="premium-price-val">R$ 9,90</div>
+      <div style="font-weight:900;font-size:1.5rem;color:var(--green-sh);text-align:center;margin-top:.6rem;" class="premium-price-val">R$ 9,99</div>
     </div>
-    <button class="btn btn-green" onclick="payViaGooglePlay()" style="margin-bottom:.7rem;">💳 Pagar pelo Google Play · <span class="premium-price-val">R$ 9,90</span></button>
+    <button class="btn btn-green" onclick="payViaGooglePlay()" style="margin-bottom:.7rem;">💳 Pagar pelo Google Play · <span class="premium-price-val">R$ 9,99</span></button>
     <div class="auth-divider"><span>Tem um código promocional?</span></div>
     <div style="display:flex;gap:.5rem;margin:.5rem 0;">
       <input class="inp" id="promoCodeInput" placeholder="Código promo" style="margin:0;flex:1;text-transform:uppercase;" maxlength="20">
@@ -1158,6 +1187,7 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
     </div>
     <div class="auth-err" id="promoErr"></div>
     <button class="btn btn-outline" style="margin-top:.4rem;font-size:.82rem;" onclick="closeModal('mPremiumPay')">Cancelar</button>
+    <button class="link-btn" onclick="restorePurchase()">Já comprei · Restaurar compra</button>
   </div>
 </div>
 
@@ -1462,10 +1492,15 @@ async function resetPassword(){
   }
 }
 
+// Sair da conta (adulto): remove do aparelho os perfis dessa conta — eles continuam salvos
+// na nuvem e voltam ao entrar de novo. Perfis criados sem conta continuam no aparelho.
 function signOut(){
+  const uid = fbUser && fbUser.uid;
+  if(uid){ const data=gd(); data.profiles=data.profiles.filter(p=>p._uid!==uid); sd(data); }
   if(fbAuth) fbAuth.signOut();
   fbUser = null;
   P = null;
+  if(uid) flash('Você saiu da conta. Os perfis dela continuam salvos na nuvem.','ok');
   updateAuthUI();
   renderLogin();
   show('sLogin');
@@ -1520,18 +1555,25 @@ function authSwitchTab(tab, el){
 async function loadCloudProfiles(){
   if(!fbReady||!fbUser){ hideLoading(); renderLogin(); return; }
   try {
-    const snap = await fbDb.collection('users').doc(fbUser.uid).collection('profiles').get();
-    if(!snap.empty){
-      const data = gd();
-      snap.forEach(doc => {
-        const cp = doc.data();
-        cp._cloudId = doc.id;
-        const exists = data.profiles.findIndex(p=>p._cloudId===doc.id);
-        if(exists>=0) data.profiles[exists] = cp;
-        else data.profiles.push(cp);
-      });
-      sd(data);
-    }
+    const uid = fbUser.uid;
+    const snap = await fbDb.collection('users').doc(uid).collection('profiles').get();
+    const data = gd();
+    const ids = new Set(snap.docs.map(d=>d.id));
+    // Perfis de outra conta que ficaram no aparelho não se misturam com os desta conta
+    data.profiles = data.profiles.filter(p => {
+      if(p._uid) return p._uid === uid;
+      if(p._cloudId) return ids.has(p._cloudId); // versões antigas não guardavam o dono
+      return true;                               // perfil criado sem conta: fica
+    });
+    snap.forEach(doc => {
+      const cp = doc.data();
+      delete cp.premium;
+      cp._cloudId = doc.id; cp._uid = uid;
+      const exists = data.profiles.findIndex(p=>p._cloudId===doc.id);
+      if(exists>=0) data.profiles[exists] = cp;
+      else data.profiles.push(cp);
+    });
+    sd(data);
   } catch(e) {
     console.warn('Erro ao carregar perfis:', e);
   }
@@ -1541,23 +1583,24 @@ async function loadCloudProfiles(){
 
 async function saveProfileToCloud(){
   if(!fbReady||!fbUser||!P) return;
+  if(P._uid && P._uid !== fbUser.uid) return; // perfil de outra conta
   try {
     const ref = fbDb.collection('users').doc(fbUser.uid).collection('profiles');
+    const data = {...P}; delete data.premium; if(data.pinHash) delete data.pin; // PIN vai como hash
     if(P._cloudId){
-      await ref.doc(P._cloudId).set(P);
+      await ref.doc(P._cloudId).set(data);
     } else {
-      const doc = await ref.add(P);
-      P._cloudId = doc.id;
+      const doc = await ref.add(data);
+      P._cloudId = doc.id; P._uid = fbUser.uid;
+      saveLocal(); // só no aparelho — chamar sp() aqui gravava na nuvem de novo, sem parar
     }
-    // also update local
-    sp();
   } catch(e) {
     console.warn('Erro ao salvar na nuvem:', e);
   }
 }
 
-// ── OVERRIDE sp() to also sync cloud ─────────────────────────
-const _spOriginal = function(){const data=gd();data.profiles[Pi]={...P};sd(data)};
+// Salva o perfil atual só no aparelho (sp() salva no aparelho e na nuvem)
+function saveLocal(){ const data=gd(); data.profiles[Pi]={...P}; sd(data); }
 
 const AVATARS=['🦊','🐯','🐻','🐼','🦁','🐸','🐧','🦄','🤖','⚡','🌟','🎮'];
 
@@ -1586,8 +1629,8 @@ function toggleDark(on){
 })();
 
 // ── PREMIUM ───────────────────────────────────────────────────
-const FREE_TABLES = [2,3,4,5];
-const PREMIUM_TABLES = [6,7,8,9,10];
+const FREE_TABLES = [2,3,4,5,6];   // a do 6 é amostra grátis de uma tabuada "difícil"
+const PREMIUM_TABLES = [7,8,9,10];
 // ── GOOGLE PLAY BILLING ───────────────────────────────────────
 let billingReady = false;
 
@@ -1611,25 +1654,56 @@ async function initBilling(){
   }
 }
 
+// Consulta a compra no Google Play (não depende de perfil aberto nem de conta na nuvem).
+// Devolve true/false, ou null se o Google Play não respondeu (aí mantém o último estado conhecido).
 async function checkExistingPurchase(){
   try {
-    if(!billingReady) return;
-    const { Capacitor } = window;
-    const Billing = Capacitor.Plugins.Billing;
-    const result = await Billing.checkPurchase();
-    if(result.hasPremium && P && !P.premium){
-      P.premium = true;
-      sp();
-      updatePremiumUI();
-      renderHome();
-    }
+    if(!billingReady) return null;
+    const result = await window.Capacitor.Plugins.Billing.checkPurchase();
+    const before = isPremiumUnlocked();
+    const owned = !!(result && result.hasPremium);
+    localStorage.setItem('mm_play_premium', owned ? '1' : '0');
+    if(before !== isPremiumUnlocked()) refreshPremiumViews();
+    return owned;
   } catch(e){
     console.warn('checkPurchase error:', e);
+    return null;
   }
 }
+// Botão "Restaurar compra"
+async function restorePurchase(){
+  const isNative = window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform();
+  if(!isNative){ flash('Disponível apenas no app da Play Store.','err'); return; }
+  showLoading('Procurando sua compra...');
+  if(!billingReady) await initBilling();
+  const owned = await checkExistingPurchase();
+  hideLoading();
+  if(owned === true){
+    ['mPremiumPay','mPremium','mPremiumUpsell'].forEach(closeModal);
+    confetti(); flash('Compra restaurada! 👑','ok'); refreshPremiumViews();
+  } else if(owned === false){
+    flash('Nenhuma compra encontrada na conta Google deste celular.','err');
+  } else {
+    flash('Não foi possível falar com o Google Play. Tente de novo.','err');
+  }
+}
+// Ao voltar para o app (ex.: pagamento pendente aprovado ou reembolso), confere de novo
+document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState==='visible' && billingReady) checkExistingPurchase(); });
 
+// Premium vale para o aparelho inteiro (todos os perfis) e nunca é salvo dentro dos perfis.
+// - mm_play_premium: resultado da última consulta ao Google Play (fonte da verdade; reembolso remove)
+// - mm_promo_premium: liberado por cupom (ou por compra feita antes desta versão)
 function isPremiumUnlocked(){
-  return (P && P.premium) || localStorage.getItem('mm_premium_purchased')==='1';
+  return localStorage.getItem('mm_play_premium')==='1' || localStorage.getItem('mm_promo_premium')==='1';
+}
+(function migratePremium(){
+  // Versões antigas guardavam tudo em mm_premium_purchased (compra ou cupom): mantém liberado
+  if(localStorage.getItem('mm_premium_purchased')==='1') localStorage.setItem('mm_promo_premium','1');
+  localStorage.removeItem('mm_premium_purchased');
+})();
+function refreshPremiumViews(){
+  updatePremiumUI();
+  if(P && document.getElementById('sHome').classList.contains('active')) renderHome();
 }
 
 function unlockPremium(){
@@ -1640,22 +1714,20 @@ function unlockPremium(){
 
 async function startGooglePlayPurchase(){
   showLoading('Abrindo Google Play...');
-  const timeout = setTimeout(()=>{
-    hideLoading();
-    openModal('mPremiumPay');
-  }, 8000);
+  // Sem tempo-limite curto: o adulto pode levar minutos na tela do Google Play.
+  // Só uma rede de segurança para não deixar a tela de carregamento presa.
+  const safety = setTimeout(hideLoading, 5*60*1000);
   try {
     const Billing = window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.Billing;
-    if(!Billing){ clearTimeout(timeout); hideLoading(); openModal('mPremiumPay'); return; }
+    if(!Billing){ clearTimeout(safety); hideLoading(); openModal('mPremiumPay'); return; }
     const result = await Billing.purchasePremium();
-    clearTimeout(timeout);
-    hideLoading();
-    if(result && result.success) confirmPremiumPurchase();
+    clearTimeout(safety); hideLoading();
+    if(result && result.success) confirmPremiumPurchase('play', result.restored);
+    else if(result && result.pending) flash('Pagamento pendente. O Premium será liberado assim que o Google Play confirmar.','ok');
     else openModal('mPremiumPay');
   } catch(e){
-    clearTimeout(timeout);
-    hideLoading();
-    if(e && e.message !== 'USER_CANCELED') openModal('mPremiumPay');
+    clearTimeout(safety); hideLoading();
+    if(e && e.message !== 'USER_CANCELED'){ flash('Não foi possível concluir a compra. Tente de novo.','err'); openModal('mPremiumPay'); }
   }
 }
 
@@ -1664,16 +1736,15 @@ function premiumAfterLogin(){
   unlockPremium();
 }
 
-function confirmPremiumPurchase(){
-  localStorage.setItem('mm_premium_purchased','1');
-  if(P){ P.premium = true; sp(); }
+function confirmPremiumPurchase(source, restored){
+  localStorage.setItem(source==='promo' ? 'mm_promo_premium' : 'mm_play_premium', '1');
   closeModal('mPremiumPay');
   closeModal('mPremium');
   closeModal('mPremiumUpsell');
   closeModal('mPremiumLogin');
   updatePremiumUI();
   confetti();
-  flash('Premium desbloqueado! 👑','ok');
+  flash(restored ? 'Compra restaurada! 👑' : 'Premium desbloqueado! 👑','ok');
   setTimeout(()=>{
     if(P) renderHome();
     else renderLogin(); // atualiza tela de login escondendo o banner
@@ -1717,7 +1788,7 @@ async function checkPromoCode(){
   try {
     const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('mm-promo:'+code));
     const hex = Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
-    if(PROMO_HASHES.includes(hex)){ confirmPremiumPurchase(); return; }
+    if(PROMO_HASHES.includes(hex)){ confirmPremiumPurchase('promo'); return; }
     if(err) err.textContent = 'Código inválido.';
   } catch(e) {
     if(err) err.textContent = 'Não foi possível verificar o código.';
@@ -1732,8 +1803,10 @@ function updatePremiumUI(){
     if(st)  st.textContent  = '✅ Premium ativo · Todas as tabuadas';
     if(btn){ btn.textContent='👑 Premium ativo!'; btn.disabled=true; btn.style.opacity='.6'; }
     if(hb)  hb.style.display = 'none';
+    const rb=document.getElementById('restoreBtn'); if(rb) rb.style.display='none';
   } else {
-    if(st)  st.textContent  = 'Versão gratuita · Tabuadas 2–5';
+    const rb=document.getElementById('restoreBtn'); if(rb) rb.style.display='';
+    if(st)  st.textContent  = 'Versão gratuita · Tabuadas 2–6';
     if(btn){ btn.textContent='🔓 Desbloquear Premium · ' + PRECO_PREMIUM; btn.disabled=false; btn.style.opacity='1'; }
     if(hb)  hb.style.display = 'flex';
   }
@@ -1980,12 +2053,11 @@ function openCloudSection(){
   if(arr) arr.classList.add('open');
   setTimeout(()=>{ if(body) body.scrollIntoView({behavior:'smooth',block:'start'}); }, 100);
 }
-function createProfile(){const nm=document.getElementById('newName').value.trim(),pin=document.getElementById('newPin').value.trim();const er=document.getElementById('newErr');er.textContent='';if(!nm){er.textContent='Digite o nome!';return}if(!/^\d{4}$/.test(pin)){er.textContent='Peça a um adulto para criar um PIN de 4 números.';return}const data=gd();const p={name:nm,av:selAv,pin,stars:0,gems:0,streak:0,lastDate:null,tableStars:{},creatures:[],totalOk:0,totalWrong:0,totalGames:0,logs:[],vol:.5};data.profiles.push(p);sd(data);loginAs(data.profiles.length-1)}
+function createProfile(){const nm=document.getElementById('newName').value.trim(),pin=document.getElementById('newPin').value.trim();const er=document.getElementById('newErr');er.textContent='';if(!nm){er.textContent='Digite o nome!';return}if(!/^\d{4}$/.test(pin)){er.textContent='Peça a um adulto para criar um PIN de 4 números.';return}createProfileWith(nm,pin);}
+async function createProfileWith(nm,pin){const data=gd();const p={name:nm,av:selAv,stars:0,gems:0,streak:0,lastDate:null,tableStars:{},creatures:[],totalOk:0,totalWrong:0,totalGames:0,logs:[],vol:.5};await setPin(p,pin);data.profiles.push(p);sd(data);loginAs(data.profiles.length-1)}
 function loginAs(idx){const data=gd();P=data.profiles[idx];Pi=idx;diff=P.diff||0;
-  // Aplica premium comprado antes de criar perfil
-  if(localStorage.getItem('mm_premium_purchased')==='1' && !P.premium){
-    P.premium = true;
-  }
+  delete P.premium; // Premium agora é do aparelho, não do perfil
+  if(P.pin && !P.pinHash){ const me=P; setPin(me, me.pin).then(()=>{ if(P===me) saveLocal(); }); }
   // Migrate old tableStars / creaturesMap into P.subjects.mult
   if(P.tableStars&&Object.keys(P.tableStars).length){
     P.subjects=P.subjects||{};P.subjects.mult=P.subjects.mult||{};
@@ -1998,7 +2070,9 @@ function loginAs(idx){const data=gd();P=data.profiles[idx];Pi=idx;diff=P.diff||0
   const dt=document.getElementById('darkToggle');if(dt)dt.checked=localStorage.getItem('mm_dark')==='1';
   updatePremiumUI();renderHome();show('sHome')}
 function sp(){const data=gd();data.profiles[Pi]={...P};sd(data);saveProfileToCloud();}
-function logout(){P=null;if(fbUser){signOut();}else{renderLogin();show('sLogin');}}
+// Trocar de jogador: volta para a lista de perfis e mantém a conta da nuvem conectada
+function switchPlayer(){ P=null; renderLogin(); show('sLogin'); }
+function logout(){ switchPlayer(); }
 function updateStreak(){const today=new Date().toDateString();if(!P||P.lastDate===today)return;const yest=new Date();yest.setDate(yest.getDate()-1);P.streak=P.lastDate===yest.toDateString()?(P.streak||0)+1:1;P.lastDate=today;P.bestStreak=Math.max(P.bestStreak||0,P.streak)}
 // Ofensiva exibida: zera se o último dia jogado foi antes de ontem
 function streakOf(p){if(!p||!p.lastDate)return 0;const yest=new Date();yest.setDate(yest.getDate()-1);return(p.lastDate===new Date().toDateString()||p.lastDate===yest.toDateString())?(p.streak||0):0}
@@ -2327,7 +2401,7 @@ function setupTimer(){
 }
 function updateRing(rem,total,arc,num,C){const pct=rem/total;arc.style.strokeDashoffset=C*(1-pct);num.textContent=Math.ceil(rem);arc.className='qr-arc'+(pct>.5?'':pct>.25?' warn':' hot')}
 function timeOut(){const q=GS.questions[GS.cur];const ans=q.ans!==undefined?q.ans:q.a*q.b;GS.combo=0;GS.wrong++;GS.hearts--;playDuck();showRB(false,`Tempo! A resposta era ${ans}`,'Tente mais rápido da próxima vez! ⏱');for(let i=0;i<4;i++){const b=document.getElementById('a'+i);b.disabled=true;if(parseInt(b.textContent)===ans)b.classList.add('correct')}if(GS.hearts<=0){setTimeout(()=>endGame(false),1500);return}}
-function pick(sel,correct,btn){if(waitNext)return;clearInterval(tIv);for(let i=0;i<4;i++)document.getElementById('a'+i).disabled=true;if(sel===correct){btn.classList.add('correct');GS.ok++;GS.combo++;GS.maxCombo=Math.max(GS.maxCombo,GS.combo);P.totalOk=(P.totalOk||0)+1;playSuccess();if(GS.combo>=3)showComboPop(GS.combo);else flash(PRAISES[~~(Math.random()*PRAISES.length)],'ok');showRB(true,'Correto! 🎉',`${sel} é a resposta certa`);updateMissionProgress('combo',GS.combo);autoT=setTimeout(nextQ,GS.combo>=3?1300:1000);}else{btn.classList.add('wrong');for(let i=0;i<4;i++){const b=document.getElementById('a'+i);if(parseInt(b.textContent)===correct)b.classList.add('correct')}GS.combo=0;GS.wrong++;GS.hearts--;P.totalWrong=(P.totalWrong||0)+1;playDuck();showRB(false,`A resposta era ${correct}`,`${GS.questions[GS.cur].a} ${GS.questions[GS.cur].op||'×'} ${GS.questions[GS.cur].b} = ${correct}`);if(GS.hearts<=0){setTimeout(()=>endGame(false),1600);return}}}
+function pick(sel,correct,btn){if(waitNext)return;clearInterval(tIv);for(let i=0;i<4;i++)document.getElementById('a'+i).disabled=true;if(sel===correct){btn.classList.add('correct');GS.ok++;GS.combo++;GS.maxCombo=Math.max(GS.maxCombo,GS.combo);P.totalOk=(P.totalOk||0)+1;playSuccess();showRB(true,'Correto! 🎉',`${sel} é a resposta certa`);if(GS.combo>=3)showComboPop(GS.combo);else flash(PRAISES[~~(Math.random()*PRAISES.length)],'ok');updateMissionProgress('combo',GS.combo);autoT=setTimeout(nextQ,GS.combo>=3?1300:1000);}else{btn.classList.add('wrong');for(let i=0;i<4;i++){const b=document.getElementById('a'+i);if(parseInt(b.textContent)===correct)b.classList.add('correct')}GS.combo=0;GS.wrong++;GS.hearts--;P.totalWrong=(P.totalWrong||0)+1;playDuck();showRB(false,`A resposta era ${correct}`,`${GS.questions[GS.cur].a} ${GS.questions[GS.cur].op||'×'} ${GS.questions[GS.cur].b} = ${correct}`);if(GS.hearts<=0){setTimeout(()=>endGame(false),1600);return}}}
 function showRB(ok,title,sub){waitNext=true;const bar=document.getElementById('resultBar');bar.className='result-bar '+(ok?'rb-correct':'rb-wrong');document.getElementById('rbIcon').textContent=ok?'✅':'❌';document.getElementById('rbTitle').textContent=title;document.getElementById('rbSub').textContent=sub;document.getElementById('sGame').classList.add('rb-visible');}
 let autoT=null;
 function nextQ(){clearTimeout(autoT);if(!waitNext||GS.hearts<=0)return;GS.cur++;if(GS.cur>=GS.questions.length){endGame(true);return}if(GS.cur===5){openModal('mBreak');return}renderQ()}
@@ -2361,7 +2435,7 @@ function endGame(won){
     confetti();playWin(stars);if(stars===3) bigWinCelebration();openModal('mWin');setTimeout(moveJourneyChar,600);
     // Avisos extras só aparecem depois que a criança fecha a celebração
     afterWin=null;
-    if(t===5 && prev<1 && nS>=1 && !isPremiumUnlocked()) afterWin='mPremiumUpsell';
+    if(t===FREE_TABLES[FREE_TABLES.length-1] && prev<1 && nS>=1 && !isPremiumUnlocked()){ afterWin='mPremiumUpsell'; renderLockedCreatures('upsellCre'); }
     else if(!fbUser && P.totalGames>=3){
       const lastPrompt = localStorage.getItem('mm_login_prompt');
       if(!lastPrompt || Date.now()-parseInt(lastPrompt) > 24*60*60*1000){
@@ -2377,7 +2451,20 @@ function endGame(won){
 let afterWin=null;
 function closeWin(){closeModal('mWin');goHome();if(afterWin){const m=afterWin;afterWin=null;setTimeout(()=>openModal(m),400);}}
 function showParentPin(){document.getElementById('pinInput').value='';document.getElementById('pinErr').textContent='';show('sParentPin')}
-function checkPin(){const p=document.getElementById('pinInput').value;if(p===P.pin){renderDash();show('sDash')}else{document.getElementById('pinErr').textContent='PIN incorreto!';playDuck()}}
+// PIN dos pais guardado como hash (SHA-256), nunca em texto
+async function hashPin(pin){
+  try{ const buf=await crypto.subtle.digest('SHA-256',new TextEncoder().encode('mm-pin:'+pin)); return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join(''); }
+  catch(e){ return null; }
+}
+async function setPin(p, pin){ const h=await hashPin(pin); if(h){ p.pinHash=h; delete p.pin; } else { p.pin=pin; } }
+async function pinMatches(p, pin){ if(p.pinHash){ return (await hashPin(pin))===p.pinHash; } return pin===p.pin; }
+async function checkPin(){
+  const v=document.getElementById('pinInput').value;
+  if(await pinMatches(P,v)){
+    if(!P.pinHash){ await setPin(P,v); sp(); } // perfis antigos: troca o PIN em texto pelo hash
+    renderDash(); show('sDash');
+  } else { document.getElementById('pinErr').textContent='PIN incorreto!'; playDuck(); }
+}
 function renderDash(){
   document.getElementById('dashName').textContent=P.av+' '+P.name;document.getElementById('dGames').textContent=P.totalGames||0;
   const tot=(P.totalOk||0)+(P.totalWrong||0);document.getElementById('dAcc').textContent=tot?~~((P.totalOk||0)/tot*100)+'%':'—';
@@ -2518,7 +2605,7 @@ function updateMissionProgress(key, val){
   const ms = getMissions();
   ms.forEach(m=>{
     if(m.done) return;
-    if(m.key === key){ m.cur = Math.min(m.max, key==='combo' ? Math.max(m.cur, val) : m.cur + val); if(m.cur >= m.max){ m.done = true; if(P){ P.gems = (P.gems||0) + m.rew; sp(); flash('Missão concluída! +'+m.rew+'💎','ok'); } } }
+    if(m.key === key){ m.cur = Math.min(m.max, key==='combo' ? Math.max(m.cur, val) : m.cur + val); if(m.cur >= m.max){ m.done = true; if(P){ P.gems = (P.gems||0) + m.rew; sp(); const msg='Missão concluída! +'+m.rew+'💎'; if(document.querySelector('.combo-pop')) setTimeout(()=>flash(msg,'ok'),1250); else flash(msg,'ok'); } } }
   });
   saveMissions(ms);
   renderMissions();
@@ -2604,7 +2691,7 @@ function renderSettingsAccount(){
           <div style="font-size:.72rem;font-weight:700;color:var(--green);">☁️ Sincronizado</div>
         </div>
       </div>
-      <button class="btn btn-outline" style="font-size:.85rem;padding:.65rem;margin-bottom:.4rem;" onclick="logout()">🚪 Sair da conta</button>
+      <button class="btn btn-outline" style="font-size:.85rem;padding:.65rem;margin-bottom:.4rem;" onclick="parentGate(signOut)">🚪 Sair da conta</button>
       <button class="btn-danger-outline" onclick="parentGate(()=>openModal('mDeleteAccount'))">🗑️ Excluir conta e dados da nuvem</button>
     `;
   } else {
@@ -2690,7 +2777,7 @@ async function deleteAccount(){
     await Promise.all(snap.docs.map(d=>d.ref.delete()));
     await fbUser.delete();
     // perfis locais continuam, mas sem vínculo com a nuvem
-    const data = gd(); data.profiles.forEach(p=>{ delete p._cloudId; }); sd(data);
+    const data = gd(); data.profiles.forEach(p=>{ if(p._uid===fbUser.uid || p._cloudId){ delete p._cloudId; delete p._uid; } }); sd(data);
     hideLoading(); closeModal('mDeleteAccount');
     flash('Conta excluída.','ok');
     P = null; fbUser = null; updateAuthUI(); renderLogin(); show('sLogin');
@@ -2724,7 +2811,35 @@ function checkGate(){
     document.getElementById('gateInput').value = '';
   }
 }
-function openPremium(){ parentGate(()=>openModal('mPremium')); }
+function openPremium(){ parentGate(showPremium); }
+function showPremium(){ renderPremiumModal(); openModal('mPremium'); }
+// Silhuetas das criaturas que esperam nas tabuadas Premium (operação atual, coleção sem tempo)
+function renderLockedCreatures(id){
+  const el=document.getElementById(id); if(!el) return;
+  const set=(subject==='sub'?CREATURES_SUB:CREATURES_ALL)[0];
+  el.innerHTML=PREMIUM_TABLES.map(t=>`<span title="Tabuada do ${t}">${set.c[t].e}</span>`).join('');
+}
+// Tela de compra para o adulto, com o progresso real da criança
+function renderPremiumModal(){
+  renderLockedCreatures('premCreRow');
+  const title=document.getElementById('premTitle'), sub=document.getElementById('premSub'), stats=document.getElementById('premStats');
+  if(!P){ title.textContent='MultiplicaMente Premium'; sub.textContent='As tabuadas 7 a 10 fazem parte da versão completa!'; stats.innerHTML=''; document.getElementById('premName').textContent='seu filho'; return; }
+  let passed=0, cre=0;
+  ['mult','div','add','sub'].forEach(sb=>{
+    const d=(P.subjects||{})[sb]||{};
+    passed += Object.values(d.tableStars||{}).filter(v=>v>=1).length;
+    cre += [0,5,4,3,2].reduce((a,k)=>a+((d.creaturesMap||{})[k]||[]).length,0);
+  });
+  const name=esc(P.name), st=streakOf(P);
+  title.textContent = passed ? `${P.av} ${P.name} está indo muito bem!` : `${P.av} Aventura completa para ${P.name}`;
+  sub.textContent= passed ? `Veja o que ${P.name} já conquistou:` : `${P.name} está começando a aventura da tabuada.`;
+  const card=(v,l)=>`<div class="prem-stat"><b>${v}</b><span>${l}</span></div>`;
+  stats.innerHTML = passed ? card(passed, passed===1?'tabuada passada':'tabuadas passadas')
+    + card(cre, cre===1?'criatura resgatada':'criaturas resgatadas')
+    + (st ? card(st+'🔥', st===1?'dia seguido':'dias seguidos') : card((P.stars||0)+'⭐','estrelas')) : '';
+  document.getElementById('premName').innerHTML=name;
+  document.getElementById('premCre').textContent = cre ? `Mais ${TOTAL_CRE-cre} criaturas para resgatar` : `Todas as ${TOTAL_CRE} criaturas`;
+}
 function forgotPin(){
   parentGate(()=>{
     document.getElementById('newPinInput').value = '';
@@ -2732,10 +2847,10 @@ function forgotPin(){
     openModal('mNewPin');
   });
 }
-function saveNewPin(){
+function saveNewPin(){ // (o hash é calculado em setPin)
   const v = document.getElementById('newPinInput').value.trim();
   if(!/^\d{4}$/.test(v)){ document.getElementById('newPinErr').textContent = 'Use exatamente 4 números.'; return; }
-  P.pin = v; sp();
+  setPin(P, v).then(()=>sp());
   closeModal('mNewPin');
   flash('PIN atualizado! 🔑','ok');
   renderDash(); show('sDash');
@@ -2783,7 +2898,15 @@ function showComboPop(n){
   const div = document.createElement('div');
   div.className = 'combo-pop';
   div.innerHTML = `<div class="combo-pop-num">×${n}</div><div class="combo-pop-lbl">${msgs[lbl]}</div>`;
-  document.body.appendChild(div);
+  // Dentro do cartão do app (acompanha a ampliação no tablet), no meio do espaço entre a pergunta e as respostas
+  const app = document.getElementById('app');
+  app.appendChild(div);
+  try {
+    const z = parseFloat(app.style.zoom) || 1, ar = app.getBoundingClientRect();
+    const qb = document.querySelector('#sGame .q-card').getBoundingClientRect().bottom;
+    const at = document.getElementById('a0').getBoundingClientRect().top;
+    if(at > qb) div.style.top = (((qb + at) / 2 - ar.top) / z) + 'px';
+  } catch(e) {}
   setTimeout(()=>div.remove(), 1200);
 }
 
@@ -2796,6 +2919,16 @@ function updateStoryProgress(){
   const el = document.getElementById('storyProgress');
   if(el) el.textContent = `${totalCre}/${TOTAL_CRE}`;
 }
+
+// Tablet: o cartão do app tem 440×820; amplia proporcionalmente para preencher a tela
+function fitApp(){
+  const a=document.getElementById('app'); if(!a) return;
+  if(innerWidth<600){ a.style.zoom=''; return; }
+  const z=Math.min(innerWidth*0.94/440, innerHeight*0.95/820, 2);
+  a.style.zoom = z>1.05 ? z.toFixed(3) : '';
+}
+window.addEventListener('resize', fitApp);
+fitApp();
 
 initFirebase();
 window.addEventListener('load', ()=>{ setTimeout(initBilling, 1500); });
