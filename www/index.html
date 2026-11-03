@@ -679,6 +679,10 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 .btn-danger-outline:active{background:var(--red-bg);}
 @keyframes fadeOut{0%{opacity:1}100%{opacity:0}}
 
+/* botão de ajuda (bolinhas) na pergunta */
+.hint-btn{display:block;margin:.55rem auto 0;padding:.35rem 1rem;background:var(--yellow-bg);border:2px solid var(--yellow);border-radius:100px;font-family:'Nunito',sans-serif;font-weight:800;font-size:.85rem;color:var(--yellow-sh);cursor:pointer;box-shadow:0 2px 0 var(--yellow-sh);}
+.hint-btn:active{transform:translateY(2px);box-shadow:none;}
+
 /* link discreto (restaurar compra) */
 .link-btn{display:block;width:100%;margin-top:.6rem;background:none;border:none;font-family:'Nunito',sans-serif;font-weight:800;font-size:.85rem;color:var(--blue-dk);text-decoration:underline;cursor:pointer;padding:.4rem;}
 
@@ -1003,6 +1007,7 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
       <div class="qr-no-timer" id="qNoTimer">⏱</div>
     </div>
     <div class="q-main" id="qText">2 × 3</div>
+    <button class="hint-btn" id="hintBtn" onclick="useHint()">💡 Ajuda</button>
     <div class="q-vis" id="qVis"></div>
   </div>
   <div class="ans-area">
@@ -1073,7 +1078,7 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
     <div class="help-row">
       <div class="help-icon">⭐</div>
       <div class="help-info"><h4>Estrelas</h4>
-      <p>Ganhas ao completar tabuadas.<br>1⭐ = passou (já libera a próxima!) • 2⭐ = 80%+ de acertos • 3⭐ = perfeito sem erros</p></div>
+      <p>Ganhas ao completar tabuadas.<br>1⭐ = passou (já libera a próxima!) • 2⭐ = 80%+ de acertos • 3⭐ = perfeito, sem erros e sem usar a ajuda 💡</p></div>
     </div>
     <div class="help-row">
       <div class="help-icon">💎</div>
@@ -2363,7 +2368,7 @@ function startGame(table){
   if(table!=='boss' && PREMIUM_TABLES.includes(table) && !isPremiumUnlocked()){
     openPremium(); return;
   }
-  clearInterval(tIv);clearTimeout(autoT);GS={table,questions:mkQ(table),cur:0,ok:0,wrong:0,combo:0,maxCombo:0,hearts:3,diff};
+  clearInterval(tIv);clearTimeout(autoT);GS={table,questions:mkQ(table),cur:0,ok:0,wrong:0,combo:0,maxCombo:0,hearts:3,diff,hintUsed:false};
   initPowerups();document.getElementById('resultBar').className='result-bar hidden';document.getElementById('sGame').classList.remove('rb-visible');show('sGame');renderQ();
 }
 function restartLast(){if(GS)startGame(GS.table)}
@@ -2374,7 +2379,9 @@ function renderQ(){
   document.getElementById('heartsDisp').textContent='💖'.repeat(GS.hearts)||'💔';
   document.getElementById('qTip').textContent=q.tip||'';document.getElementById('qText').textContent=`${q.a} ${q.op||'×'} ${q.b}`;
   const cb=document.getElementById('comboBanner');if(GS.combo>=5)cb.textContent=`🔥 Combo ×${GS.combo}! Incrível!`;else if(GS.combo>=3)cb.textContent=`⚡ Combo ×${GS.combo}!`;else cb.textContent='';
-  renderVis(q);
+  // A criança tenta lembrar primeiro: as bolinhas só aparecem com a ajuda (modo sem tempo) ou depois de errar
+  document.getElementById('qVis').innerHTML='';
+  document.getElementById('hintBtn').style.display = GS.diff===0 ? '' : 'none';
   const opts=mkAns(ans,q);for(let i=0;i<4;i++){const b=document.getElementById('a'+i);b.textContent=opts[i];b.className='ans-btn';b.style.opacity='';b.style.display='';b.disabled=false;b.onclick=()=>pick(opts[i],ans,b)}
   setupTimer();
 }
@@ -2389,6 +2396,21 @@ function renderVis(q){
   else if(q.op==='+'){ chunks(q.a); const pl=document.createElement('span');pl.className='vplus';pl.textContent='+';vis.appendChild(pl); chunks(q.b,()=>' b'); }
   else if(q.op==='−'){ chunks(q.a,i=>i>=q.a-q.b?' x':''); }                       // os últimos b "saem"
 }
+// Ajuda: mostra a conta em grupos de bolinhas. Vale o acerto, mas a partida não dá 3⭐
+function useHint(){
+  if(waitNext||!GS) return;
+  renderVis(GS.questions[GS.cur]);
+  GS.hintUsed=true;
+  document.getElementById('hintBtn').style.display='none';
+}
+// Depois de errar: as bolinhas explicam a resposta certa
+function showExplain(q){ renderVis(q); document.getElementById('hintBtn').style.display='none'; }
+function explainQ(q,ans){
+  if(q.op==='×') return `${q.b} grupos de ${q.a} = ${ans}`;
+  if(q.op==='÷') return `${q.a} em grupos de ${q.b} dá ${ans} grupos`;
+  if(q.op==='−') return `${q.a} tirando ${q.b} sobram ${ans}`;
+  return `${q.a} + ${q.b} = ${ans}`;
+}
 function setupTimer(){
   const ring=document.getElementById('qRing'),nt=document.getElementById('qNoTimer');
   if(diff===0){ring.style.display='none';nt.style.display='flex';return}
@@ -2400,21 +2422,22 @@ function setupTimer(){
   tIv=setInterval(()=>{elapsed+=step;const rem=Math.max(0,(total-elapsed)/1000);updateRing(rem,diff,arc,num,C);if(rem<=1)playTick();if(elapsed>=total){clearInterval(tIv);timeOut()}},step);
 }
 function updateRing(rem,total,arc,num,C){const pct=rem/total;arc.style.strokeDashoffset=C*(1-pct);num.textContent=Math.ceil(rem);arc.className='qr-arc'+(pct>.5?'':pct>.25?' warn':' hot')}
-function timeOut(){const q=GS.questions[GS.cur];const ans=q.ans!==undefined?q.ans:q.a*q.b;GS.combo=0;GS.wrong++;GS.hearts--;playDuck();showRB(false,`Tempo! A resposta era ${ans}`,'Tente mais rápido da próxima vez! ⏱');for(let i=0;i<4;i++){const b=document.getElementById('a'+i);b.disabled=true;if(parseInt(b.textContent)===ans)b.classList.add('correct')}if(GS.hearts<=0){setTimeout(()=>endGame(false),1500);return}}
-function pick(sel,correct,btn){if(waitNext)return;clearInterval(tIv);for(let i=0;i<4;i++)document.getElementById('a'+i).disabled=true;if(sel===correct){btn.classList.add('correct');GS.ok++;GS.combo++;GS.maxCombo=Math.max(GS.maxCombo,GS.combo);P.totalOk=(P.totalOk||0)+1;playSuccess();showRB(true,'Correto! 🎉',`${sel} é a resposta certa`);if(GS.combo>=3)showComboPop(GS.combo);else flash(PRAISES[~~(Math.random()*PRAISES.length)],'ok');updateMissionProgress('combo',GS.combo);autoT=setTimeout(nextQ,GS.combo>=3?1300:1000);}else{btn.classList.add('wrong');for(let i=0;i<4;i++){const b=document.getElementById('a'+i);if(parseInt(b.textContent)===correct)b.classList.add('correct')}GS.combo=0;GS.wrong++;GS.hearts--;P.totalWrong=(P.totalWrong||0)+1;playDuck();showRB(false,`A resposta era ${correct}`,`${GS.questions[GS.cur].a} ${GS.questions[GS.cur].op||'×'} ${GS.questions[GS.cur].b} = ${correct}`);if(GS.hearts<=0){setTimeout(()=>endGame(false),1600);return}}}
-function showRB(ok,title,sub){waitNext=true;const bar=document.getElementById('resultBar');bar.className='result-bar '+(ok?'rb-correct':'rb-wrong');document.getElementById('rbIcon').textContent=ok?'✅':'❌';document.getElementById('rbTitle').textContent=title;document.getElementById('rbSub').textContent=sub;document.getElementById('sGame').classList.add('rb-visible');}
+function timeOut(){const q=GS.questions[GS.cur];const ans=q.ans!==undefined?q.ans:q.a*q.b;GS.combo=0;GS.wrong++;GS.hearts--;playDuck();showRB(false,`Tempo! A resposta era ${ans}`,explainQ(q,ans));showExplain(q);for(let i=0;i<4;i++){const b=document.getElementById('a'+i);b.disabled=true;if(parseInt(b.textContent)===ans)b.classList.add('correct')}if(GS.hearts<=0){setTimeout(()=>endGame(false),1500);return}}
+function pick(sel,correct,btn){if(waitNext)return;clearInterval(tIv);for(let i=0;i<4;i++)document.getElementById('a'+i).disabled=true;if(sel===correct){btn.classList.add('correct');GS.ok++;GS.combo++;GS.maxCombo=Math.max(GS.maxCombo,GS.combo);P.totalOk=(P.totalOk||0)+1;playSuccess();showRB(true,'Correto! 🎉',`${sel} é a resposta certa`);if(GS.combo>=3)showComboPop(GS.combo);else flash(PRAISES[~~(Math.random()*PRAISES.length)],'ok');updateMissionProgress('combo',GS.combo);autoT=setTimeout(nextQ,GS.combo>=3?1300:1000);}else{btn.classList.add('wrong');for(let i=0;i<4;i++){const b=document.getElementById('a'+i);if(parseInt(b.textContent)===correct)b.classList.add('correct')}GS.combo=0;GS.wrong++;GS.hearts--;P.totalWrong=(P.totalWrong||0)+1;playDuck();showRB(false,`A resposta era ${correct}`,explainQ(GS.questions[GS.cur],correct));showExplain(GS.questions[GS.cur]);if(GS.hearts<=0){setTimeout(()=>endGame(false),1600);return}}}
+function showRB(ok,title,sub){waitNext=true;const bar=document.getElementById('resultBar');bar.className='result-bar '+(ok?'rb-correct':'rb-wrong');document.getElementById('rbIcon').textContent=ok?'✅':'❌';document.getElementById('rbTitle').textContent=title;document.getElementById('rbSub').textContent=sub;document.getElementById('sGame').classList.add('rb-visible');document.getElementById('hintBtn').style.display='none';}
 let autoT=null;
 function nextQ(){clearTimeout(autoT);if(!waitNext||GS.hearts<=0)return;GS.cur++;if(GS.cur>=GS.questions.length){endGame(true);return}if(GS.cur===5){openModal('mBreak');return}renderQ()}
 function endGame(won){
   clearInterval(tIv);clearTimeout(autoT);P.totalGames=(P.totalGames||0)+1;const acc=GS.ok/GS.questions.length;
   updateStreak();P.bestCombo=Math.max(P.bestCombo||0,GS.maxCombo);if(won)P.wins=(P.wins||0)+1;
-  if(won&&acc===1&&GS.wrong===0) P.perfectGames=(P.perfectGames||0)+1;
+  const perfect = won&&acc===1&&GS.wrong===0&&!GS.hintUsed;
+  if(perfect) P.perfectGames=(P.perfectGames||0)+1;
   const log={table:GS.table,subject,ok:GS.ok,total:GS.questions.length,acc:~~(acc*100),won,combo:GS.maxCombo,diff,ts:Date.now(),date:new Date().toLocaleString('pt-BR')};
   P.logs=P.logs||[];P.logs.unshift(log);if(P.logs.length>20)P.logs.pop();
   updateMissionProgress('games',1);
-  if(won&&acc===1&&GS.wrong===0) updateMissionProgress('perfect',1);
+  if(perfect) updateMissionProgress('perfect',1);
   if(won){
-    const stars=acc===1&&GS.wrong===0?3:acc>=.8?2:1;const t=GS.table;const ts2=getTS();const prev=ts2[t]||0;const nS=t!=='boss'?Math.max(prev,stars):prev;if(t!=='boss')setTStar(t,nS);const gained=Math.max(0,nS-prev);
+    const stars=perfect?3:acc>=.8?2:1;const t=GS.table;const ts2=getTS();const prev=ts2[t]||0;const nS=t!=='boss'?Math.max(prev,stars):prev;if(t!=='boss')setTStar(t,nS);const gained=Math.max(0,nS-prev);
     const gems=GS.ok*2+GS.maxCombo*3+(acc===1?25:0)+(diff>0?(6-diff)*5:0);P.stars=(P.stars||0)+gained;P.gems=(P.gems||0)+gems;
     let cr=null;
     if(stars===3&&t!=='boss'){
@@ -2431,7 +2454,7 @@ function endGame(won){
     document.getElementById('winEmoji').textContent=stars===3?'🏆':stars===2?'⭐':'🎉';
     document.getElementById('winTitle').textContent=stars===3?'Perfeito! 🏆':stars===2?'Muito bem! ⭐':'Parabéns! 🎉';
     const sr=document.getElementById('winStars');sr.innerHTML='';for(let i=0;i<3;i++){const s=document.createElement('span');s.className='star-item'+(i>=stars?' empty':'');s.textContent='⭐';sr.appendChild(s)}
-    document.getElementById('winRewards').innerHTML=`<div class="rew-chip">💎 +${gems}</div>${gained>0?`<div class="rew-chip">⭐ +${gained}</div>`:''} ${GS.maxCombo>=3?`<div class="rew-chip">🔥 Combo ×${GS.maxCombo}</div>`:''} ${cr?`<div class="rew-chip" style="border-color:${cr.col};">${cr.e} ${cr.n} resgatada!</div>`:''}`;
+    document.getElementById('winRewards').innerHTML=(GS.hintUsed&&acc===1&&GS.wrong===0?`<div class="rew-chip" style="flex-basis:100%;justify-content:center;">💡 Sem usar a ajuda vale 3⭐!</div>`:'')+`<div class="rew-chip">💎 +${gems}</div>${gained>0?`<div class="rew-chip">⭐ +${gained}</div>`:''} ${GS.maxCombo>=3?`<div class="rew-chip">🔥 Combo ×${GS.maxCombo}</div>`:''} ${cr?`<div class="rew-chip" style="border-color:${cr.col};">${cr.e} ${cr.n} resgatada!</div>`:''}`;
     confetti();playWin(stars);if(stars===3) bigWinCelebration();openModal('mWin');setTimeout(moveJourneyChar,600);
     // Avisos extras só aparecem depois que a criança fecha a celebração
     afterWin=null;
