@@ -9,3 +9,5 @@ exclude:
   - capacitor.config.json
   - README.md
   - .idea
+  - firestore.rules
+  - firebase.json
