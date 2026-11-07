@@ -1697,14 +1697,23 @@ document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState=
 
 // Premium vale para o aparelho inteiro (todos os perfis) e nunca é salvo dentro dos perfis.
 // - mm_play_premium: resultado da última consulta ao Google Play (fonte da verdade; reembolso remove)
-// - mm_promo_premium: liberado por cupom (ou por compra feita antes desta versão)
+// - mm_cupom_premium: liberado ao digitar um código promocional nesta versão
 function isPremiumUnlocked(){
-  return localStorage.getItem('mm_play_premium')==='1' || localStorage.getItem('mm_promo_premium')==='1';
+  return localStorage.getItem('mm_play_premium')==='1' || localStorage.getItem('mm_cupom_premium')==='1';
+}
+function premiumSource(){
+  if(localStorage.getItem('mm_play_premium')==='1') return 'play';
+  if(localStorage.getItem('mm_cupom_premium')==='1') return 'cupom';
+  return null;
 }
 (function migratePremium(){
-  // Versões antigas guardavam tudo em mm_premium_purchased (compra ou cupom): mantém liberado
-  if(localStorage.getItem('mm_premium_purchased')==='1') localStorage.setItem('mm_promo_premium','1');
+  // Marcas antigas (mm_premium_purchased até a 1.0.27; mm_promo_premium na 1.0.28) podem voltar
+  // sozinhas pelo backup automático do Android ao reinstalar. Não valem mais para sempre:
+  // contam como compra a confirmar e a próxima consulta ao Google Play decide.
+  const legacy = localStorage.getItem('mm_premium_purchased')==='1' || localStorage.getItem('mm_promo_premium')==='1';
+  if(legacy && localStorage.getItem('mm_play_premium')===null) localStorage.setItem('mm_play_premium','1');
   localStorage.removeItem('mm_premium_purchased');
+  localStorage.removeItem('mm_promo_premium');
 })();
 function refreshPremiumViews(){
   updatePremiumUI();
@@ -1742,7 +1751,7 @@ function premiumAfterLogin(){
 }
 
 function confirmPremiumPurchase(source, restored){
-  localStorage.setItem(source==='promo' ? 'mm_promo_premium' : 'mm_play_premium', '1');
+  localStorage.setItem(source==='promo' ? 'mm_cupom_premium' : 'mm_play_premium', '1');
   closeModal('mPremiumPay');
   closeModal('mPremium');
   closeModal('mPremiumUpsell');
@@ -1805,7 +1814,7 @@ function updatePremiumUI(){
   const btn = document.getElementById('premiumBtn');
   const hb  = document.getElementById('homePremiumBanner');
   if(isPremiumUnlocked()){
-    if(st)  st.textContent  = '✅ Premium ativo · Todas as tabuadas';
+    if(st)  st.textContent  = premiumSource()==='cupom' ? '✅ Premium ativo · liberado por código promocional' : '✅ Premium ativo · compra no Google Play';
     if(btn){ btn.textContent='👑 Premium ativo!'; btn.disabled=true; btn.style.opacity='.6'; }
     if(hb)  hb.style.display = 'none';
     const rb=document.getElementById('restoreBtn'); if(rb) rb.style.display='none';
