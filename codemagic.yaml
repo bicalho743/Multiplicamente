@@ -1,0 +1,45 @@
+# Compilação do MultiplicaMente para iPhone/iPad no Codemagic (Mac na nuvem).
+# Gera o .ipa assinado e envia para o App Store Connect (TestFlight).
+#
+# Antes de rodar, no site do Codemagic:
+#   1. Teams → Integrations → Developer Portal: conectar uma chave de API do
+#      App Store Connect com o nome "MultiplicaMente ASC".
+#   2. Code signing identities → iOS: deixar o Codemagic gerar o certificado de
+#      distribuição e o perfil "App Store" do pacote com.solano.multiplicamente.
+workflows:
+  ios-app-store:
+    name: MultiplicaMente iOS (App Store)
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+    integrations:
+      app_store_connect: MultiplicaMente ASC
+    environment:
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.solano.multiplicamente
+      node: 20
+      xcode: latest
+    triggering:
+      events: []   # roda só quando você clicar em "Start new build"
+    scripts:
+      - name: Instalar dependências
+        script: npm ci --legacy-peer-deps
+      - name: Copiar o app (www) para o projeto iOS
+        script: npx cap sync ios
+      - name: Número do build (sempre maior que o anterior)
+        script: |
+          sed -i '' "s/CURRENT_PROJECT_VERSION = [0-9]*;/CURRENT_PROJECT_VERSION = $BUILD_NUMBER;/g" ios/App/App.xcodeproj/project.pbxproj
+      - name: Aplicar assinatura
+        script: xcode-project use-profiles
+      - name: Gerar o .ipa
+        script: |
+          xcode-project build-ipa \
+            --project "ios/App/App.xcodeproj" \
+            --scheme "App"
+    artifacts:
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+    publishing:
+      app_store_connect:
+        auth: integration
+        submit_to_testflight: true

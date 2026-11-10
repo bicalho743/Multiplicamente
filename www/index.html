@@ -2,10 +2,12 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>MultiplicaMente 🦉</title>
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
+/* Nunito (licença OFL) embutida no app: funciona sem internet e não chama servidores de terceiros */
+@font-face{font-family:'Nunito';font-style:normal;font-weight:400 900;font-display:swap;src:url(fonts/nunito-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C4,U+2113,U+2C60-2C7F,U+A720-A7FF;}
+@font-face{font-family:'Nunito';font-style:normal;font-weight:400 900;font-display:swap;src:url(fonts/nunito-latin.woff2) format('woff2');unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html,body{height:100%;overflow:hidden;user-select:none;}
 body{font-family:'Nunito',sans-serif;background:#f7f7f7;color:#3c3c3c;}
@@ -115,7 +117,7 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 .toggle-slider:before{content:'';position:absolute;width:20px;height:20px;left:3px;top:3px;background:#fff;border-radius:50%;transition:.3s;}
 .toggle-switch input:checked+.toggle-slider{background:var(--dark);}
 .toggle-switch input:checked+.toggle-slider:before{transform:translateX(22px);background:var(--yellow);}
-.screen{position:fixed;inset:0;display:none;flex-direction:column;background:#f7f7f7;overflow:hidden;}
+.screen{position:fixed;inset:0;display:none;flex-direction:column;background:#f7f7f7;overflow:hidden;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom);}
 .screen.active{display:flex;animation:si .25s ease-out;}
 @keyframes si{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:none}}
 @media(min-width:600px){
@@ -301,7 +303,7 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 .ans-btn:disabled{opacity:1;-webkit-text-fill-color:inherit;}
 
 /* RESULT BAR */
-.result-bar{position:absolute;bottom:0;left:0;right:0;padding:.75rem 1rem;border-top:2.5px solid var(--gray);display:flex;align-items:center;gap:.7rem;min-height:68px;z-index:10;}
+.result-bar{position:absolute;bottom:0;left:0;right:0;padding:.75rem 1rem calc(.75rem + env(safe-area-inset-bottom));border-top:2.5px solid var(--gray);display:flex;align-items:center;gap:.7rem;min-height:68px;z-index:10;}
 .result-bar.hidden{display:none;}
 #sGame.rb-visible .ans-area{padding-bottom:80px;}
 .rb-correct{border-top-color:var(--green);background:var(--green-bg);}
@@ -318,7 +320,7 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 .modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.45);display:none;align-items:flex-end;z-index:200;}
 .modal-ov.open{display:flex;animation:fadeOv .2s;}
 @keyframes fadeOv{from{opacity:0}to{opacity:1}}
-.modal-sheet{width:100%;max-height:90%;overflow-y:auto;-webkit-overflow-scrolling:touch;background:var(--white);border-radius:24px 24px 0 0;padding:1.4rem 1.4rem 1.8rem;animation:slideUp .3s ease-out;}
+.modal-sheet{width:100%;max-height:90%;overflow-y:auto;-webkit-overflow-scrolling:touch;background:var(--white);border-radius:24px 24px 0 0;padding:1.4rem 1.4rem calc(1.8rem + env(safe-area-inset-bottom));animation:slideUp .3s ease-out;}
 @keyframes slideUp{from{transform:translateY(60px);opacity:0}to{transform:translateY(0);opacity:1}}
 .break-emoji{font-size:3.8rem;text-align:center;display:block;animation:bnc .7s ease-in-out infinite alternate;}
 @keyframes bnc{from{transform:translateY(0)}to{transform:translateY(-10px)}}
@@ -671,7 +673,7 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 @keyframes starBurst{0%{opacity:1;transform:scale(0)}50%{opacity:1;transform:scale(1.5)}100%{opacity:0;transform:scale(.5) translateY(-80px)}}
 
 /* ── OFFLINE BANNER ──────────────────────────────────────── */
-.offline-banner{position:fixed;top:0;left:50%;transform:translateX(-50%);z-index:9990;background:#FF4B4B;color:#fff;font-weight:800;font-size:.82rem;padding:.45rem 1.2rem;border-radius:0 0 12px 12px;display:none;align-items:center;gap:.4rem;box-shadow:0 3px 8px rgba(0,0,0,.2);}
+.offline-banner{position:fixed;top:env(safe-area-inset-top);left:50%;transform:translateX(-50%);z-index:9990;background:#FF4B4B;color:#fff;font-weight:800;font-size:.82rem;padding:.45rem 1.2rem;border-radius:0 0 12px 12px;display:none;align-items:center;gap:.4rem;box-shadow:0 3px 8px rgba(0,0,0,.2);}
 .offline-banner.show{display:flex;}
 
 /* ── DELETE PROFILE ──────────────────────────────────────── */
@@ -682,6 +684,11 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 /* botão de ajuda (bolinhas) na pergunta */
 .hint-btn{display:block;margin:.55rem auto 0;padding:.35rem 1rem;background:var(--yellow-bg);border:2px solid var(--yellow);border-radius:100px;font-family:'Nunito',sans-serif;font-weight:800;font-size:.85rem;color:var(--yellow-sh);cursor:pointer;box-shadow:0 2px 0 var(--yellow-sh);}
 .hint-btn:active{transform:translateY(2px);box-shadow:none;}
+
+/* iPhone/iPad: só e-mail na conta da nuvem; códigos de oferta da App Store no lugar do cupom */
+body.ios .btn-google{display:none!important;}
+body.ios .android-only{display:none!important;}
+body:not(.ios) .ios-only{display:none!important;}
 
 /* link discreto (restaurar compra) */
 .link-btn{display:block;width:100%;margin-top:.6rem;background:none;border:none;font-family:'Nunito',sans-serif;font-weight:800;font-size:.85rem;color:var(--blue-dk);text-decoration:underline;cursor:pointer;padding:.4rem;}
@@ -1184,13 +1191,16 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
       </div>
       <div style="font-weight:900;font-size:1.5rem;color:var(--green-sh);text-align:center;margin-top:.6rem;" class="premium-price-val">R$ 9,99</div>
     </div>
-    <button class="btn btn-green" onclick="payViaGooglePlay()" style="margin-bottom:.7rem;">💳 Pagar pelo Google Play · <span class="premium-price-val">R$ 9,99</span></button>
-    <div class="auth-divider"><span>Tem um código promocional?</span></div>
-    <div style="display:flex;gap:.5rem;margin:.5rem 0;">
-      <input class="inp" id="promoCodeInput" placeholder="Código promo" style="margin:0;flex:1;text-transform:uppercase;" maxlength="20">
-      <button class="btn btn-blue" style="width:auto;padding:.7rem 1rem;margin:0;" onclick="checkPromoCode()">OK</button>
+    <button class="btn btn-green" onclick="payViaGooglePlay()" style="margin-bottom:.7rem;">💳 Pagar pela <span class="store-name">Google Play</span> · <span class="premium-price-val">R$ 9,99</span></button>
+    <div class="android-only">
+      <div class="auth-divider"><span>Tem um código promocional?</span></div>
+      <div style="display:flex;gap:.5rem;margin:.5rem 0;">
+        <input class="inp" id="promoCodeInput" placeholder="Código promo" style="margin:0;flex:1;text-transform:uppercase;" maxlength="20">
+        <button class="btn btn-blue" style="width:auto;padding:.7rem 1rem;margin:0;" onclick="checkPromoCode()">OK</button>
+      </div>
+      <div class="auth-err" id="promoErr"></div>
     </div>
-    <div class="auth-err" id="promoErr"></div>
+    <button class="btn btn-blue ios-only" style="font-size:.85rem;padding:.65rem;" onclick="redeemOfferCode()">🎟️ Tenho um código de oferta</button>
     <button class="btn btn-outline" style="margin-top:.4rem;font-size:.82rem;" onclick="closeModal('mPremiumPay')">Cancelar</button>
     <button class="link-btn" onclick="restorePurchase()">Já comprei · Restaurar compra</button>
   </div>
@@ -1281,7 +1291,12 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 </div>
 
 <script>
-// Valor de reserva; o preço real vem do Google Play em initBilling()
+// Loja do aparelho: Google Play (Android) ou App Store (iPhone/iPad)
+const IS_IOS = !!(window.Capacitor && window.Capacitor.getPlatform && window.Capacitor.getPlatform()==='ios');
+const STORE = IS_IOS ? 'App Store' : 'Google Play';
+if(IS_IOS) document.body.classList.add('ios');
+document.querySelectorAll('.store-name').forEach(el=>{ el.textContent = STORE; });
+// Valor de reserva; o preço real vem da loja em initBilling()
 let PRECO_PREMIUM = "R$ 9,99";
 
 function applyPremiumPrices() {
@@ -1310,9 +1325,10 @@ let fbReady = false;
 
 function loadFirebaseScripts(callback){
   const scripts = [
-    'https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js',
-    'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js',
-    'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js'
+    // Embutidas no app (www/vendor): abre sem internet e não baixa código depois de instalado
+    'vendor/firebase-app-compat.js',
+    'vendor/firebase-auth-compat.js',
+    'vendor/firebase-firestore-compat.js'
   ];
   let loaded = 0;
   let failed = false;
@@ -1678,18 +1694,20 @@ async function checkExistingPurchase(){
 // Botão "Restaurar compra"
 async function restorePurchase(){
   const isNative = window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform();
-  if(!isNative){ flash('Disponível apenas no app da Play Store.','err'); return; }
+  if(!isNative){ flash('Disponível apenas no app baixado da loja.','err'); return; }
   showLoading('Procurando sua compra...');
   if(!billingReady) await initBilling();
+  // iPhone: sincroniza com a App Store antes de conferir (pode pedir o ID Apple)
+  if(IS_IOS && billingReady){ try{ await window.Capacitor.Plugins.Billing.restore(); }catch(e){} }
   const owned = await checkExistingPurchase();
   hideLoading();
   if(owned === true){
     ['mPremiumPay','mPremium','mPremiumUpsell'].forEach(closeModal);
     confetti(); flash('Compra restaurada! 👑','ok'); refreshPremiumViews();
   } else if(owned === false){
-    flash('Nenhuma compra encontrada na conta Google deste celular.','err');
+    flash(IS_IOS ? 'Nenhuma compra encontrada no ID Apple deste aparelho.' : 'Nenhuma compra encontrada na conta Google deste celular.','err');
   } else {
-    flash('Não foi possível falar com o Google Play. Tente de novo.','err');
+    flash('Não foi possível falar com a '+STORE+'. Tente de novo.','err');
   }
 }
 // Ao voltar para o app (ex.: pagamento pendente aprovado ou reembolso), confere de novo
@@ -1727,7 +1745,7 @@ function unlockPremium(){
 }
 
 async function startGooglePlayPurchase(){
-  showLoading('Abrindo Google Play...');
+  showLoading('Abrindo a '+STORE+'...');
   // Sem tempo-limite curto: o adulto pode levar minutos na tela do Google Play.
   // Só uma rede de segurança para não deixar a tela de carregamento presa.
   const safety = setTimeout(hideLoading, 5*60*1000);
@@ -1737,7 +1755,7 @@ async function startGooglePlayPurchase(){
     const result = await Billing.purchasePremium();
     clearTimeout(safety); hideLoading();
     if(result && result.success) confirmPremiumPurchase('play', result.restored);
-    else if(result && result.pending) flash('Pagamento pendente. O Premium será liberado assim que o Google Play confirmar.','ok');
+    else if(result && result.pending) flash(IS_IOS ? 'Compra aguardando aprovação. O Premium será liberado assim que for aprovada.' : 'Pagamento pendente. O Premium será liberado assim que o Google Play confirmar.','ok');
     else openModal('mPremiumPay');
   } catch(e){
     clearTimeout(safety); hideLoading();
@@ -1774,18 +1792,27 @@ function payViaGooglePlay(){
       startGooglePlayPurchase();
     } else {
       // Tenta inicializar billing e comprar
-      showLoading('Conectando ao Google Play...');
+      showLoading('Conectando à '+STORE+'...');
       initBilling().then(()=>{
         hideLoading();
         if(billingReady) startGooglePlayPurchase();
-        else { flash('Google Play indisponível. Use código promocional.','err'); openModal('mPremiumPay'); }
+        else { flash(STORE+' indisponível. Tente de novo mais tarde.','err'); openModal('mPremiumPay'); }
       });
     }
   } else {
-    flash('Disponível apenas no app da Play Store. Use um código promocional.','err');
+    flash('A compra está disponível no app baixado da loja.','err');
   }
 }
-// SHA-256 de 'mm-promo:'+CÓDIGO — os códigos em texto não ficam no app.
+// iPhone: códigos de oferta são criados no App Store Connect e resgatados na tela da Apple.
+// A compra entra pela App Store; conferimos de novo algumas vezes depois de abrir a tela.
+async function redeemOfferCode(){
+  try { await window.Capacitor.Plugins.Billing.redeemCode(); } catch(e){ flash('Não foi possível abrir a tela de códigos.','err'); return; }
+  [5000,15000,30000,60000].forEach(ms=>setTimeout(async()=>{
+    const before=isPremiumUnlocked(); await checkExistingPurchase();
+    if(!before && isPremiumUnlocked()){ ['mPremiumPay','mPremium','mPremiumUpsell'].forEach(closeModal); confetti(); flash('Código resgatado! 👑','ok'); }
+  }, ms));
+}
+// SHA-256 de 'mm-promo:'+CÓDIGO — os códigos em texto não ficam no app (cupom só no Android).
 // Para gerar um novo: echo -n 'mm-promo:MEUCODIGO' | sha256sum
 const PROMO_HASHES = [
   '58e6c4dcd4a38def2826b936a3530aa7aaf1238cfbcb910ba96198d02c03d108',
@@ -1814,7 +1841,7 @@ function updatePremiumUI(){
   const btn = document.getElementById('premiumBtn');
   const hb  = document.getElementById('homePremiumBanner');
   if(isPremiumUnlocked()){
-    if(st)  st.textContent  = premiumSource()==='cupom' ? '✅ Premium ativo · liberado por código promocional' : '✅ Premium ativo · compra no Google Play';
+    if(st)  st.textContent  = premiumSource()==='cupom' ? '✅ Premium ativo · liberado por código promocional' : '✅ Premium ativo · compra na '+STORE;
     if(btn){ btn.textContent='👑 Premium ativo!'; btn.disabled=true; btn.style.opacity='.6'; }
     if(hb)  hb.style.display = 'none';
     const rb=document.getElementById('restoreBtn'); if(rb) rb.style.display='none';
