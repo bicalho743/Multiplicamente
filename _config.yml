@@ -3,6 +3,9 @@
 exclude:
   - www
   - android
+  - ios
+  - codemagic.yaml
+  - assets
   - node_modules
   - package.json
   - package-lock.json
