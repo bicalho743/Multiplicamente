@@ -17,7 +17,7 @@ workflows:
       ios_signing:
         distribution_type: app_store
         bundle_identifier: com.solano.multiplicamente
-      node: 20
+      node: 22
       xcode: latest
     triggering:
       events: []   # roda só quando você clicar em "Start new build"
@@ -43,3 +43,20 @@ workflows:
       app_store_connect:
         auth: integration
         submit_to_testflight: true
+
+  # Preenche no App Store Connect o que a revisão exige (privacidade, categoria,
+  # direitos de conteúdo, compilação e contato). Não compila e não envia para revisão.
+  # O telefone de contato é passado ao iniciar: variável REVIEW_CONTACT_PHONE.
+  asc-preparar-revisao:
+    name: App Store - preparar revisão
+    instance_type: mac_mini_m2
+    max_build_duration: 10
+    integrations:
+      app_store_connect: MultiplicaMente ASC
+    triggering:
+      events: []
+    scripts:
+      - name: Instalar dependências
+        script: pip3 install --quiet "pyjwt[crypto]" || pip3 install --quiet --break-system-packages "pyjwt[crypto]"
+      - name: Preencher App Store Connect
+        script: python3 scripts/asc_preparar_revisao.py
