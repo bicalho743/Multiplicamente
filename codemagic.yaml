@@ -60,3 +60,44 @@ workflows:
         script: pip3 install --quiet "pyjwt[crypto]" || pip3 install --quiet --break-system-packages "pyjwt[crypto]"
       - name: Preencher App Store Connect
         script: python3 scripts/asc_preparar_revisao.py
+
+  # Gera o .aab assinado e envia ao Google Play como RASCUNHO na faixa de teste interno.
+  # Publicar (liberar para os usuários) continua sendo um clique no Play Console.
+  # Pré-requisitos no Codemagic: keystore "multiplicamente_keystore" e o grupo de
+  # variáveis "google_play" (GCLOUD_SERVICE_ACCOUNT_CREDENTIALS) neste app.
+  android-google-play:
+    name: MultiplicaMente Android (Google Play)
+    instance_type: mac_mini_m2
+    max_build_duration: 60
+    environment:
+      android_signing:
+        - multiplicamente_keystore
+      groups:
+        - google_play
+      vars:
+        PACKAGE_NAME: com.solano.multiplicamente
+      node: 22
+      java: 21
+    triggering:
+      events: []   # roda só quando for disparado
+    scripts:
+      - name: Instalar dependências
+        script: npm ci --legacy-peer-deps
+      - name: Copiar o app (www) para o projeto Android
+        script: npx cap sync android
+      - name: versionCode maior que o último do Google Play
+        script: |
+          ULTIMO=$(google-play get-latest-build-number --package-name "$PACKAGE_NAME" 2>/dev/null || echo 0)
+          ATUAL=$(grep -o 'versionCode [0-9]*' android/app/build.gradle | grep -o '[0-9]*')
+          NOVO=$(( ULTIMO >= ATUAL ? ULTIMO + 1 : ATUAL ))
+          echo "Google Play: $ULTIMO | build.gradle: $ATUAL | usando: $NOVO"
+          sed -i '' "s/versionCode [0-9]*/versionCode $NOVO/" android/app/build.gradle
+      - name: Gerar o .aab assinado
+        script: cd android && ./gradlew bundleRelease
+    artifacts:
+      - android/app/build/outputs/bundle/release/*.aab
+    publishing:
+      google_play:
+        credentials: $GCLOUD_SERVICE_ACCOUNT_CREDENTIALS
+        track: internal
+        submit_as_draft: true
