@@ -191,6 +191,18 @@ def compilacao():
     print(f"   OK: compilação {b['_versao']} ({b['attributes']['version']}) escolhida")
 
 
+def copyright_versao():
+    v = versao()
+    atual = v["attributes"].get("copyright")
+    if atual:
+        print(f"   Já definido: {atual}")
+        return
+    texto = os.environ.get("ASC_COPYRIGHT", "2026 Solano Bicalho")
+    call("PATCH", f"/v1/appStoreVersions/{v['id']}", {"data": {"type": "appStoreVersions", "id": v["id"],
+        "attributes": {"copyright": texto}}})
+    print(f"   OK: {texto}")
+
+
 def contato_revisao():
     v = versao()
     phone = os.environ.get("REVIEW_CONTACT_PHONE", "").strip()
@@ -247,6 +259,7 @@ if __name__ == "__main__":
     passo("Categorias", categorias)
     passo("Política de privacidade", politica_privacidade)
     passo("Compilação", compilacao)
+    passo("Copyright", copyright_versao)
     passo("Informações de contato da revisão", contato_revisao)
     passo("Conferência de textos e imagens", conferir_textos)
     print("\n== RESUMO")
