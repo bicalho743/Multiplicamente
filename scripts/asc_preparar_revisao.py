@@ -22,7 +22,6 @@ import jwt  # PyJWT
 
 API = "https://api.appstoreconnect.apple.com"
 APP_ID = os.environ.get("ASC_APP_ID", "6833585676")
-VERSION = os.environ.get("ASC_VERSION", "1.0")
 LOCALE = "pt-BR"
 PRIVACY_URL = "https://bicalho743.github.io/Multiplicamente/privacidade.html"
 REVIEW_NOTES = (
@@ -150,35 +149,46 @@ def politica_privacidade():
     print(f"   OK ({alvo['attributes']['locale']}): {PRIVACY_URL}")
 
 
+EDITAVEIS = ("PREPARE_FOR_SUBMISSION", "DEVELOPER_REJECTED", "REJECTED", "METADATA_REJECTED", "INVALID_BINARY")
+
+
 def versao():
-    vs = call("GET", f"/v1/apps/{APP_ID}/appStoreVersions?filter[platform]=IOS"
-                     f"&filter[versionString]={VERSION}")["data"]
-    if not vs:
-        raise RuntimeError(f"versão {VERSION} não encontrada")
-    v = vs[0]
-    print(f"   Versão {VERSION}: {v['attributes']['appStoreState']}")
+    vs = call("GET", f"/v1/apps/{APP_ID}/appStoreVersions?filter[platform]=IOS&limit=20")["data"]
+    editaveis = [v for v in vs if v["attributes"]["appStoreState"] in EDITAVEIS]
+    if not editaveis:
+        raise RuntimeError(f"nenhuma versão editável: {[(v['attributes']['versionString'], v['attributes']['appStoreState']) for v in vs]}")
+    v = editaveis[0]
+    print(f"   Versão {v['attributes']['versionString']}: {v['attributes']['appStoreState']}")
     return v
 
 
 def compilacao():
     v = versao()
-    builds = call("GET", f"/v1/builds?filter[app]={APP_ID}&filter[preReleaseVersion.version]={VERSION}"
-                         "&sort=-uploadedDate&limit=20")["data"]
+    nome_versao = v["attributes"]["versionString"]
+    r = call("GET", f"/v1/builds?filter[app]={APP_ID}&include=preReleaseVersion&sort=-uploadedDate&limit=20")
+    numeros = {i["id"]: i["attributes"]["version"] for i in r.get("included", []) if i["type"] == "preReleaseVersions"}
+    builds = r["data"]
     for b in builds:
+        b["_versao"] = numeros.get((b["relationships"]["preReleaseVersion"].get("data") or {}).get("id"), "?")
         a = b["attributes"]
-        print(f"   build {a['version']}: {a['processingState']} expirado={a['expired']} "
+        print(f"   build {b['_versao']} ({a['version']}): {a['processingState']} expirado={a['expired']} "
               f"criptografia={a.get('usesNonExemptEncryption')}")
     validos = [b for b in builds if b["attributes"]["processingState"] == "VALID" and not b["attributes"]["expired"]]
     if not validos:
-        raise RuntimeError("nenhuma compilação VALID para a versão; gere uma nova no Codemagic")
-    b = validos[0]
+        raise RuntimeError("nenhuma compilação VALID; gere uma nova no Codemagic")
+    mesmos = [b for b in validos if b["_versao"] == nome_versao]
+    b = mesmos[0] if mesmos else validos[0]
+    if b["_versao"] != nome_versao:
+        call("PATCH", f"/v1/appStoreVersions/{v['id']}", {"data": {"type": "appStoreVersions", "id": v["id"],
+            "attributes": {"versionString": b["_versao"]}}})
+        print(f"   OK: versão da loja renomeada de {nome_versao} para {b['_versao']} (igual à compilação)")
     if b["attributes"].get("usesNonExemptEncryption") is None:
         call("PATCH", f"/v1/builds/{b['id']}", {"data": {"type": "builds", "id": b["id"],
             "attributes": {"usesNonExemptEncryption": False}}})
         print("   OK: criptografia declarada (não usa criptografia própria)")
     call("PATCH", f"/v1/appStoreVersions/{v['id']}/relationships/build",
          {"data": {"type": "builds", "id": b["id"]}})
-    print(f"   OK: compilação {b['attributes']['version']} escolhida para a versão {VERSION}")
+    print(f"   OK: compilação {b['_versao']} ({b['attributes']['version']}) escolhida")
 
 
 def contato_revisao():
