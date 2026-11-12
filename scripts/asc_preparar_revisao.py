@@ -194,10 +194,10 @@ def compilacao():
 def copyright_versao():
     v = versao()
     atual = v["attributes"].get("copyright")
-    if atual:
+    texto = os.environ.get("ASC_COPYRIGHT", "2026 Candeia Tec")
+    if atual == texto:
         print(f"   Já definido: {atual}")
         return
-    texto = os.environ.get("ASC_COPYRIGHT", "2026 Solano Bicalho")
     call("PATCH", f"/v1/appStoreVersions/{v['id']}", {"data": {"type": "appStoreVersions", "id": v["id"],
         "attributes": {"copyright": texto}}})
     print(f"   OK: {texto}")
