@@ -39,10 +39,33 @@ REVIEW_NOTES = (
 pendencias = []
 
 
+def chave_privada():
+    """Aceita a chave como PEM, PEM com '\\n' literais, base64 puro ou caminho de arquivo."""
+    k = os.environ["APP_STORE_CONNECT_PRIVATE_KEY"].strip()
+    if k.startswith("@file:"):
+        k = open(k[len("@file:"):]).read().strip()
+    elif os.path.isfile(k):
+        k = open(k).read().strip()
+    k = k.replace("\\n", "\n").strip().strip('"').strip("'")
+    if "BEGIN" not in k:
+        corpo = "".join(k.split())
+        linhas = [corpo[i:i + 64] for i in range(0, len(corpo), 64)]
+        k = "-----BEGIN PRIVATE KEY-----\n" + "\n".join(linhas) + "\n-----END PRIVATE KEY-----"
+    return k + "\n"
+
+
+def diagnostico_chave():
+    bruto = os.environ["APP_STORE_CONNECT_PRIVATE_KEY"]
+    k = chave_privada()
+    print(f"   chave: {len(bruto)} caracteres, {bruto.count(chr(10))} quebras reais, "
+          f"{bruto.count(chr(92) + 'n')} '\\n' literais, tem BEGIN={'BEGIN' in bruto}; "
+          f"normalizada: {k.splitlines()[0]} ... {k.splitlines()[-1]}")
+
+
 def token():
     key_id = os.environ["APP_STORE_CONNECT_KEY_IDENTIFIER"]
     issuer = os.environ["APP_STORE_CONNECT_ISSUER_ID"]
-    private_key = os.environ["APP_STORE_CONNECT_PRIVATE_KEY"]
+    private_key = chave_privada()
     now = int(time.time())
     return jwt.encode(
         {"iss": issuer, "iat": now, "exp": now + 1000, "aud": "appstoreconnect-v1"},
@@ -209,6 +232,7 @@ if __name__ == "__main__":
     for var in ("APP_STORE_CONNECT_KEY_IDENTIFIER", "APP_STORE_CONNECT_ISSUER_ID", "APP_STORE_CONNECT_PRIVATE_KEY"):
         if not os.environ.get(var):
             sys.exit(f"Variável {var} ausente: confira 'integrations: app_store_connect' no codemagic.yaml")
+    passo("Formato da chave", diagnostico_chave)
     passo("Direitos de conteúdo", direitos_de_conteudo)
     passo("Categorias", categorias)
     passo("Política de privacidade", politica_privacidade)
