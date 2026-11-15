@@ -78,7 +78,7 @@ https://bicalho743.github.io/Multiplicamente/privacidade.html
 ## Copyright
 
 ```
-2026 Solano Bicalho
+2026 Candeia Tec
 ```
 
 ## Imagens
