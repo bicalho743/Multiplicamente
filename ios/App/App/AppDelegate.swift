@@ -1,6 +1,7 @@
 import UIKit
 import Capacitor
 import StoreKit
+import AuthenticationServices
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -56,6 +57,7 @@ class MainViewController: CAPBridgeViewController {
     override open func capacitorDidLoad() {
         bridge?.registerPluginInstance(BillingPlugin())
         bridge?.registerPluginInstance(ReviewPlugin())
+        bridge?.registerPluginInstance(AppleSignInPlugin())
     }
 }
 
@@ -202,5 +204,86 @@ public class ReviewPlugin: CAPPlugin, CAPBridgedPlugin {
             }
             call.resolve()
         }
+    }
+}
+
+// MARK: - Entrar com a Apple (iPhone/iPad)
+
+/// Usado pelo www/index.html: SignInWithApple.authorize({ nonce, scopes, state }).
+/// Feito à mão para não depender de plugin de terceiros (o Capacitor 8 do app exige isso).
+@objc(AppleSignInPlugin)
+public class AppleSignInPlugin: CAPPlugin, CAPBridgedPlugin, ASAuthorizationControllerDelegate, ASAuthorizationControllerPresentationContextProviding {
+    public let identifier = "AppleSignInPlugin"
+    public let jsName = "SignInWithApple"
+    public let pluginMethods: [CAPPluginMethod] = [
+        CAPPluginMethod(name: "authorize", returnType: CAPPluginReturnPromise)
+    ]
+
+    private var pendingCall: CAPPluginCall?
+    private var authController: ASAuthorizationController?
+
+    @objc func authorize(_ call: CAPPluginCall) {
+        DispatchQueue.main.async {
+            let request = ASAuthorizationAppleIDProvider().createRequest()
+            var scopes: [ASAuthorization.Scope] = []
+            let scopesStr = call.getString("scopes") ?? ""
+            if scopesStr.contains("name") { scopes.append(.fullName) }
+            if scopesStr.contains("email") { scopes.append(.email) }
+            request.requestedScopes = scopes
+            request.state = call.getString("state")
+            // Com o nonce já em SHA-256 (o JS envia o hash; o Firebase recebe o original)
+            request.nonce = call.getString("nonce")
+
+            self.pendingCall = call
+            self.bridge?.saveCall(call)
+            let controller = ASAuthorizationController(authorizationRequests: [request])
+            controller.delegate = self
+            controller.presentationContextProvider = self
+            self.authController = controller
+            controller.performRequests()
+        }
+    }
+
+    public func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+        guard let call = pendingCall else { return }
+        pendingCall = nil
+        guard let cred = authorization.credential as? ASAuthorizationAppleIDCredential,
+              let tokenData = cred.identityToken,
+              let identityToken = String(data: tokenData, encoding: .utf8) else {
+            call.reject("Token da Apple não recebido.")
+            self.bridge?.releaseCall(call)
+            return
+        }
+        let code = cred.authorizationCode.flatMap { String(data: $0, encoding: .utf8) } ?? ""
+        call.resolve([
+            "response": [
+                "user": cred.user,
+                "email": cred.email ?? "",
+                "givenName": cred.fullName?.givenName ?? "",
+                "familyName": cred.fullName?.familyName ?? "",
+                "identityToken": identityToken,
+                "authorizationCode": code
+            ]
+        ])
+        self.bridge?.releaseCall(call)
+    }
+
+    public func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+        guard let call = pendingCall else { return }
+        pendingCall = nil
+        let nsErr = error as NSError
+        if nsErr.code == ASAuthorizationError.canceled.rawValue {
+            call.reject("The user canceled the authorization attempt.")
+        } else {
+            call.reject(error.localizedDescription)
+        }
+        self.bridge?.releaseCall(call)
+    }
+
+    public func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+        let windows = UIApplication.shared.connectedScenes
+            .compactMap { $0 as? UIWindowScene }
+            .flatMap { $0.windows }
+        return windows.first(where: { $0.isKeyWindow }) ?? windows.first ?? UIWindow()
     }
 }
