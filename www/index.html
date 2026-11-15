@@ -764,12 +764,12 @@ body:not(.ios) .ios-only{display:none!important;}
         <div style="font-size:.78rem;font-weight:700;color:var(--gray-dk);" id="profileModalStats">⭐0 · 💎0 · 🔥0</div>
         <div style="font-size:.72rem;font-weight:700;color:var(--blue-dk);margin-top:.1rem;" id="profileModalCloud"></div>
       </div>
-      <button onclick="closeModal('mProfile')" style="background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--gray-dk);padding:.3rem;">✕</button>
+      <button onclick="closeModal('mProfile')" aria-label="Fechar" style="background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--gray-dk);min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center;">✕</button>
     </div>
     <button class="btn btn-outline" onclick="closeModal('mProfile');showParentPin()" style="margin-bottom:.35rem;padding:.7rem;font-size:.88rem;">📊 Relatório dos pais</button>
     <button class="btn btn-outline" onclick="closeModal('mProfile');htab('settings',document.querySelector('.htab:last-child'))" style="margin-bottom:.35rem;padding:.7rem;font-size:.88rem;">⚙️ Configurações</button>
     <button class="btn btn-blue" onclick="closeModal('mProfile');switchPlayer()" style="padding:.7rem;font-size:.88rem;">🔄 Trocar de jogador</button>
-    <button class="btn-danger-outline" onclick="closeModal('mProfile');confirmDeleteProfile()">🗑️ Apagar este perfil</button>
+    <button class="btn-danger-outline" onclick="closeModal('mProfile');parentGate(confirmDeleteProfile)">🗑️ Apagar este perfil</button>
   </div>
 </div>
 
@@ -890,7 +890,7 @@ body:not(.ios) .ios-only{display:none!important;}
     <div class="home-user" onclick="openModal('mProfile')" style="cursor:pointer;">
       <div class="home-av" id="homeAv" style="border:2px solid var(--green);transition:transform .1s;">🦉</div>
       <div><div class="home-name" id="homeName">Jogador</div><div class="home-gems" id="homeGems">💎 0</div></div>
-      <span style="font-size:.7rem;color:var(--gray-dk);margin-left:.2rem;">▾</span>
+      <span style="font-size:.72rem;font-weight:800;color:var(--green);margin-left:.3rem;background:var(--green-bg);border-radius:100px;padding:.15rem .45rem;">Perfil ▾</span>
     </div>
     <div class="hud-pills" style="align-items:center;gap:.35rem;">
       <div class="pill">🔥 <span id="hudStreak">0</span></div>
@@ -980,6 +980,11 @@ body:not(.ios) .ios-only{display:none!important;}
         <div id="settingsAccountArea">
           <!-- preenchido pelo JS -->
         </div>
+      </div>
+      <div class="settings-card" style="font-size:.8rem;font-weight:700;color:var(--gray-dk);line-height:1.8;">
+        <a href="https://bicalho743.github.io/Multiplicamente/privacidade.html" target="_blank" rel="noopener" style="color:var(--blue-dk);font-weight:800;">🔒 Política de privacidade</a><br>
+        <a href="mailto:contato@candeiatec.com.br" style="color:var(--blue-dk);font-weight:800;">✉️ Contato: contato@candeiatec.com.br</a><br>
+        MultiplicaMente · versão 1.0.29
       </div>
     </div>
   </div>
