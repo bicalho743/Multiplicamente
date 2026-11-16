@@ -36,8 +36,14 @@ App de tabuada para crianças. Responda em português, passo a passo e sem jarg�
   solanobicalho@yahoo.com.br) para contato@candeiatec.com.br.
 
 ## Entrar com a Apple (iOS) — em teste
-- 16/11/2026: build 1.0.29 (8) enviado ao TestFlight a partir do branch `claude/affectionate-lovelace-1iw52q`
+- 16/11/2026: builds 1.0.29 (8) e (9) enviados ao TestFlight a partir do branch `claude/affectionate-lovelace-1iw52q`
   (ainda não está no `main`; a versão em revisão na Apple continua sendo o build 3).
+- Build 9: corrige "Excluir conta" (no build 3 a conta era excluída mas aparecia "Não foi possível excluir") e,
+  em conta da Apple, pede nova confirmação e tenta desfazer o vínculo (revogação; só funciona de fato se o
+  provedor Apple do Firebase tiver Services ID, Team ID, Key ID e chave configurados).
+- `marketing/appstore/resposta_revisao_2_1.md` já descreve o build 9 com Entrar com a Apple.
+- Cuidado: `asc-preparar-revisao` escolhe a compilação mais recente e regrava as "Notas" com o texto curto do
+  script; não rode depois que o usuário colar as notas da resposta 2.1 sem antes atualizar `REVIEW_NOTES`.
 - Botão "Entrar com a Apple" só no iOS; plugin nativo `AppleSignInPlugin` em `ios/App/App/AppDelegate.swift`
   (jsName `SignInWithApple`) e permissão em `ios/App/App/App.entitlements`. No Android segue o Google.
 - O workflow `ios-app-store` roda `scripts/asc_ligar_apple_login.py` (liga a permissão no App ID) e recria o

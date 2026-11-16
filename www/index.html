@@ -1477,6 +1477,28 @@ async function sha256Hex(txt){
   const buf=await crypto.subtle.digest('SHA-256', new TextEncoder().encode(txt));
   return Array.from(new Uint8Array(buf), b=>b.toString(16).padStart(2,'0')).join('');
 }
+// Abre a folha da Apple e devolve a credencial do Firebase + o código de autorização.
+async function appleAutorizar(plugin){
+  // O Firebase exige o nonce "puro"; a Apple recebe o SHA-256 dele.
+  const rawNonce = gerarNonce(32);
+  const hashedNonce = await sha256Hex(rawNonce);
+  const res = await plugin.authorize({
+    clientId: 'com.solano.multiplicamente',
+    redirectURI: '',
+    scopes: 'email name',
+    state: gerarNonce(12),
+    nonce: hashedNonce
+  });
+  const r = (res && res.response) || {};
+  if(!r.identityToken) throw { code:'auth/unknown', message:'Token da Apple não encontrado.' };
+  return {
+    credential: new firebase.auth.OAuthProvider('apple.com').credential({ idToken: r.identityToken, rawNonce: rawNonce }),
+    code: r.authorizationCode || ''
+  };
+}
+function appleCancelou(e){
+  return String((e && (e.message || e.errorMessage)) || '').toLowerCase().includes('cancel');
+}
 async function signInApplePay(){
   localStorage.setItem('mm_pending_pay','1');
   await signInApple();
@@ -1487,25 +1509,12 @@ async function signInApple(){
   if(!plugin){flash('Entrar com a Apple só está disponível no app do iPhone.','err');return;}
   showLoading('Entrando com a Apple...');
   try {
-    // O Firebase exige o nonce "puro"; a Apple recebe o SHA-256 dele.
-    const rawNonce = gerarNonce(32);
-    const hashedNonce = await sha256Hex(rawNonce);
-    const res = await plugin.authorize({
-      clientId: 'com.solano.multiplicamente',
-      redirectURI: '',
-      scopes: 'email name',
-      state: gerarNonce(12),
-      nonce: hashedNonce
-    });
-    const idToken = res && res.response && res.response.identityToken;
-    if(!idToken){ hideLoading(); flash('Token da Apple não encontrado.','err'); return; }
-    const credential = new firebase.auth.OAuthProvider('apple.com').credential({ idToken: idToken, rawNonce: rawNonce });
-    await fbAuth.signInWithCredential(credential);
+    const a = await appleAutorizar(plugin);
+    await fbAuth.signInWithCredential(a.credential);
     hideLoading();
   } catch(e) {
     hideLoading();
-    const txt = String((e && (e.message || e.errorMessage)) || '').toLowerCase();
-    if(txt.includes('cancel')) return;
+    if(appleCancelou(e)) return;
     console.warn('Apple Sign-In error:', JSON.stringify(e));
     const msg = traduzErroFirebase((e && e.code) || 'auth/unknown');
     const errEl = document.getElementById('siErr');
@@ -2884,19 +2893,38 @@ async function requestStoreReview(){
 // ── EXCLUIR CONTA (Google Play exige para apps que criam conta) ─
 async function deleteAccount(){
   if(!fbReady || !fbUser){ closeModal('mDeleteAccount'); return; }
+  const user = fbUser, uid = fbUser.uid;
   showLoading('Excluindo conta...');
   try {
-    const ref = fbDb.collection('users').doc(fbUser.uid).collection('profiles');
+    const viaApple = (user.providerData||[]).some(p=>p && p.providerId==='apple.com');
+    const plugin = window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.SignInWithApple;
+    if(viaApple && plugin){
+      const a = await appleAutorizar(plugin);
+      await user.reauthenticateWithCredential(a.credential);
+      // A Apple pede que o vínculo "Entrar com a Apple" seja desfeito ao excluir a conta.
+      // Se esse pedido falhar, a exclusão da conta segue normalmente.
+      try {
+        if(a.code){
+          const r = await fetch('https://identitytoolkit.googleapis.com/v2/accounts:revokeToken?key='+encodeURIComponent(FIREBASE_CONFIG.apiKey), {
+            method:'POST', headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({ providerId:'apple.com', tokenType:'CODE', token:a.code, idToken: await user.getIdToken() })
+          });
+          if(!r.ok) console.warn('Apple revoke:', r.status);
+        }
+      } catch(e2) { console.warn('Apple revoke error:', e2 && e2.message); }
+    }
+    const ref = fbDb.collection('users').doc(uid).collection('profiles');
     const snap = await ref.get();
     await Promise.all(snap.docs.map(d=>d.ref.delete()));
-    await fbUser.delete();
+    await user.delete();
     // perfis locais continuam, mas sem vínculo com a nuvem
-    const data = gd(); data.profiles.forEach(p=>{ if(p._uid===fbUser.uid || p._cloudId){ delete p._cloudId; delete p._uid; } }); sd(data);
+    const data = gd(); data.profiles.forEach(p=>{ if(p._uid===uid || p._cloudId){ delete p._cloudId; delete p._uid; } }); sd(data);
     hideLoading(); closeModal('mDeleteAccount');
     flash('Conta excluída.','ok');
     P = null; fbUser = null; updateAuthUI(); renderLogin(); show('sLogin');
   } catch(e) {
     hideLoading(); closeModal('mDeleteAccount');
+    if(appleCancelou(e)) return;
     if(e && e.code === 'auth/requires-recent-login') flash('Por segurança, saia e entre de novo na conta, depois tente excluir.','err');
     else flash('Não foi possível excluir agora. Tente de novo.','err');
   }
