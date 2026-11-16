@@ -32,17 +32,21 @@ workflows:
       - name: Perfil de assinatura com "Entrar com a Apple"
         script: |
           # O perfil guardado no Codemagic é anterior ao "Sign in with Apple".
-          # Aqui usamos (ou criamos uma vez) um perfil novo, que já inclui essa permissão.
+          # Aqui ligamos a permissão no identificador e geramos um perfil novo que a inclui.
           set -e
           NOME="MultiplicaMente Apple Login"
           ids() { python3 -c "import json,sys; d=json.load(sys.stdin); print(' '.join(x['id'] for x in d))"; }
           rm -f "$HOME/Library/MobileDevice/Provisioning Profiles/"*.mobileprovision
-          EXISTE=$(app-store-connect profiles list --type IOS_APP_STORE --state ACTIVE --name "$NOME" --save --json | ids)
-          if [ -z "$EXISTE" ]; then
-            BUNDLE=$(app-store-connect bundle-ids list --bundle-id-identifier com.solano.multiplicamente --strict-match-identifier --json | ids)
-            CERTS=$(app-store-connect certificates list --profile-type IOS_APP_STORE --json | ids)
-            app-store-connect profiles create $BUNDLE --certificate-ids $CERTS --type IOS_APP_STORE --name "$NOME" --save
-          fi
+          BUNDLE=$(app-store-connect bundle-ids list --bundle-id-identifier com.solano.multiplicamente --strict-match-identifier --json | ids)
+          # Liga a permissão no identificador do app (se já estiver ligada, segue em frente)
+          app-store-connect bundle-ids enable-capabilities $BUNDLE --capability "Sign In with Apple" || true
+          app-store-connect bundle-ids capabilities $BUNDLE
+          # Recria o perfil para ele já nascer com a permissão
+          for P in $(app-store-connect profiles list --type IOS_APP_STORE --name "$NOME" --json | ids); do
+            app-store-connect profiles delete $P --ignore-not-found
+          done
+          CERTS=$(app-store-connect certificates list --profile-type IOS_APP_STORE --json | ids)
+          app-store-connect profiles create $BUNDLE --certificate-ids $CERTS --type IOS_APP_STORE --name "$NOME" --save
       - name: Aplicar assinatura
         script: xcode-project use-profiles
       - name: Gerar o .ipa
