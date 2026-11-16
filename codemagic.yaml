@@ -29,6 +29,20 @@ workflows:
       - name: Número do build (sempre maior que o anterior)
         script: |
           sed -i '' "s/CURRENT_PROJECT_VERSION = [0-9]*;/CURRENT_PROJECT_VERSION = $BUILD_NUMBER;/g" ios/App/App.xcodeproj/project.pbxproj
+      - name: Perfil de assinatura com "Entrar com a Apple"
+        script: |
+          # O perfil guardado no Codemagic é anterior ao "Sign in with Apple".
+          # Aqui usamos (ou criamos uma vez) um perfil novo, que já inclui essa permissão.
+          set -e
+          NOME="MultiplicaMente Apple Login"
+          ids() { python3 -c "import json,sys; d=json.load(sys.stdin); print(' '.join(x['id'] for x in d))"; }
+          rm -f "$HOME/Library/MobileDevice/Provisioning Profiles/"*.mobileprovision
+          EXISTE=$(app-store-connect profiles list --type IOS_APP_STORE --state ACTIVE --name "$NOME" --save --json | ids)
+          if [ -z "$EXISTE" ]; then
+            BUNDLE=$(app-store-connect bundle-ids list --bundle-id-identifier com.solano.multiplicamente --strict-match-identifier --json | ids)
+            CERTS=$(app-store-connect certificates list --profile-type IOS_APP_STORE --json | ids)
+            app-store-connect profiles create $BUNDLE --certificate-ids $CERTS --type IOS_APP_STORE --name "$NOME" --save
+          fi
       - name: Aplicar assinatura
         script: xcode-project use-profiles
       - name: Gerar o .ipa
