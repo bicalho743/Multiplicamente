@@ -38,9 +38,9 @@ workflows:
           ids() { python3 -c "import json,sys; d=json.load(sys.stdin); print(' '.join(x['id'] for x in d))"; }
           rm -f "$HOME/Library/MobileDevice/Provisioning Profiles/"*.mobileprovision
           BUNDLE=$(app-store-connect bundle-ids list --bundle-id-identifier com.solano.multiplicamente --strict-match-identifier --json | ids)
-          # Liga a permissão no identificador do app (se já estiver ligada, segue em frente)
-          app-store-connect bundle-ids enable-capabilities $BUNDLE --capability "Sign In with Apple" || true
-          app-store-connect bundle-ids capabilities $BUNDLE
+          # Liga a permissão no identificador do app (se já estiver ligada, não muda nada)
+          pip3 install --quiet "pyjwt[crypto]" || pip3 install --quiet --break-system-packages "pyjwt[crypto]"
+          python3 scripts/asc_ligar_apple_login.py
           # Recria o perfil para ele já nascer com a permissão
           for P in $(app-store-connect profiles list --type IOS_APP_STORE --name "$NOME" --json | ids); do
             app-store-connect profiles delete $P --ignore-not-found
