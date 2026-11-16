@@ -35,6 +35,16 @@ App de tabuada para crianças. Responda em português, passo a passo e sem jarg�
 - A decidir: trocar o e-mail de contato da política de privacidade (`privacidade.html`, hoje
   solanobicalho@yahoo.com.br) para contato@candeiatec.com.br.
 
+## Entrar com a Apple (iOS) — em teste
+- 16/11/2026: build 1.0.29 (8) enviado ao TestFlight a partir do branch `claude/affectionate-lovelace-1iw52q`
+  (ainda não está no `main`; a versão em revisão na Apple continua sendo o build 3).
+- Botão "Entrar com a Apple" só no iOS; plugin nativo `AppleSignInPlugin` em `ios/App/App/AppDelegate.swift`
+  (jsName `SignInWithApple`) e permissão em `ios/App/App/App.entitlements`. No Android segue o Google.
+- O workflow `ios-app-store` roda `scripts/asc_ligar_apple_login.py` (liga a permissão no App ID) e recria o
+  perfil de assinatura "MultiplicaMente Apple Login" a cada build.
+- Pendente (usuário): ativar o provedor Apple no Firebase Console (Authentication → Sign-in method) e testar.
+- Também neste branch: apagar perfil pede o portão para adultos; rodapé de Config com privacidade, contato e versão.
+
 ## Android
 - O .aab assinado é gerado no computador do usuário. O keystore `multiplicamente.jks` não fica no repositório
   (está no .gitignore). Para gerar pelo Codemagic, o usuário precisa enviar o keystore em Settings → Code signing
