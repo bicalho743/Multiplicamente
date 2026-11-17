@@ -43,16 +43,17 @@ App de tabuada para crianças. Responda em português, passo a passo e sem jarg�
   (e as notas da revisão estão vazias). Sem isso a compra não segue junto com o app. Pendente (usuário, pelo site).
 
 ## Entrar com a Apple (iOS) — em teste
-- 16 e 17/11/2026: builds 1.0.29 (8), (9) e (10) enviados ao TestFlight a partir do branch `claude/affectionate-lovelace-1iw52q`
+- 16 e 17/11/2026: builds 1.0.29 (8) a (11) enviados ao TestFlight a partir do branch `claude/affectionate-lovelace-1iw52q`
   (ainda não está no `main`; a versão em revisão na Apple continua sendo o build 3).
 - Build 9: corrige "Excluir conta" (no build 3 a conta era excluída mas aparecia "Não foi possível excluir") e,
   em conta da Apple, pede nova confirmação e tenta desfazer o vínculo (revogação; só funciona de fato se o
   provedor Apple do Firebase tiver Services ID, Team ID, Key ID e chave configurados).
+- Build 11 (17/11/2026): "Excluir conta" ganhou a caixinha "Apagar também os jogadores e o progresso guardados neste celular" (desmarcada por padrão).
 - Build 10 (17/11/2026): primeira tela só com nome e personagem (botão Jogar); o PIN dos pais é criado na
   primeira vez que abrem o relatório; a conta na nuvem saiu da tela inicial e virou a folha `mCloud`, aberta
   pelo perfil e por Config (atrás da pergunta para adultos). Ao entrar na conta, volta para a lista de jogadores.
   Pendente (usuário): testar no aparelho os fluxos de conta pelo caminho novo. Se falhar, o build 9 é a reserva.
-- `marketing/appstore/resposta_revisao_2_1.md` já descreve o build 10 (fluxo novo) com Entrar com a Apple.
+- `marketing/appstore/resposta_revisao_2_1.md` já descreve o build 11 (fluxo novo) com Entrar com a Apple.
 - Cuidado: `asc-preparar-revisao` escolhe a compilação mais recente e regrava as "Notas" com o texto curto do
   script; não rode depois que o usuário colar as notas da resposta 2.1 sem antes atualizar `REVIEW_NOTES`.
 - Botão "Entrar com a Apple" só no iOS; plugin nativo `AppleSignInPlugin` em `ios/App/App/AppDelegate.swift`

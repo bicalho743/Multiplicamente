@@ -2,7 +2,7 @@
 
 ## Parte 1: Gravar o vídeo no iPhone (você)
 
-Use o iPhone com o app instalado pelo TestFlight (build 1.0.29 (10)) e o iOS mais recente.
+Use o iPhone com o app instalado pelo TestFlight (build 1.0.29 (11)) e o iOS mais recente.
 
 **Antes de gravar:**
 - Ajustes → Central de Controle → adicione **Gravação de Tela**.
@@ -20,8 +20,8 @@ Use o iPhone com o app instalado pelo TestFlight (build 1.0.29 (10)) e o iOS mai
 8. Em **Config**, mostre **Já comprei · Restaurar compra**.
 9. **Criar conta:** em Config → **Entrar para salvar na nuvem** → pergunta para adultos → **Criar conta** → e-mail de teste + senha. O app volta para a lista de jogadores: toque no jogador e mostre, em Config, "Sincronizado".
 10. **Sair e entrar:** **Sair da conta** → **Entrar** com o mesmo e-mail e senha.
-11. **Excluir conta:** Config → **Excluir conta e dados da nuvem** → pergunta para adultos → **Sim, excluir minha conta** → mostre que voltou para "Sem conta".
-12. **Entrar com a Apple:** Config → **Entrar para salvar na nuvem** → **Entrar com a Apple** → confirme com Face ID → toque no jogador e mostre, em Config, "Sincronizado". Depois **Excluir conta e dados da nuvem** de novo (a Apple pede uma nova confirmação) → mostre "Sem conta".
+11. **Excluir conta:** Config → **Excluir conta e dados da nuvem** → pergunta para adultos → **marque a caixinha "Apagar também os jogadores e o progresso guardados neste celular"** → **Sim, excluir minha conta** → mostre que voltou para a primeira tela, sem jogadores.
+12. **Entrar com a Apple:** Config → **Entrar para salvar na nuvem** → **Entrar com a Apple** → confirme com Face ID → toque no jogador e mostre, em Config, "Sincronizado". Depois **Excluir conta e dados da nuvem** de novo, marcando a mesma caixinha (a Apple pede uma nova confirmação) → mostre a primeira tela, sem jogadores.
 13. Pare a gravação.
 
 > Só grave depois de testar o passo 12 no seu aparelho. Se o "Entrar com a Apple" der erro, avise antes de gravar.
@@ -36,7 +36,7 @@ Substitua `[LINK DO VÍDEO]`, `[E-MAIL DEMO]` e `[SENHA DEMO]`. Depois **salve**
 
 ```
 1. SCREEN RECORDING
-Recorded on a physical iPhone running the latest iOS (TestFlight build 1.0.29 (10)): [LINK DO VÍDEO]
+Recorded on a physical iPhone running the latest iOS (TestFlight build 1.0.29 (11)): [LINK DO VÍDEO]
 It starts with launching the app and shows: creating a player profile, playing a level (hint and error explanation), the parents' report (parental gate and PIN), unlocking the paid content with the In-App Purchase (sandbox), Restore Purchase, account registration, sign-out/sign-in, account deletion, and Sign in with Apple (sign-in and account deletion).
 
 2. PURPOSE AND TARGET AUDIENCE
@@ -47,7 +47,7 @@ No login is required. Open the app, type any name, pick a character and tap "Jog
 - Journey: tap a level number and choose "Sem tempo" (no timer) or a speed.
 - Tabs: Jornada (journey), Recordes (records), Coleção (creatures), Config (settings). The chart button opens the parents' report: the first time, a parental gate asks for the adult's year of birth (e.g. 1985) and the parent creates a 4-digit PIN; after that it asks for the PIN.
 - Paid content: tables 7 to 10 are unlocked by the non-consumable In-App Purchase "MultiplicaMente Premium" (premium_unlock). Tap level 7 or Config > "Desbloquear Premium". A parental gate asks for the adult's year of birth (any adult year, e.g. 1985). "Já comprei · Restaurar compra" restores the purchase.
-- Optional account (only to sync progress between devices): Config > "Entrar para salvar na nuvem" (behind the parental gate) > "Entrar com a Apple" (Sign in with Apple) or "Criar conta" (email and password). After signing in, the app returns to the player list. Account deletion: Config > "Excluir conta e dados da nuvem" (deletes the account and its cloud data; accounts created with Sign in with Apple are asked to confirm with Apple once more).
+- Optional account (only to sync progress between devices): Config > "Entrar para salvar na nuvem" (behind the parental gate) > "Entrar com a Apple" (Sign in with Apple) or "Criar conta" (email and password). After signing in, the app returns to the player list. Account deletion: Config > "Excluir conta e dados da nuvem" (deletes the account and its cloud data; a checkbox in the confirmation also deletes the players stored on the device; accounts created with Sign in with Apple are asked to confirm with Apple once more).
 Demo account: [E-MAIL DEMO] / [SENHA DEMO]
 There is no user-generated content shared between users and no chat, so no reporting/blocking is needed. The records tab only compares profiles on the same device.
 
