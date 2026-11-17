@@ -25,8 +25,8 @@ APP_ID = os.environ.get("ASC_APP_ID", "6833585676")
 LOCALE = "pt-BR"
 PRIVACY_URL = "https://bicalho743.github.io/Multiplicamente/privacidade.html"
 REVIEW_NOTES = (
-    'O app funciona sem conta e sem internet. Para testar: toque em "Novo jogador", '
-    "crie um perfil (nome + PIN de 4 números) e jogue. As tabuadas do 2 ao 6 são grátis; "
+    'O app funciona sem conta e sem internet. Para testar: na primeira tela, digite um nome, '
+    'escolha um personagem e toque em "Jogar". As tabuadas do 2 ao 6 são grátis; '
     'as do 7 ao 10 são liberadas pela compra não consumível "MultiplicaMente Premium" '
     '(premium_unlock), em Config. "Restaurar compra" também fica em Config. A compra, o '
     "relatório dos pais e as configurações sensíveis ficam atrás de uma pergunta para adultos "
