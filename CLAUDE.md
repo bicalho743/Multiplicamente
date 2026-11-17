@@ -18,7 +18,10 @@ App de tabuada para crianças. Responda em português, passo a passo e sem jarg�
 - `asc-preparar-revisao`: roda `scripts/asc_preparar_revisao.py`, que preenche no App Store Connect a URL de
   privacidade, os direitos de conteúdo, a categoria, a compilação, o copyright e o contato da revisão, e
   imprime no fim o que ainda falta. Passe `REVIEW_CONTACT_PHONE` nas variables ao disparar. Não envia para revisão.
-- Os dois usam a integração `MultiplicaMente ASC` e `instance_type: mac_mini_m2` (o plano não tem Linux).
+- `asc-preco-premium`: roda `scripts/asc_preco_premium.py`; mostra o cadastro da compra Premium e define o preço
+  (variables `PRECO`, `TERRITORIO`; `SO_MOSTRAR=1` só mostra). Em 17/11/2026 ficou em R$ 9,99, país base Brasil
+  (estava R$ 9,90).
+- Todos usam a integração `MultiplicaMente ASC` e `instance_type: mac_mini_m2` (o plano não tem Linux).
 
 ## Loja
 - Textos, imagens e roteiro do App Store Connect: `marketing/appstore/`.
@@ -35,6 +38,9 @@ App de tabuada para crianças. Responda em português, passo a passo e sem jarg�
 - 16/11/2026: e-mail de contato da política (`privacidade.html`) e da página do app (`index.html`) trocado para
   contato@candeiatec.com.br no branch `claude/affectionate-lovelace-1iw52q`; só vai ao ar quando entrar no `main`.
 - 16/11/2026: provedor Apple ativado no Firebase (Authentication → Método de login).
+- 17/11/2026: usuário testou o build 9 no aparelho: entrar com a Apple e excluir conta funcionando.
+- 17/11/2026: a compra `premium_unlock` está como "Faltam metadados": falta a captura de tela para a revisão
+  (e as notas da revisão estão vazias). Sem isso a compra não segue junto com o app. Pendente (usuário, pelo site).
 
 ## Entrar com a Apple (iOS) — em teste
 - 16/11/2026: builds 1.0.29 (8) e (9) enviados ao TestFlight a partir do branch `claude/affectionate-lovelace-1iw52q`
