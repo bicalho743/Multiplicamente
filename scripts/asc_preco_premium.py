@@ -52,6 +52,23 @@ def main():
         sys.exit(f"Compra {PRODUTO} não encontrada.")
     iap = iaps[0]
     print(f"== {iap['attributes']['name']} ({PRODUTO}) — estado: {iap['attributes'].get('state')}")
+    print("== Cadastro da compra (o que a Apple exige para enviar junto com o app)")
+    a = iap["attributes"]
+    print(f"   Tipo: {a.get('inAppPurchaseType')} | notas da revisão: {'ok' if a.get('reviewNote') else 'VAZIO'}"
+          f" | compartilhamento familiar: {a.get('familySharable')}")
+    for nome, caminho in (("Idiomas", "inAppPurchaseLocalizations"), ("Captura para a revisão", "appStoreReviewScreenshot"),
+                          ("Disponibilidade", "inAppPurchaseAvailability")):
+        try:
+            r = call("GET", f"/v2/inAppPurchases/{iap['id']}/{caminho}")
+            d = r.get("data")
+            if isinstance(d, list):
+                print(f"   {nome}: " + (", ".join(f"{x['attributes'].get('locale')} [{x['attributes'].get('name')} / "
+                      f"{x['attributes'].get('description')}] ({x['attributes'].get('state')})" for x in d) or "NENHUM"))
+            else:
+                at = (d or {}).get("attributes") or {}
+                print(f"   {nome}: " + (str({k: at.get(k) for k in ('fileName', 'assetDeliveryState', 'availableInNewTerritories') if k in at}) if d else "FALTA"))
+        except Exception as e:
+            print(f"   {nome}: FALTA ou sem acesso ({str(e)[:120]})")
     print("== Preço atual")
     mostrar(iap["id"])
     if SO_MOSTRAR:
