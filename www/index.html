@@ -188,7 +188,9 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 #sHome{background:var(--white);}
 .home-topbar{display:flex;align-items:center;justify-content:space-between;padding:.7rem 1.1rem .5rem;border-bottom:2px solid var(--gray);flex-shrink:0;}
 .home-user{display:flex;align-items:center;gap:.55rem;}
-.home-av{width:38px;height:38px;font-size:1.35rem;background:var(--green-bg);border-radius:10px;display:flex;align-items:center;justify-content:center;border:2px solid var(--green);}
+.home-av{width:60px;height:60px;font-size:2.2rem;background:var(--green-bg);border-radius:16px;display:flex;align-items:center;justify-content:center;border:3px solid var(--green);}
+.home-av-wrap{position:relative;padding-bottom:9px;flex-shrink:0;}
+.perfil-badge{position:absolute;left:50%;bottom:0;transform:translateX(-50%);background:var(--green);color:#fff;font-weight:900;font-size:.68rem;border-radius:100px;padding:.1rem .6rem;border:2px solid var(--white);letter-spacing:.02em;}
 .home-name{font-weight:800;font-size:.95rem;} .home-gems{font-size:.82rem;color:var(--gray-dk);font-weight:700;}
 .hud-pills{display:flex;gap:.4rem;}
 .pill{display:flex;align-items:center;gap:.25rem;border-radius:100px;padding:.3rem .55rem;font-weight:800;font-size:.82rem;background:var(--yellow-bg);color:var(--yellow-sh);}
@@ -756,25 +758,68 @@ body:not(.ios) .ios-only{display:none!important;}
 
 <!-- PROFILE MODAL -->
 <div class="modal-ov" id="mProfile">
-  <div class="modal-sheet" style="padding:1rem 1.2rem 1.4rem;">
-    <div style="display:flex;align-items:center;gap:.7rem;margin-bottom:.8rem;">
-      <div style="font-size:1.8rem;background:var(--green-bg);border:2.5px solid var(--green);border-radius:12px;width:48px;height:48px;display:flex;align-items:center;justify-content:center;flex-shrink:0;" id="profileModalAv">🦉</div>
-      <div style="flex:1;">
-        <div style="font-weight:900;font-size:1rem;color:var(--dark);" id="profileModalName">Jogador</div>
-        <div style="font-size:.78rem;font-weight:700;color:var(--gray-dk);" id="profileModalStats">⭐0 · 💎0 · 🔥0</div>
-        <div style="font-size:.72rem;font-weight:700;color:var(--blue-dk);margin-top:.1rem;" id="profileModalCloud"></div>
-      </div>
+  <div class="modal-sheet" style="padding:1rem 1.2rem 1.4rem;max-height:92%;">
+    <div style="display:flex;align-items:center;justify-content:space-between;">
+      <div style="font-weight:900;font-size:.8rem;letter-spacing:.12em;color:var(--gray-dk);text-transform:uppercase;">Perfil</div>
       <button onclick="closeModal('mProfile')" aria-label="Fechar" style="background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--gray-dk);min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center;">✕</button>
     </div>
+    <div style="display:flex;align-items:center;gap:1rem;margin:-.2rem 0 1rem;">
+      <div style="font-size:3.2rem;background:var(--green-bg);border:3px solid var(--green);border-radius:22px;width:88px;height:88px;display:flex;align-items:center;justify-content:center;flex-shrink:0;" id="profileModalAv">🦉</div>
+      <div style="flex:1;min-width:0;">
+        <div style="font-weight:900;font-size:1.4rem;color:var(--dark);overflow-wrap:anywhere;" id="profileModalName">Jogador</div>
+        <div style="font-size:.9rem;font-weight:700;color:var(--gray-dk);" id="profileModalStats">⭐0 · 💎0 · 🔥0</div>
+        <div style="font-size:.78rem;font-weight:700;color:var(--blue-dk);margin-top:.15rem;" id="profileModalCloud"></div>
+      </div>
+    </div>
     <button class="btn btn-outline" onclick="closeModal('mProfile');showParentPin()" style="margin-bottom:.35rem;padding:.7rem;font-size:.88rem;">📊 Relatório dos pais</button>
-    <button class="btn btn-outline" onclick="closeModal('mProfile');htab('settings',document.querySelector('.htab:last-child'))" style="margin-bottom:.35rem;padding:.7rem;font-size:.88rem;">⚙️ Configurações</button>
     <button class="btn btn-outline" id="profileCloudBtn" onclick="closeModal('mProfile');parentGate(openCloudSection)" style="margin-bottom:.35rem;padding:.7rem;font-size:.88rem;">☁️ Salvar progresso na nuvem</button>
-    <button class="btn btn-blue" onclick="closeModal('mProfile');switchPlayer()" style="padding:.7rem;font-size:.88rem;">🔄 Trocar de jogador</button>
-    <button class="btn-danger-outline" onclick="closeModal('mProfile');parentGate(confirmDeleteProfile)">🗑️ Apagar este perfil</button>
+    <button class="btn btn-blue" onclick="closeModal('mProfile');switchPlayer()" style="padding:.7rem;font-size:.88rem;margin-bottom:1rem;">🔄 Trocar de jogador</button>
+    <div class="sec-lbl" style="margin-bottom:.5rem;">Configurações</div>
+    <div class="settings-section" style="padding:0;">
+          <div class="settings-card">
+            <h3>🔊 Volume dos sons</h3>
+            <div class="vol-row">
+              <span>🔈</span>
+              <input type="range" id="volSlider" min="0" max="1" step="0.05" value="0.5" oninput="setVol(this.value)">
+              <span>🔊</span>
+              <div class="vol-pct" id="volPct">50%</div>
+            </div>
+            <button class="btn btn-outline" style="margin-top:.7rem;width:auto;padding:.6rem 1.1rem;font-size:.88rem;" onclick="testSounds()">🎵 Testar sons</button>
+          </div>
+          <div class="settings-card">
+            <h3>🌙 Aparência</h3>
+            <div class="dark-toggle">
+              <span style="font-weight:700;font-size:.9rem;">Modo escuro</span>
+              <label class="toggle-switch">
+                <input type="checkbox" id="darkToggle" onchange="toggleDark(this.checked)">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+          <div class="settings-card">
+            <h3>👑 Premium</h3>
+            <div style="font-size:.85rem;font-weight:700;color:var(--gray-dk);margin-bottom:.7rem;" id="premiumStatus">Versão gratuita · Tabuadas 2–4</div>
+            <button class="btn btn-green" onclick="openPremium()" id="premiumBtn">🔓 Desbloquear Premium · <span class="premium-price-val">R$ 9,99</span></button>
+            <button class="link-btn" id="restoreBtn" onclick="parentGate(restorePurchase)">Já comprei · Restaurar compra</button>
+            <div style="font-size:.72rem;font-weight:700;color:var(--gray-dk);margin-top:.4rem;text-align:center;">O Premium vale para todos os perfis deste aparelho.</div>
+          </div>
+          <div class="settings-card">
+            <h3>☁️ Conta e sincronização</h3>
+            <div id="settingsAccountArea">
+              <!-- preenchido pelo JS -->
+            </div>
+          </div>
+          <div class="settings-card" style="font-size:.8rem;font-weight:700;color:var(--gray-dk);line-height:1.8;">
+            <a href="https://bicalho743.github.io/Multiplicamente/privacidade.html" target="_blank" rel="noopener" style="color:var(--blue-dk);font-weight:800;">🔒 Política de privacidade</a><br>
+            <a href="mailto:contato@candeiatec.com.br" style="color:var(--blue-dk);font-weight:800;">✉️ Contato: contato@candeiatec.com.br</a><br>
+            MultiplicaMente · versão 1.0.29
+          </div>
+    </div>
+    <button class="btn-danger-outline" style="margin-top:1rem;" onclick="closeModal('mProfile');parentGate(confirmDeleteProfile)">🗑️ Apagar este perfil</button>
   </div>
 </div>
 
-<!-- CONTA NA NUVEM (adultos): aberta pelo perfil e por Config -->
+<!-- CONTA NA NUVEM (adultos): aberta pelo Perfil -->
 <div class="modal-ov" id="mCloud">
   <div class="modal-sheet">
     <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.6rem;">
@@ -893,9 +938,8 @@ body:not(.ios) .ios-only{display:none!important;}
 <div class="screen" id="sHome">
   <div class="home-topbar">
     <div class="home-user" onclick="openModal('mProfile')" style="cursor:pointer;">
-      <div class="home-av" id="homeAv" style="border:2px solid var(--green);transition:transform .1s;">🦉</div>
+      <div class="home-av-wrap"><div class="home-av" id="homeAv" style="transition:transform .1s;">🦉</div><span class="perfil-badge">Perfil</span></div>
       <div><div class="home-name" id="homeName">Jogador</div><div class="home-gems" id="homeGems">💎 0</div></div>
-      <span style="font-size:.72rem;font-weight:800;color:var(--green);margin-left:.3rem;background:var(--green-bg);border-radius:100px;padding:.15rem .45rem;">Perfil ▾</span>
     </div>
     <div class="hud-pills" style="align-items:center;gap:.35rem;">
       <div class="pill">🔥 <span id="hudStreak">0</span></div>
@@ -914,7 +958,6 @@ body:not(.ios) .ios-only{display:none!important;}
     <button class="htab active" onclick="htab('missions',this)">🎯 Jornada</button>
     <button class="htab" onclick="htab('ranking',this)">🏅 Recordes</button>
     <button class="htab" onclick="htab('collection',this)">🐉 Coleção</button>
-    <button class="htab" onclick="htab('settings',this)">⚙️ Config</button>
   </div>
 
   <!-- MISSIONS — JOURNEY MAP -->
@@ -951,49 +994,6 @@ body:not(.ios) .ios-only{display:none!important;}
   </div>
 
   <!-- SETTINGS -->
-  <div class="tab-panel" id="tabSettings">
-    <div class="settings-section">
-      <div class="settings-card">
-        <h3>🔊 Volume dos sons</h3>
-        <div class="vol-row">
-          <span>🔈</span>
-          <input type="range" id="volSlider" min="0" max="1" step="0.05" value="0.5" oninput="setVol(this.value)">
-          <span>🔊</span>
-          <div class="vol-pct" id="volPct">50%</div>
-        </div>
-        <button class="btn btn-outline" style="margin-top:.7rem;width:auto;padding:.6rem 1.1rem;font-size:.88rem;" onclick="testSounds()">🎵 Testar sons</button>
-      </div>
-      <div class="settings-card">
-        <h3>🌙 Aparência</h3>
-        <div class="dark-toggle">
-          <span style="font-weight:700;font-size:.9rem;">Modo escuro</span>
-          <label class="toggle-switch">
-            <input type="checkbox" id="darkToggle" onchange="toggleDark(this.checked)">
-            <span class="toggle-slider"></span>
-          </label>
-        </div>
-      </div>
-      <div class="settings-card">
-        <h3>👑 Premium</h3>
-        <div style="font-size:.85rem;font-weight:700;color:var(--gray-dk);margin-bottom:.7rem;" id="premiumStatus">Versão gratuita · Tabuadas 2–4</div>
-        <button class="btn btn-green" onclick="openPremium()" id="premiumBtn">🔓 Desbloquear Premium · <span class="premium-price-val">R$ 9,99</span></button>
-        <button class="link-btn" id="restoreBtn" onclick="parentGate(restorePurchase)">Já comprei · Restaurar compra</button>
-        <div style="font-size:.72rem;font-weight:700;color:var(--gray-dk);margin-top:.4rem;text-align:center;">O Premium vale para todos os perfis deste aparelho.</div>
-      </div>
-      <div class="settings-card">
-        <h3>☁️ Conta e sincronização</h3>
-        <div id="settingsAccountArea">
-          <!-- preenchido pelo JS -->
-        </div>
-      </div>
-      <div class="settings-card" style="font-size:.8rem;font-weight:700;color:var(--gray-dk);line-height:1.8;">
-        <a href="https://bicalho743.github.io/Multiplicamente/privacidade.html" target="_blank" rel="noopener" style="color:var(--blue-dk);font-weight:800;">🔒 Política de privacidade</a><br>
-        <a href="mailto:contato@candeiatec.com.br" style="color:var(--blue-dk);font-weight:800;">✉️ Contato: contato@candeiatec.com.br</a><br>
-        MultiplicaMente · versão 1.0.29
-      </div>
-    </div>
-  </div>
-
   <div class="home-bottom">
     <button class="boss-btn" id="bossBtn" onclick="openSpeed('boss')" style="background:var(--green);box-shadow:0 4px 0 var(--green-sh);"><span>🔀 Desafio Misto</span><span class="boss-sub" id="bossSub">mistura as tabuadas que você já passou</span></button>
     <button class="dash-btn" onclick="showParentPin()">📊</button>
@@ -1397,7 +1397,7 @@ function initFirebase(){
           // Entrou pela folha da nuvem: fecha a folha e volta para a lista de jogadores,
           // porque os perfis do aparelho são trocados pelos da conta.
           const mc = document.getElementById('mCloud');
-          if(mc && mc.classList.contains('open')){ closeModal('mCloud'); P = null; show('sLogin'); }
+          if(mc && mc.classList.contains('open')){ closeModal('mCloud'); closeModal('mProfile'); P = null; show('sLogin'); }
           showLoading('Carregando perfis...');
           loadCloudProfiles().then(()=>{
             // Verifica redirect do Google
@@ -1596,6 +1596,7 @@ function signOut(){
   const uid = fbUser && fbUser.uid;
   if(uid){ const data=gd(); data.profiles=data.profiles.filter(p=>p._uid!==uid); sd(data); }
   if(fbAuth) fbAuth.signOut();
+  closeModal('mProfile');
   fbUser = null;
   P = null;
   if(uid) flash('Você saiu da conta. Os perfis dela continuam salvos na nuvem.','ok');
@@ -2129,8 +2130,8 @@ function renderLogin(){
     // Additional profiles — smaller
     data.profiles.slice(1).forEach((p,i)=>{
       const d=document.createElement('div');
-      d.className='profile-item';
-      d.innerHTML=`<div class="pi-av">${p.av}</div><div class="pi-info"><div class="pi-name">${esc(p.name)}</div><div class="pi-stats">⭐${p.stars||0} · 💎${p.gems||0} · 🔥${streakOf(p)}</div></div><div style="color:var(--gray-dk);font-size:1rem;">▶</div>`;
+      d.className='profile-big';
+      d.innerHTML=`<div class="pb-av">${p.av}</div><div class="pb-info"><div class="pb-name">${esc(p.name)}</div><div class="pb-stats">⭐${p.stars||0} · 💎${p.gems||0} · 🔥${streakOf(p)}</div></div><div class="pb-play">▶</div>`;
       d.onclick=()=>loginAs(i+1);
       area.appendChild(d);
     });
@@ -2429,7 +2430,7 @@ function renderCollection(){
     grid.appendChild(d);
   }
 }
-function htab(tab,el){document.querySelectorAll('.htab').forEach(b=>b.classList.remove('active'));el.classList.add('active');const map={missions:'tabMissions',ranking:'tabRanking',collection:'tabCollection',settings:'tabSettings'};document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.getElementById(map[tab]).classList.add('active');if(tab==='collection'){collViewDiff=diff;renderCollection();}if(tab==='ranking')renderRecords();if(tab==='settings')renderSettingsAccount();}
+function htab(tab,el){document.querySelectorAll('.htab').forEach(b=>b.classList.remove('active'));el.classList.add('active');const map={missions:'tabMissions',ranking:'tabRanking',collection:'tabCollection'};document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));document.getElementById(map[tab]).classList.add('active');if(tab==='collection'){collViewDiff=diff;renderCollection();}if(tab==='ranking')renderRecords();if(tab==='settings')renderSettingsAccount();}
 function setDiff(d,el){diff=d;document.querySelectorAll('.dbn,.dbn-sm').forEach(b=>b.classList.remove('sel'));document.querySelectorAll('[data-d="'+d+'"]').forEach(b=>b.classList.add('sel'));const db=document.getElementById('diffBadge');if(db)db.textContent=DLBL[d];if(P){P.diff=d;sp()}}
 function mkQ(table){
   const seq=[1,2,10,5,3,4,9,6,7,8];
@@ -2938,7 +2939,7 @@ async function deleteAccount(){
       data.profiles.forEach(p=>{ if(p._uid===uid || p._cloudId){ delete p._cloudId; delete p._uid; } });
     }
     sd(data);
-    hideLoading(); closeModal('mDeleteAccount');
+    hideLoading(); closeModal('mDeleteAccount'); closeModal('mProfile');
     flash(apagarLocal ? 'Conta e jogadores excluídos.' : 'Conta excluída.','ok');
     P = null; fbUser = null; updateAuthUI(); renderLogin(); show('sLogin');
   } catch(e) {

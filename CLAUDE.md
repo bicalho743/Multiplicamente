@@ -69,6 +69,16 @@ App de tabuada para crianças. Responda em português, passo a passo e sem jarg�
 - Pendente (usuário): testar no aparelho (entrar com a Apple, sair, entrar, excluir conta).
 - Também neste branch: apagar perfil pede o portão para adultos; rodapé de Config com privacidade, contato e versão.
 
+## Versão 1.0.30 (planejada; só no branch, SEM build; o build 11 é o que está em revisão)
+- Tabuadas 2 a 4 grátis; Premium libera 5 a 10 (`FREE_TABLES`/`PREMIUM_TABLES` em `www/index.html` e textos do app).
+- A aba "Config" saiu: volume, modo escuro, Premium, conta e rodapé legal agora ficam no **Perfil** (toque no personagem
+  com o selo "Perfil" no topo da Home). Lista de jogadores: todos os cartões com o mesmo visual (verde).
+- Ao publicar, trocar juntos: textos da App Store e do Google Play (`marketing/appstore/textos.md`), `index.html` do
+  repositório, páginas do site (candeia_tec: suporte e excluir conta dizem "Config" → "Perfil"), Notas da Apple
+  (`REVIEW_NOTES` e `resposta_revisao_2_1.md`: "Config" → "Perfil", "fase 7" → "fase 5") e o post/legenda
+  (`marketing/social/`, que hoje diz "2 ao 6 grátis").
+- Quem já usa o app no Google Play perde o acesso às tabuadas 5 e 6 (o progresso fica salvo).
+
 ## Android
 - O .aab assinado é gerado no computador do usuário. O keystore `multiplicamente.jks` não fica no repositório
   (está no .gitignore). Para gerar pelo Codemagic, o usuário precisa enviar o keystore em Settings → Code signing
