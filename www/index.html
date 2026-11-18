@@ -975,7 +975,7 @@ body:not(.ios) .ios-only{display:none!important;}
       </div>
       <div class="settings-card">
         <h3>👑 Premium</h3>
-        <div style="font-size:.85rem;font-weight:700;color:var(--gray-dk);margin-bottom:.7rem;" id="premiumStatus">Versão gratuita · Tabuadas 2–6</div>
+        <div style="font-size:.85rem;font-weight:700;color:var(--gray-dk);margin-bottom:.7rem;" id="premiumStatus">Versão gratuita · Tabuadas 2–4</div>
         <button class="btn btn-green" onclick="openPremium()" id="premiumBtn">🔓 Desbloquear Premium · <span class="premium-price-val">R$ 9,99</span></button>
         <button class="link-btn" id="restoreBtn" onclick="parentGate(restorePurchase)">Já comprei · Restaurar compra</button>
         <div style="font-size:.72rem;font-weight:700;color:var(--gray-dk);margin-top:.4rem;text-align:center;">O Premium vale para todos os perfis deste aparelho.</div>
@@ -1146,12 +1146,12 @@ body:not(.ios) .ios-only{display:none!important;}
   <div class="modal-sheet">
     <span class="break-emoji">👑</span>
     <div class="sheet-title" id="premTitle">MultiplicaMente Premium</div>
-    <div class="sheet-sub" id="premSub" style="margin-bottom:.7rem;">As tabuadas 7 a 10 fazem parte da versão completa!</div>
+    <div class="sheet-sub" id="premSub" style="margin-bottom:.7rem;">As tabuadas 5 a 10 fazem parte da versão completa!</div>
     <div class="prem-stats" id="premStats"></div>
     <div class="prem-box">
       <div class="prem-box-t">Com o Premium, <span id="premName">seu filho</span> ganha:</div>
       <ul>
-        <li>✅ Tabuadas 7, 8, 9 e 10, as mais difíceis</li>
+        <li>✅ Tabuadas 5, 6, 7, 8, 9 e 10</li>
         <li>✅ Nas 4 operações: ×, ÷, + e −</li>
         <li>✅ <span id="premCre">Todas as 180 criaturas</span></li>
         <li>✅ Sem assinatura e sem anúncios</li>
@@ -1182,7 +1182,7 @@ body:not(.ios) .ios-only{display:none!important;}
   <div class="modal-sheet">
     <span class="break-emoji">🎉</span>
     <div class="sheet-title">Você completou as tabuadas grátis!</div>
-    <div class="sheet-sub">Novas criaturas estão esperando nas tabuadas 7 a 10! Mostre esta tela para um adulto.</div>
+    <div class="sheet-sub">Novas criaturas estão esperando nas tabuadas 5 a 10! Mostre esta tela para um adulto.</div>
     <div class="prem-cre-row big" id="upsellCre"></div>
     <button class="btn btn-green" onclick="parentGate(()=>{closeModal('mPremiumUpsell');showPremium();})">👨‍👩‍👧 Chamar um adulto</button>
     <button class="btn btn-outline" style="margin-top:.5rem;" onclick="closeModal('mPremiumUpsell')">Depois</button>
@@ -1196,7 +1196,7 @@ body:not(.ios) .ios-only{display:none!important;}
     <div class="sheet-title">MultiplicaMente Premium</div>
     <div style="background:linear-gradient(135deg,#fff9cc,#fff3aa);border:2px solid var(--yellow);border-radius:var(--r);padding:.9rem;margin-bottom:1rem;">
       <div style="font-size:.85rem;font-weight:700;color:var(--dark);line-height:1.9;">
-        ✅ Tabuadas 7, 8, 9 e 10<br>
+        ✅ Tabuadas 5, 6, 7, 8, 9 e 10<br>
         ✅ Em todas as operações: ×, ÷, + e −<br>
         ✅ 180 criaturas colecionáveis<br>
         ✅ Vale para todos os perfis do aparelho<br>
@@ -1729,8 +1729,8 @@ function toggleDark(on){
 })();
 
 // ── PREMIUM ───────────────────────────────────────────────────
-const FREE_TABLES = [2,3,4,5,6];   // a do 6 é amostra grátis de uma tabuada "difícil"
-const PREMIUM_TABLES = [7,8,9,10];
+const FREE_TABLES = [2,3,4];   // tabuadas grátis (a Premium libera as demais)
+const PREMIUM_TABLES = [5,6,7,8,9,10];
 // ── GOOGLE PLAY BILLING ───────────────────────────────────────
 let billingReady = false;
 
@@ -1926,7 +1926,7 @@ function updatePremiumUI(){
     const rb=document.getElementById('restoreBtn'); if(rb) rb.style.display='none';
   } else {
     const rb=document.getElementById('restoreBtn'); if(rb) rb.style.display='';
-    if(st)  st.textContent  = 'Versão gratuita · Tabuadas 2–6';
+    if(st)  st.textContent  = 'Versão gratuita · Tabuadas 2–4';
     if(btn){ btn.textContent='🔓 Desbloquear Premium · ' + PRECO_PREMIUM; btn.disabled=false; btn.style.opacity='1'; }
     if(hb)  hb.style.display = 'flex';
   }
@@ -2984,7 +2984,7 @@ function renderLockedCreatures(id){
 function renderPremiumModal(){
   renderLockedCreatures('premCreRow');
   const title=document.getElementById('premTitle'), sub=document.getElementById('premSub'), stats=document.getElementById('premStats');
-  if(!P){ title.textContent='MultiplicaMente Premium'; sub.textContent='As tabuadas 7 a 10 fazem parte da versão completa!'; stats.innerHTML=''; document.getElementById('premName').textContent='seu filho'; return; }
+  if(!P){ title.textContent='MultiplicaMente Premium'; sub.textContent='As tabuadas 5 a 10 fazem parte da versão completa!'; stats.innerHTML=''; document.getElementById('premName').textContent='seu filho'; return; }
   let passed=0, cre=0;
   ['mult','div','add','sub'].forEach(sb=>{
     const d=(P.subjects||{})[sb]||{};
