@@ -79,12 +79,19 @@ App de tabuada para crianças. Responda em português, passo a passo e sem jarg�
   (`marketing/social/`, que hoje diz "2 ao 6 grátis").
 - Quem já usa o app no Google Play perde o acesso às tabuadas 5 e 6 (o progresso fica salvo).
 
-## Onboarding (proposta para a 1.0.30, só desenhos; aguardando aprovação)
+## Onboarding (aprovado e programado para a 1.0.30; sem build)
 - Telas e decisões em `docs/onboarding/` (`00_fluxo.png`, `README.md`; gerar de novo: `node docs/onboarding/gerar.js`).
 - Segue o guia da Candeia Tec: sem cadastro na entrada, apelido em vez de nome, "Já tenho conta (adultos)", primeira
   partida direto em "Sem tempo", dica no primeiro toque, cartão para os pais após a primeira vitória, editar apelido e
   personagem no Perfil. Sem SDK de analytics (usar as métricas das lojas).
-- Só programar depois da aprovação do usuário.
+- Aprovado em 18/11/2026 e programado: boas-vindas (`#welcomeBox`) → apelido e personagem (pulável; em branco vira
+  "Jogador", "Jogador 2"...) → Home com dica no 2 (`maybeShowFirstTapHint`, grava `mm_hint_tap`) → primeira partida do
+  jogador direto em "Sem tempo" (`openSpeed`) → cartão `mParents` uma vez após a 1ª vitória (grava `mm_parent_card`).
+  "Já tenho conta (adultos)" na primeira tela abre a folha `mCloud` em modo "entrar" atrás da pergunta para adultos.
+  Perfil: "Editar apelido e personagem" (`mEditProfile`). Coleção vazia mostra a dica (`#collTip`).
+- Testado em navegador (fluxos completos, sem erros); falta testar no aparelho depois de um build.
+- Ao publicar a 1.0.30, também trocar: Notas da Apple ("type any name" → apelido; "Config" → "Perfil"), roteiro do vídeo,
+  página de suporte (candeia_tec) e a política de privacidade do site (já ajustada aqui para "apelido ou nome").
 
 ## Android
 - O .aab assinado é gerado no computador do usuário. O keystore `multiplicamente.jks` não fica no repositório

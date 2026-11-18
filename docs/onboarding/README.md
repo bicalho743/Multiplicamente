@@ -1,7 +1,7 @@
 # Onboarding do MultiplicaMente (proposta para a versão 1.0.30)
 
 Segue o [Guia de onboarding para os apps Candeia Tec](https://claude.ai/artifact/9FnveWCwAkT5TTBwmLkh4d).
-**Só desenhos para aprovação. Nada foi programado.** Visão geral: `00_fluxo.png`.
+**Status: aprovado pelo usuário em 18/11/2026 e programado em `www/index.html` (branch `claude/affectionate-lovelace-1iw52q`), sem build.** Visão geral dos desenhos: `00_fluxo.png`.
 
 ## Passo 1: ficha de público
 | Pergunta | MultiplicaMente |
@@ -30,7 +30,7 @@ Sem perguntas de personalização (o guia manda evitar quando o público é cria
 7. `08_colecao-ensina`: tela vazia que explica como resgatar.
 8. `09_perfil-editar`: mudar apelido e personagem depois.
 
-## Decisões a aprovar
+## Decisões (aprovadas)
 - Trocar "Seu nome" por **apelido**, com opção de pular (o jogador vira "Jogador"). Ajustar o texto da política de privacidade ("nome ou apelido").
 - Voltar com um **"Já tenho conta (adultos)"** na primeira tela. Isso reabre a decisão de deixar a nuvem só no Perfil; o link só leva à mesma folha, atrás da pergunta para adultos.
 - Primeira partida direto em "Sem tempo".

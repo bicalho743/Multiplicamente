@@ -189,6 +189,19 @@ body[data-dark="1"] .inp{background:var(--bg-card);color:var(--text-main);}
 .home-topbar{display:flex;align-items:center;justify-content:space-between;padding:.7rem 1.1rem .5rem;border-bottom:2px solid var(--gray);flex-shrink:0;}
 .home-user{display:flex;align-items:center;gap:.55rem;}
 .home-av{width:60px;height:60px;font-size:2.2rem;background:var(--green-bg);border-radius:16px;display:flex;align-items:center;justify-content:center;border:3px solid var(--green);}
+.welcome-box{display:none;flex:1;flex-direction:column;justify-content:space-between;gap:1rem;min-height:0;}
+.welcome-hero{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:.9rem;padding:0 .3rem;}
+.welcome-owl{font-size:5.5rem;line-height:1;animation:owlBob 2s ease-in-out infinite;}
+.welcome-title{font-weight:900;font-size:1.7rem;color:var(--dark);line-height:1.15;}
+.welcome-cre{font-size:2.2rem;letter-spacing:.3rem;}
+.welcome-sub{font-weight:700;color:var(--gray-dk);font-size:.98rem;line-height:1.4;}
+.tap-hint{position:fixed;inset:0;z-index:250;}
+.tap-hole{position:absolute;border-radius:50%;box-shadow:0 0 0 2500px rgba(0,0,0,.6);border:4px solid #fff;cursor:pointer;}
+.tap-bubble{position:absolute;left:24px;right:24px;background:#fff;border-radius:22px;padding:1.1rem 1.2rem;text-align:center;box-shadow:0 8px 0 rgba(0,0,0,.15);}
+.tap-bubble .tb-t{font-weight:900;font-size:1.25rem;color:var(--dark);margin:.2rem 0 .8rem;}
+.edit-pencil{position:absolute;right:-8px;bottom:-8px;background:#fff;border:2.5px solid var(--green);border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:1rem;pointer-events:none;}
+.coll-tip{margin:.7rem .9rem 0;background:var(--green-bg);border:2.5px solid var(--green);border-radius:16px;padding:.8rem 1rem;font-weight:800;color:var(--green-sh);display:flex;gap:.7rem;align-items:center;}
+.coll-tip .ct-e{font-size:2rem;}
 .home-av-wrap{position:relative;padding-bottom:9px;flex-shrink:0;}
 .perfil-badge{position:absolute;left:50%;bottom:0;transform:translateX(-50%);background:var(--green);color:#fff;font-weight:900;font-size:.68rem;border-radius:100px;padding:.1rem .6rem;border:2px solid var(--white);letter-spacing:.02em;}
 .home-name{font-weight:800;font-size:.95rem;} .home-gems{font-size:.82rem;color:var(--gray-dk);font-weight:700;}
@@ -764,13 +777,17 @@ body:not(.ios) .ios-only{display:none!important;}
       <button onclick="closeModal('mProfile')" aria-label="Fechar" style="background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--gray-dk);min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center;">✕</button>
     </div>
     <div style="display:flex;align-items:center;gap:1rem;margin:-.2rem 0 1rem;">
-      <div style="font-size:3.2rem;background:var(--green-bg);border:3px solid var(--green);border-radius:22px;width:88px;height:88px;display:flex;align-items:center;justify-content:center;flex-shrink:0;" id="profileModalAv">🦉</div>
+      <div style="position:relative;flex-shrink:0;cursor:pointer;" onclick="openEditProfile()" aria-label="Editar apelido e personagem">
+        <div style="font-size:3.2rem;background:var(--green-bg);border:3px solid var(--green);border-radius:22px;width:88px;height:88px;display:flex;align-items:center;justify-content:center;" id="profileModalAv">🦉</div>
+        <span class="edit-pencil">✏️</span>
+      </div>
       <div style="flex:1;min-width:0;">
         <div style="font-weight:900;font-size:1.4rem;color:var(--dark);overflow-wrap:anywhere;" id="profileModalName">Jogador</div>
         <div style="font-size:.9rem;font-weight:700;color:var(--gray-dk);" id="profileModalStats">⭐0 · 💎0 · 🔥0</div>
         <div style="font-size:.78rem;font-weight:700;color:var(--blue-dk);margin-top:.15rem;" id="profileModalCloud"></div>
       </div>
     </div>
+    <button class="btn btn-outline" onclick="openEditProfile()" style="margin-bottom:.35rem;padding:.7rem;font-size:.88rem;">✏️ Editar apelido e personagem</button>
     <button class="btn btn-outline" onclick="closeModal('mProfile');showParentPin()" style="margin-bottom:.35rem;padding:.7rem;font-size:.88rem;">📊 Relatório dos pais</button>
     <button class="btn btn-outline" id="profileCloudBtn" onclick="closeModal('mProfile');parentGate(openCloudSection)" style="margin-bottom:.35rem;padding:.7rem;font-size:.88rem;">☁️ Salvar progresso na nuvem</button>
     <button class="btn btn-blue" onclick="closeModal('mProfile');switchPlayer()" style="padding:.7rem;font-size:.88rem;margin-bottom:1rem;">🔄 Trocar de jogador</button>
@@ -819,14 +836,37 @@ body:not(.ios) .ios-only{display:none!important;}
   </div>
 </div>
 
+<!-- EDITAR APELIDO E PERSONAGEM -->
+<div class="modal-ov" id="mEditProfile">
+  <div class="modal-sheet">
+    <div class="sheet-title">Apelido e personagem</div>
+    <input class="inp" id="editName" placeholder="Como você quer ser chamado?" maxlength="20" style="font-size:1.1rem;padding:.9rem 1rem;">
+    <div class="sec-lbl" style="margin-top:.5rem;">Escolha seu personagem</div>
+    <div class="av-grid" id="editAvGrid"></div>
+    <button class="btn btn-green" onclick="saveEditProfile()" style="margin-top:.4rem;">Salvar</button>
+    <button class="btn btn-outline" onclick="closeModal('mEditProfile')" style="margin-top:.5rem;">Cancelar</button>
+  </div>
+</div>
+
+<!-- PARA OS PAIS (uma vez, depois da primeira vitória) -->
+<div class="modal-ov" id="mParents">
+  <div class="modal-sheet">
+    <span class="break-emoji">📊</span>
+    <div class="sheet-title">Para os pais</div>
+    <div class="sheet-sub">Veja como <b id="parentsName">a criança</b> está indo: acertos, dias seguidos e progresso de cada tabuada. Fica no <b>Perfil</b>, protegido por PIN.</div>
+    <button class="btn btn-green" onclick="closeModal('mParents');showParentPin()">📊 Ver o relatório</button>
+    <button class="btn btn-outline" style="margin-top:.5rem;" onclick="closeModal('mParents')">Depois</button>
+  </div>
+</div>
+
 <!-- CONTA NA NUVEM (adultos): aberta pelo Perfil -->
 <div class="modal-ov" id="mCloud">
   <div class="modal-sheet">
     <div style="display:flex;align-items:center;gap:.6rem;margin-bottom:.6rem;">
       <div style="font-size:1.6rem;">☁️</div>
       <div style="flex:1;">
-        <div class="sheet-title" style="text-align:left;margin:0;">Salvar progresso na nuvem</div>
-        <div style="font-size:.78rem;font-weight:700;color:var(--gray-dk);">Para adultos. Guarda o progresso e leva para outro aparelho.</div>
+        <div class="sheet-title" id="cloudTitle" style="text-align:left;margin:0;">Salvar progresso na nuvem</div>
+        <div id="cloudSub" style="font-size:.78rem;font-weight:700;color:var(--gray-dk);">Para adultos. Guarda o progresso e leva para outro aparelho.</div>
       </div>
       <button onclick="closeModal('mCloud')" aria-label="Fechar" style="background:none;border:none;font-size:1.2rem;cursor:pointer;color:var(--gray-dk);min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center;">✕</button>
     </div>
@@ -918,14 +958,32 @@ body:not(.ios) .ios-only{display:none!important;}
     <!-- Perfis existentes — renderizado pelo JS com profile-big para o 1º -->
     <div id="profilesArea"></div>
 
+    <!-- Boas-vindas (só quando ainda não há jogadores) -->
+    <div class="welcome-box" id="welcomeBox">
+      <div class="welcome-hero">
+        <div class="welcome-owl">🦉</div>
+        <div class="welcome-title">Resolva a tabuada e<br>resgate criaturas!</div>
+        <div class="welcome-cre">🦊🐼🦄🐸</div>
+        <div class="welcome-sub">Uma jornada de fases, do 2 ao 10.<br>Sem anúncios.</div>
+      </div>
+      <div>
+        <button class="btn btn-green" onclick="welcomeJogar()" style="font-size:1.3rem;padding:1.1rem;">🎮 Jogar</button>
+        <button class="link-btn" onclick="parentGate(()=>openCloudSection('entrar'))" style="font-size:.95rem;margin-top:.8rem;">Já tenho conta (adultos)</button>
+      </div>
+    </div>
+
     <!-- Adicionar jogador (colapsável) -->
     <button class="add-player-toggle" id="addPlayerToggle" onclick="toggleAddPlayer()">
       <span>＋</span> Adicionar jogador
     </button>
     <div class="add-player-form" id="addPlayerForm">
-      <div class="sec-lbl">Novo jogador</div>
-      <input class="inp" id="newName" placeholder="Seu nome" maxlength="20" style="font-size:1.05rem;padding:.8rem .9rem;">
-      <div class="sec-lbl" style="margin-top:.3rem;">Escolha seu personagem</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:.4rem;">
+        <div class="sec-lbl" style="margin:0;white-space:nowrap;">Quem vai jogar?</div>
+        <button class="link-btn" onclick="createProfile()" style="width:auto;margin:0;font-size:.95rem;">Pular</button>
+      </div>
+      <input class="inp" id="newName" placeholder="Como você quer ser chamado?" maxlength="20" style="font-size:1.1rem;padding:.9rem 1rem;">
+      <div style="font-size:.78rem;font-weight:700;color:var(--gray-dk);margin:-.1rem 0 .9rem;">Pode ser um apelido. Não precisa ser o nome completo.</div>
+      <div class="sec-lbl">Escolha seu personagem</div>
       <div class="av-grid" id="avGrid"></div>
       <div class="auth-err" id="newErr"></div>
       <button class="btn btn-green" onclick="createProfile()" style="font-size:1.15rem;padding:1rem;">🎮 Jogar</button>
@@ -985,6 +1043,7 @@ body:not(.ios) .ios-only{display:none!important;}
 
   <!-- COLLECTION -->
   <div class="tab-panel" id="tabCollection">
+    <div id="collTip"></div>
     <!-- difficulty selector for collections -->
     <div class="coll-diff-row" id="collDiffRow"></div>
     <!-- collection header -->
@@ -2078,6 +2137,7 @@ function logTime(l){
 }
 function gd(){return JSON.parse(localStorage.getItem('mm4')||'{"profiles":[]}')}
 function sd(d){localStorage.setItem('mm4',JSON.stringify(d))}
+let welcomeStep=false,editAv=null;
 let P=null,Pi=0,selAv=AVATARS[0],diff=0,vol=.5,GS=null,tIv=null,waitNext=false,aCtx=null;
 function AC(){if(!aCtx)aCtx=new(window.AudioContext||window.webkitAudioContext)();return aCtx}
 function playSuccess(){try{const ctx=AC(),ns=[523,659,784,1047];ns.forEach((f,i)=>{const o=ctx.createOscillator(),g=ctx.createGain();o.connect(g);g.connect(ctx.destination);o.frequency.value=f;o.type='triangle';const t=ctx.currentTime+i*.1;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(vol*.8,t+.03);g.gain.exponentialRampToValueAtTime(.001,t+.25);o.start(t);o.stop(t+.26)})}catch(e){}}
@@ -2117,6 +2177,8 @@ function renderLogin(){
     // Fecha e limpa o formulário de novo jogador (fica aberto após criar o 1º perfil)
     const form = document.getElementById('addPlayerForm');
     const toggle = document.getElementById('addPlayerToggle');
+    const wb0 = document.getElementById('welcomeBox'); if(wb0) wb0.style.display='none';
+    welcomeStep = false;
     if(form) form.classList.remove('open');
     if(toggle){ toggle.style.display=''; toggle.textContent='＋ Adicionar jogador'; }
     ['newName'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
@@ -2136,10 +2198,12 @@ function renderLogin(){
       area.appendChild(d);
     });
   } else {
-    // No profiles — auto-open the add form
+    // Sem jogadores: boas-vindas e, ao tocar em Jogar, apelido e personagem
     const form = document.getElementById('addPlayerForm');
     const toggle = document.getElementById('addPlayerToggle');
-    if(form){ form.classList.add('open'); }
+    const wb = document.getElementById('welcomeBox');
+    if(wb) wb.style.display = welcomeStep ? 'none' : 'flex';
+    if(form){ form.classList.toggle('open', welcomeStep); }
     if(toggle){ toggle.style.display='none'; }
   }
   const ag=document.getElementById('avGrid');
@@ -2159,15 +2223,24 @@ function toggleAddPlayer(){
 
 // Conta na nuvem: folha "mCloud", sempre atrás da confirmação de adulto
 function toggleCloudSection(){ parentGate(openCloudSection); }
-function openCloudSection(){
+function openCloudSection(modo){
   ['siErr','suErr'].forEach(id=>{ const e=document.getElementById(id); if(e) e.textContent=''; });
+  const entrar = modo==='entrar';
+  const t=document.getElementById('cloudTitle'), sub=document.getElementById('cloudSub');
+  if(t) t.textContent = entrar ? 'Entrar na sua conta' : 'Salvar progresso na nuvem';
+  if(sub) sub.textContent = entrar ? 'Para adultos. Seus jogadores voltam para este aparelho.' : 'Para adultos. Guarda o progresso e leva para outro aparelho.';
+  const aba = document.querySelector('#mCloud .auth-tab');
+  if(aba) authSwitchTab('signin', aba);
   openModal('mCloud');
 }
 document.addEventListener('focusin', ev=>{ // mantém o campo visível acima do teclado
   const el=ev.target;
   if(el && el.classList && el.classList.contains('inp') && el.closest && el.closest('#mCloud')) setTimeout(()=>{ try{ el.scrollIntoView({block:'center',behavior:'smooth'}); }catch(e){} }, 350);
 });
-function createProfile(){const nm=document.getElementById('newName').value.trim();const er=document.getElementById('newErr');er.textContent='';if(!nm){er.textContent='Digite seu nome!';return}createProfileWith(nm);}
+function nomePadrao(){const ex=gd().profiles.map(p=>p.name);if(!ex.includes('Jogador'))return 'Jogador';let i=2;while(ex.includes('Jogador '+i))i++;return 'Jogador '+i}
+// Apelido em branco (ou "Pular") vira "Jogador"
+function createProfile(){const nm=document.getElementById('newName').value.trim()||nomePadrao();createProfileWith(nm);}
+function welcomeJogar(){welcomeStep=true;renderLogin();}
 function createProfileWith(nm){const data=gd();const p={name:nm,av:selAv,stars:0,gems:0,streak:0,lastDate:null,tableStars:{},creatures:[],totalOk:0,totalWrong:0,totalGames:0,logs:[],vol:.5};data.profiles.push(p);sd(data);loginAs(data.profiles.length-1)}
 function loginAs(idx){const data=gd();P=data.profiles[idx];Pi=idx;diff=P.diff||0;
   delete P.premium; // Premium agora é do aparelho, não do perfil
@@ -2182,7 +2255,7 @@ function loginAs(idx){const data=gd();P=data.profiles[idx];Pi=idx;diff=P.diff||0
   }vol=P.vol||.5;document.getElementById('volSlider').value=vol;document.getElementById('volPct').textContent=Math.round(vol*100)+'%';
   // restore dark toggle state
   const dt=document.getElementById('darkToggle');if(dt)dt.checked=localStorage.getItem('mm_dark')==='1';
-  updatePremiumUI();renderHome();show('sHome')}
+  updatePremiumUI();renderHome();show('sHome');maybeShowFirstTapHint()}
 function sp(){const data=gd();data.profiles[Pi]={...P};sd(data);saveProfileToCloud();}
 // Trocar de jogador: volta para a lista de perfis e mantém a conta da nuvem conectada
 function switchPlayer(){ P=null; renderLogin(); show('sLogin'); }
@@ -2314,6 +2387,7 @@ function renderJourney(){
 
     const div = document.createElement('div');
     div.className = cls;
+    div.dataset.t = n.boss ? 'boss' : String(n.t);
     div.style.cssText = `left:${n.x}px;top:${n.y}px;`;
     const opLabel = SUBJECTS[subject].op;
     div.innerHTML = n.boss
@@ -2384,6 +2458,12 @@ function renderCollection(){
   const creSet = subject==='sub' ? CREATURES_SUB : CREATURES_ALL;
   const set = creSet[collViewDiff];
   if(!set) return;
+  const tip = document.getElementById('collTip');
+  if(tip){
+    const total = P ? ['mult','div','add','sub'].reduce((t,sb)=>{ const cm=((P.subjects||{})[sb]||{}).creaturesMap||{}; return t+[0,5,4,3,2].reduce((a,d)=>a+(cm[d]||[]).length,0); },0) : 1;
+    const e0 = ((creSet[0]||{}).c||{})[2]; 
+    tip.innerHTML = total===0 ? `<div class="coll-tip"><span class="ct-e">${e0?e0.e:'🐾'}</span><span>Vença a tabuada do 2 para resgatar sua primeira criatura!</span></div>` : '';
+  }
 
   // difficulty selector row
   const row = document.getElementById('collDiffRow');
@@ -2568,11 +2648,52 @@ function endGame(won){
     // Avisos extras só aparecem depois que a criança fecha a celebração
     afterWin=null;
     if(t===FREE_TABLES[FREE_TABLES.length-1] && prev<1 && nS>=1 && !isPremiumUnlocked()){ afterWin='mPremiumUpsell'; renderLockedCreatures('upsellCre'); }
+    else if((P.wins||0)===1 && localStorage.getItem('mm_parent_card')!=='1'){ try{ localStorage.setItem('mm_parent_card','1'); }catch(e){} const pn=document.getElementById('parentsName'); if(pn) pn.textContent=P.name; afterWin='mParents'; }
     if(!afterWin && stars>=2 && shouldAskReview()) afterWin='mReview';
   }else{const gems=GS.ok;P.gems=(P.gems||0)+gems;sp();document.getElementById('loseGems').textContent=gems+' 💎';openModal('mLose')}
 }
 let afterWin=null;
 function closeWin(){closeModal('mWin');goHome();if(afterWin){const m=afterWin;afterWin=null;setTimeout(()=>openModal(m),400);}}
+// Dica única no primeiro toque (nunca repete)
+function maybeShowFirstTapHint(){
+  if(!P || (P.totalGames||0)>0 || subject!=='mult') return;
+  try{ if(localStorage.getItem('mm_hint_tap')==='1') return; }catch(e){}
+  setTimeout(()=>{
+    const home=document.getElementById('sHome');
+    if(!P || !home || !home.classList.contains('active') || document.getElementById('tapHint')) return;
+    const no=home.querySelector('.jnode[data-t="2"]'); if(!no) return;
+    const r=no.getBoundingClientRect(); if(!r.width) return;
+    const ov=document.createElement('div'); ov.id='tapHint'; ov.className='tap-hint';
+    ov.innerHTML=`<div class="tap-hole" style="left:${r.left-10}px;top:${r.top-10}px;width:${r.width+20}px;height:${r.height+20}px;"></div>
+      <div class="tap-bubble" style="top:${r.bottom+28}px;"><div style="font-size:2rem;">👆</div><div class="tb-t">Toque no 2 para começar!</div><button class="btn btn-green" style="padding:.8rem;">Entendi</button></div>`;
+    ov.querySelector('.tap-hole').onclick=()=>{ hideTapHint(); no.click(); };
+    ov.querySelector('button').onclick=hideTapHint;
+    document.body.appendChild(ov);
+  }, 700);
+}
+function hideTapHint(){
+  try{ localStorage.setItem('mm_hint_tap','1'); }catch(e){}
+  const o=document.getElementById('tapHint'); if(o) o.remove();
+}
+
+// Editar apelido e personagem (no Perfil)
+function renderEditAv(){
+  const g=document.getElementById('editAvGrid'); if(!g) return; g.innerHTML='';
+  AVATARS.forEach(a=>{ const b=document.createElement('button'); b.className='av-btn'+(a===editAv?' sel':''); b.textContent=a;
+    b.onclick=()=>{ editAv=a; renderEditAv(); }; g.appendChild(b); });
+}
+function openEditProfile(){
+  if(!P) return;
+  document.getElementById('editName').value=P.name;
+  editAv=P.av; renderEditAv();
+  openModal('mEditProfile');
+}
+function saveEditProfile(){
+  if(!P) return;
+  const nm=document.getElementById('editName').value.trim()||P.name;
+  P.name=nm; P.av=editAv||P.av;
+  sp(); renderHome(); closeModal('mEditProfile');
+}
 function temPin(p){ return !!(p && (p.pinHash || p.pin)); }
 function abrirNovoPin(titulo, sub){
   document.getElementById('newPinInput').value = '';
@@ -3018,6 +3139,8 @@ function saveNewPin(){ // (o hash é calculado em setPin)
 const SPD_NAMES = {0:'Sem tempo',5:'5 segundos',4:'4 segundos',3:'3 segundos',2:'2 segundos'};
 function openSpeed(table){
   if(table!=='boss' && PREMIUM_TABLES.includes(table) && !isPremiumUnlocked()){ openPremium(); return; }
+  // Primeira partida do jogador: vai direto em "Sem tempo", sem a folha de velocidades
+  if(table!=='boss' && P && (P.totalGames||0)===0){ setDiff(0); startGame(table); return; }
   const passed = passedTables();
   if(table==='boss' && passed.length<2){ playDuck(); flash('Passe 2 tabuadas para liberar o Desafio Misto! 🔒','err'); return; }
   const op = SUBJECTS[subject].op;
