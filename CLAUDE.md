@@ -21,6 +21,9 @@ App de tabuada para crianças. Responda em português, passo a passo e sem jarg�
 - `asc-preco-premium`: roda `scripts/asc_preco_premium.py`; mostra o cadastro da compra Premium e define o preço
   (variables `PRECO`, `TERRITORIO`; `SO_MOSTRAR=1` só mostra). Em 17/11/2026 ficou em R$ 9,99, país base Brasil
   (estava R$ 9,90).
+- `asc-conferir-envio`: SÓ LEITURA (`scripts/asc_conferir_envio.py`). Mostra a compilação anexada, as Notas, a conta
+  demo, o estado da compra Premium e os envios; termina com "PENDENTE: ..." ou "Pronto para o clique final".
+  Rode antes de reenviar à revisão (variable opcional `BUILD_ESPERADA`, padrão 11).
 - Todos usam a integração `MultiplicaMente ASC` e `instance_type: mac_mini_m2` (o plano não tem Linux).
 
 ## Loja
@@ -41,6 +44,9 @@ App de tabuada para crianças. Responda em português, passo a passo e sem jarg�
 - 17/11/2026: usuário testou o build 9 no aparelho: entrar com a Apple e excluir conta funcionando.
 - 17/11/2026: a compra `premium_unlock` está como "Faltam metadados": falta a captura de tela para a revisão
   (e as notas da revisão estão vazias). Sem isso a compra não segue junto com o app. Pendente (usuário, pelo site).
+
+- 18/11/2026: conferência antes do reenvio: versão 1.0.29 "Rejeitada" ainda com a compilação 3, Notas antigas
+  (624 caracteres) e compra Premium sem captura de tela. Nada foi reenviado. Vídeo no Google Fotos (link nas Notas).
 
 ## Entrar com a Apple (iOS) — em teste
 - 16 e 17/11/2026: builds 1.0.29 (8) a (11) enviados ao TestFlight a partir do branch `claude/affectionate-lovelace-1iw52q`
