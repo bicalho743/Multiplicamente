@@ -94,3 +94,19 @@ workflows:
         script: pip3 install --quiet "pyjwt[crypto]" || pip3 install --quiet --break-system-packages "pyjwt[crypto]"
       - name: Preço do Premium
         script: python3 scripts/asc_preco_premium.py
+
+  # SÓ LEITURA: confere se a versão está pronta para ser reenviada à revisão (compilação, Notas, compra, envios).
+  # Não altera nada e não envia nada. Variables opcionais: BUILD_ESPERADA (padrão 11).
+  asc-conferir-envio:
+    name: App Store - conferir antes de enviar
+    instance_type: mac_mini_m2
+    max_build_duration: 10
+    integrations:
+      app_store_connect: MultiplicaMente ASC
+    triggering:
+      events: []
+    scripts:
+      - name: Instalar dependências
+        script: pip3 install --quiet "pyjwt[crypto]" || pip3 install --quiet --break-system-packages "pyjwt[crypto]"
+      - name: Conferir a versão
+        script: python3 scripts/asc_conferir_envio.py
