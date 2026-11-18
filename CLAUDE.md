@@ -79,6 +79,13 @@ App de tabuada para crianças. Responda em português, passo a passo e sem jarg�
   (`marketing/social/`, que hoje diz "2 ao 6 grátis").
 - Quem já usa o app no Google Play perde o acesso às tabuadas 5 e 6 (o progresso fica salvo).
 
+## Onboarding (proposta para a 1.0.30, só desenhos; aguardando aprovação)
+- Telas e decisões em `docs/onboarding/` (`00_fluxo.png`, `README.md`; gerar de novo: `node docs/onboarding/gerar.js`).
+- Segue o guia da Candeia Tec: sem cadastro na entrada, apelido em vez de nome, "Já tenho conta (adultos)", primeira
+  partida direto em "Sem tempo", dica no primeiro toque, cartão para os pais após a primeira vitória, editar apelido e
+  personagem no Perfil. Sem SDK de analytics (usar as métricas das lojas).
+- Só programar depois da aprovação do usuário.
+
 ## Android
 - O .aab assinado é gerado no computador do usuário. O keystore `multiplicamente.jks` não fica no repositório
   (está no .gitignore). Para gerar pelo Codemagic, o usuário precisa enviar o keystore em Settings → Code signing
