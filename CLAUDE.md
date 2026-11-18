@@ -89,7 +89,8 @@ App de tabuada para crianças. Responda em português, passo a passo e sem jarg�
   jogador direto em "Sem tempo" (`openSpeed`) → cartão `mParents` uma vez após a 1ª vitória (grava `mm_parent_card`).
   "Já tenho conta (adultos)" na primeira tela abre a folha `mCloud` em modo "entrar" atrás da pergunta para adultos.
   Perfil: "Editar apelido e personagem" (`mEditProfile`). Coleção vazia mostra a dica (`#collTip`).
-- Testado em navegador (fluxos completos, sem erros); falta testar no aparelho depois de um build.
+- Testado em navegador (fluxos completos, sem erros). Build 12 (18/11/2026) enviado ao TestFlight com o onboarding, o Perfil
+  e as tabuadas 2 a 4 grátis; falta testar no aparelho. A versão em revisão continua sendo a do build 11.
 - Ao publicar a 1.0.30, também trocar: Notas da Apple ("type any name" → apelido; "Config" → "Perfil"), roteiro do vídeo,
   página de suporte (candeia_tec) e a política de privacidade do site (já ajustada aqui para "apelido ou nome").
 
