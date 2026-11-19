@@ -32,6 +32,10 @@ App de tabuada para crianças. Responda em português, passo a passo e sem jarg�
 - Pelo site apenas: práticas de privacidade (salvar e Publicar), preços, classificação etária e o clique
   final em "Adicionar para revisão".
 
+- Gráfico de destaque do Google Play: `marketing/loja/recurso_grafico_1024x500_v2.png` (gerar: `node marketing/loja/gerar_recurso_grafico.js`).
+  Feito para a página do Play no computador (conteúdo no centro-direita, letra grande, sem número de tabuadas grátis).
+  O que está no ar dizia "Tabuadas do 2 ao 5 grátis" (não bate com o app).
+
 ## Situação da revisão (atualize aqui)
 - 13/11/2026: a Apple respondeu "Guideline 2.1 - Information Needed" (não é recusa; pediu informações).
 - Resposta pronta em `marketing/appstore/resposta_revisao_2_1.md`: roteiro do vídeo e texto em inglês para "Notas".
