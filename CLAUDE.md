@@ -32,8 +32,8 @@ App de tabuada para crianças. Responda em português, passo a passo e sem jarg�
 - Pendente (usuário): gravar o vídeo no iPhone pelo TestFlight, subir (Drive ou YouTube não listado), criar uma
   conta de demonstração que não seja excluída, colar o texto com link/e-mail/senha em Notas, responder na
   Central de Resoluções e reenviar.
-- A decidir: trocar o e-mail de contato da política de privacidade (`privacidade.html`, hoje
-  solanobicalho@yahoo.com.br) para contato@candeiatec.com.br.
+- 19/11/2026: contato do site e da política de privacidade (`index.html`, `privacidade.html`) trocado para
+  contato@candeiatec.com.br (antes era o e-mail pessoal do Solano).
 
 ## Android
 - O .aab assinado é gerado no computador do usuário. O keystore `multiplicamente.jks` não fica no repositório
