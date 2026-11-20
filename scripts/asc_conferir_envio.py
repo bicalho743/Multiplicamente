@@ -83,6 +83,18 @@ def main():
         print(f"   {r['id']}: {a.get('state')} (enviado {a.get('submittedDate')})")
     if not rs: print("   nenhum")
 
+    print("== Classificação etária (declaração atual)")
+    try:
+        infos = call("GET", f"/v1/apps/{APP_ID}/appInfos")["data"]
+        for info in infos:
+            st = info["attributes"].get("appStoreState") or info["attributes"].get("state")
+            idade = call("GET", f"/v1/appInfos/{info['id']}/ageRatingDeclaration")["data"]["attributes"]
+            print(f"   appInfo {info['id']} ({st}):")
+            for k in sorted(idade):
+                print(f"     {k}: {idade[k]}")
+    except Exception as e:
+        print(f"   (não foi possível ler: {str(e)[:200]})")
+
     print("\n== RESUMO")
     if problemas:
         for p in problemas: print(f"   PENDENTE: {p}")
