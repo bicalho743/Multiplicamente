@@ -52,6 +52,12 @@ App de tabuada para crianças. Responda em português, passo a passo e sem jarg�
 - 18/11/2026: conferência antes do reenvio: versão 1.0.29 "Rejeitada" ainda com a compilação 3, Notas antigas
   (624 caracteres) e compra Premium sem captura de tela. Nada foi reenviado. Vídeo no Google Fotos (link nas Notas).
 
+- 20/11/2026: a Apple analisou o build 11 e respondeu Guideline 2.3.6 (metadados): a classificação etária declarava
+  "Verificação de idade" (`ageAssurance`) = Sim e "Controles parentais" (`parentalControls`) = Sim, e o revisor (iPad Air)
+  não achou nenhum dos dois. Plano: mudar "Verificação de idade" para Não (o app não verifica idade), manter "Controles
+  parentais" = Sim e responder dizendo onde estão (portão de adultos com ano de nascimento + PIN do relatório; compras,
+  conta, apagar perfil). Não precisa de build novo. `asc-conferir-envio` agora mostra a declaração etária.
+
 ## Entrar com a Apple (iOS) — em teste
 - 16 e 17/11/2026: builds 1.0.29 (8) a (11) enviados ao TestFlight a partir do branch `claude/affectionate-lovelace-1iw52q`
   (ainda não está no `main`; a versão em revisão na Apple continua sendo o build 3).
