@@ -58,6 +58,16 @@ App de tabuada para crianças. Responda em português, passo a passo e sem jarg�
   parentais" = Sim e responder dizendo onde estão (portão de adultos com ano de nascimento + PIN do relatório; compras,
   conta, apagar perfil). Não precisa de build novo. `asc-conferir-envio` agora mostra a declaração etária.
 
+- 20/11/2026: usuário mudou "Verificação de idade" para Não (confirmado pela API), respondeu à Apple e reenviou a
+  versão 1.0.29 (build 11 mantido; a 12 não foi anexada).
+- 25/11/2026: a Apple (iPad Air) pediu na Guideline 2.1 "conta de demonstração com assinatura expirada". O app não tem
+  assinatura: o Premium é compra única não consumível. O usuário respondeu explicando isso e o passo a passo para
+  testar a compra e a restauração (no build 11 o Premium libera 7 a 10). Aguardando a Apple; se ela responder de novo,
+  rodar `asc-conferir-envio` para ver o estado.
+- 24/11/2026: o app NÃO usa RevenueCat (compra pelo `BillingPlugin` no Android e StoreKit 2 no iOS), então vendas do Play
+  não aparecem no RevenueCat (projeto `proj19ead3d1` vazio, só "Test Store"). Vendas: ver Play Console e App Store Connect.
+  Integrar o RevenueCat só numa versão futura, com testes.
+
 ## Entrar com a Apple (iOS) — em teste
 - 16 e 17/11/2026: builds 1.0.29 (8) a (11) enviados ao TestFlight a partir do branch `claude/affectionate-lovelace-1iw52q`
   (ainda não está no `main`; a versão em revisão na Apple continua sendo o build 3).
