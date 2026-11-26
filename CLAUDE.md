@@ -1,5 +1,7 @@
 # MultiplicaMente
 
+Trabalho no PC: ver bicalho743/meu-enxoval-em-dia/docs/CLAUDE-NO-PC.md
+
 App de tabuada para crianças. Responda em português, passo a passo e sem jargão.
 
 ## Dados do app
@@ -49,3 +51,11 @@ App de tabuada para crianças. Responda em português, passo a passo e sem jarg�
 ## Regras
 - Nunca envie para revisão nem publique sem o usuário pedir.
 - Google Play ainda não configurado para envio automático.
+
+## Onde paramos (26/11/2026)
+- **Revisão da Apple (Guideline 2.1):** a resposta está pronta em `marketing/appstore/resposta_revisao_2_1.md`; falta
+  o vídeo, a conta de demonstração e reenviar (ver "Situação da revisão"). Conferir no App Store Connect se mudou algo.
+- **Contato:** site e política de privacidade com `contato@candeiatec.com.br` desde 19/11 (saiu o e-mail pessoal).
+- **Ícone:** o da capa do WhatsApp da Candeia Tec é o `AppIcon-512@2x.png` do iOS (o Android tem moldura interna).
+- **Google Play:** envio ainda manual; falta o workflow `android-play` e o keystore no Codemagic.
+- **Plano de marketing 2027:** PDF guardado no Hub (Candeia_Tec › Marketing), não neste repositório.
