@@ -1,0 +1,23 @@
+const { chromium, devices } = require('playwright');
+(async () => {
+  const out = process.argv[2];
+  const b = await chromium.launch();
+  const ctx = await b.newContext({ ...devices['iPhone 15 Pro Max'], viewport: { width: 430, height: 932 }, screen: { width: 430, height: 932 } });
+  const page = await ctx.newPage();
+  const U = 'file://' + require('path').resolve(__dirname, '..', '..', 'www') + '/index.html';
+  await page.goto(U); await page.evaluate(() => localStorage.clear()); await page.goto(U); await page.waitForTimeout(2600);
+  await page.screenshot({ path: out + '/f1_boas_vindas.png' });
+  await page.click('#welcomeBox >> text=Jogar'); await page.waitForTimeout(400);
+  await page.screenshot({ path: out + '/f2_apelido.png' });
+  await page.fill('#newName', 'Ana'); await page.click('#addPlayerForm button.btn-green'); await page.waitForTimeout(1900);
+  await page.screenshot({ path: out + '/f3_dica.png' });
+  await page.click('#tapHint button');
+  await page.evaluate(() => { startGame(2); GS.ok = 10; endGame(true); closeWin(); }); await page.waitForTimeout(1200);
+  await page.screenshot({ path: out + '/f4_pais.png' });
+  await page.click('#mParents >> text=Depois');
+  await page.click('.home-user'); await page.waitForTimeout(500);
+  await page.screenshot({ path: out + '/f5_perfil.png' });
+  await page.click('#mProfile >> text=Editar apelido e personagem'); await page.waitForTimeout(400);
+  await page.screenshot({ path: out + '/f6_editar.png' });
+  await b.close();
+})();

@@ -1,0 +1,26 @@
+const { chromium, devices } = require('playwright');
+(async () => {
+  const out = process.argv[2];
+  const b = await chromium.launch();
+  const ctx = await b.newContext({ ...devices['iPhone 15 Pro Max'], viewport: { width: 430, height: 932 }, screen: { width: 430, height: 932 } });
+  const page = await ctx.newPage();
+  const errs = []; page.on('pageerror', e => errs.push(String(e)));
+  await page.goto('file://' + require('path').resolve(__dirname, '..', '..', 'www') + '/index.html', { waitUntil: 'load' });
+  await page.waitForTimeout(1200);
+  await page.fill('#newName', 'Ana'); await page.click('text=Jogar'); await page.waitForTimeout(1000);
+  await page.screenshot({ path: `${out}/1_home.png` });
+  await page.click('.home-user'); await page.waitForTimeout(700);
+  await page.screenshot({ path: `${out}/2_perfil_topo.png` });
+  await page.evaluate(() => { const s=document.querySelector('#mProfile .modal-sheet'); s.scrollTop = s.scrollHeight; });
+  await page.waitForTimeout(400);
+  await page.screenshot({ path: `${out}/3_perfil_fim.png` });
+  await page.evaluate(() => { closeModal('mProfile'); switchPlayer(); });
+  await page.waitForTimeout(500);
+  await page.click('#addPlayerToggle'); await page.fill('#newName', 'Leo');
+  await page.evaluate(() => { selAv = '🐼'; });
+  await page.click('text=Jogar'); await page.waitForTimeout(700);
+  await page.evaluate(() => switchPlayer()); await page.waitForTimeout(600);
+  await page.screenshot({ path: `${out}/4_lista.png` });
+  console.log(JSON.stringify(errs));
+  await b.close();
+})();

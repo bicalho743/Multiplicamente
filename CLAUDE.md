@@ -1,6 +1,47 @@
 # MultiplicaMente
 
 App de tabuada para crianças. Responda em português, passo a passo e sem jargão.
+Trabalho no PC: ver bicalho743/meu-enxoval-em-dia/docs/CLAUDE-NO-PC.md
+
+## Ids e contas (resumo)
+| Item | Valor |
+|---|---|
+| Tipo | **Capacitor 8** (`www/` + `ios/` + `android/`). Não é Expo nem site |
+| Bundle iOS / pacote Android | `com.solano.multiplicamente` |
+| Apple Team | `78UAFVLGA9` (Solano Bicalho, Individual) |
+| App Store Connect (app id) | `6833585676` |
+| Codemagic (appId) | `6af482847e217e7e1a698645` (integração `MultiplicaMente ASC`) |
+| Expo / EAS | não usa |
+| RevenueCat | projeto `proj19ead3d1` existe, mas **o app não usa** (vazio; só "Test Store") |
+| Supabase / Render | não usa |
+| Firebase | `multiplicamente-ccacc` (Auth: e-mail, Google no Android, Apple no iOS; Firestore) |
+| Google Play | `com.solano.multiplicamente`, em produção (1.0.29) |
+| Instagram / Upload-Post | perfil Upload-Post `@vidaemmetodo01` (nome "Multiplicamente"); Instagram `vidaemmetodo01` |
+| Site / páginas do app | repo `bicalho743/Candeia_Tec`, pasta `apps/multiplicamente/` (privacidade, termos, suporte, excluir conta) |
+
+## Onde paramos (26/11/2026)
+**Em revisão na Apple:** versão 1.0.29, **compilação 11** (Notas em inglês com o vídeo, conta demo = "não é necessária").
+- 20/11: Apple pediu ajuste da classificação etária (2.3.6): "Verificação de idade" passou para Não; "Controles parentais" Sim. Respondido e reenviado.
+- 25/11: Apple pediu "conta de demonstração com assinatura expirada" (2.1). O app não tem assinatura (Premium é compra única). Respondido. **Aguardando a Apple.** Se ela responder, rodar `asc-conferir-envio`.
+- Não anexar o build 12 a esta versão: o vídeo e as Notas descrevem o build 11 (Premium libera 7 a 10; aba Config).
+
+**No TestFlight, sem testar no aparelho:** build 12 (branch `claude/affectionate-lovelace-1iw52q`) com onboarding novo, Perfil com as configurações (sem aba Config) e tabuadas 2 a 4 grátis.
+
+**Git:** a branch está 29 commits à frente do `main` e o `main` tem 1 commit que ela não tem (`0f9c60b`, troca do e-mail de contato; já feita na branch). Nada foi juntado ao `main`. Juntar com uma PR (merge normal, sem rebase) **só depois da aprovação da Apple**, junto com a versão 1.0.30.
+
+**Versão 1.0.30 (pronta no código, SEM publicar):** tabuadas 2 a 4 grátis; Perfil no lugar da aba Config; onboarding (`docs/onboarding/`). Antes de publicar, trocar juntos: textos da App Store e do Google Play (`marketing/appstore/textos.md`), `index.html` do repositório, páginas do Candeia_Tec ("Config" → "Perfil"), Notas e roteiro do vídeo da Apple, e o post do Instagram (diz "2 ao 6 grátis").
+
+**Google Play / redes (pendências do usuário):**
+- Subir o gráfico novo `marketing/loja/recurso_grafico_1024x500_v2.png` (Play Console → Presença na loja → Página principal da loja). O que está no ar diz "2 ao 5 grátis".
+- Link da bio do Instagram: usar `https://play.google.com/store/apps/details?id=com.solano.multiplicamente` (o atual não abre). Nome do perfil ainda "Vida em Metodo".
+- Post do carrossel publicado em 18/11: https://www.instagram.com/p/Df3RR4MCBYI/ (confirmar se as 7 imagens entraram).
+
+**Decisões pendentes (do usuário):**
+1. Quando juntar a branch ao `main` e publicar a 1.0.30 (Android: gerar o .aab no PC; iOS: Codemagic).
+2. Integrar ou não o RevenueCat (hoje as vendas só aparecem no Play Console e no App Store Connect). Se sim, numa versão futura com testes.
+3. Criar conta de demonstração por e-mail para a Apple (hoje o texto diz que não é necessária).
+
+**Arquivos do trabalho:** textos e artes das lojas em `marketing/appstore/` (iOS), `marketing/loja/` (Google Play e gráficos), `marketing/social/` (posts), `marketing/telas/`; onboarding em `docs/onboarding/`; testes de tela em `docs/testes/`.
 
 ## Dados do app
 - Tipo: Capacitor (app web em `www/`, projetos nativos em `ios/` e `android/`). Não usa Expo.
@@ -120,7 +161,10 @@ App de tabuada para crianças. Responda em português, passo a passo e sem jarg�
   identities → Android keystores (reference name `multiplicamente_keystore`) e criar um workflow `android-play`.
 
 ## Ambiente do Claude Code
-- Use o ambiente "Multiplicamente": nele o proxy injeta o token da API do Codemagic (header
+- **No PC (Windows):** não há proxy. O token do Codemagic vem da variável de usuário `CM_API_TOKEN`, enviada no header
+  `x-auth-token`. Scripts em python3/bash: rodar no Git Bash ou trocar por `python`. Build de iPhone nunca no Windows
+  (Codemagic ou EAS). App Store Connect e Play Console: pelo Chrome já logado.
+- **Na nuvem (antigo):** use o ambiente "Multiplicamente": nele o proxy injeta o token da API do Codemagic (header
   `x-auth-token: proxy-injected`). Disparar: POST https://api.codemagic.io/builds
   {"appId":"6af482847e217e7e1a698645","workflowId":"ios-app-store","branch":"main"};
   status: GET /builds/<id>; log de uma etapa: GET /builds/<id>/step/<buildActions[]._id>.

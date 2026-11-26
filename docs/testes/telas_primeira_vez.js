@@ -1,0 +1,20 @@
+const { chromium, devices } = require('playwright');
+(async () => {
+  const out = process.argv[2];
+  const b = await chromium.launch();
+  const ctx = await b.newContext({ ...devices['iPhone 15 Pro Max'], viewport: { width: 430, height: 932 }, screen: { width: 430, height: 932 } });
+  const page = await ctx.newPage();
+  await page.goto('file://' + require('path').resolve(__dirname, '..', '..', 'www') + '/index.html', { waitUntil: 'load' });
+  await page.waitForTimeout(1200);
+  await page.screenshot({ path: `${out}/1_primeira_tela.png` });
+  await page.fill('#newName', 'Ana'); await page.click('text=Jogar'); await page.waitForTimeout(1000);
+  await page.screenshot({ path: `${out}/2_home.png` });
+  await page.evaluate(() => openSpeed(2)); await page.waitForTimeout(600);
+  await page.screenshot({ path: `${out}/3_velocidade.png` });
+  await page.evaluate(() => { closeModal('mSpeed'); }); 
+  await page.click('text=Recordes'); await page.waitForTimeout(600);
+  await page.screenshot({ path: `${out}/4_recordes.png` });
+  await page.click('text=Coleção'); await page.waitForTimeout(600);
+  await page.screenshot({ path: `${out}/5_colecao.png` });
+  await b.close();
+})();
